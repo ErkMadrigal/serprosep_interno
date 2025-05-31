@@ -22,6 +22,7 @@
     
     // $router = new Router();
     // $inserciones = new Inserciones();
+    
     $consultas = new Consultas();
     $conn = DataBase::getConnection();
 
