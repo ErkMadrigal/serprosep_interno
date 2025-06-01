@@ -9,14 +9,6 @@
             self::$respuesta = null;
         }
         
-        public static function prueba(){
-            self::$respuesta["status"] = "ok";
-            self::$respuesta["mensaje"] = "La API esta funcionando correctamente";
-            self::$respuesta["timestamp"] = date("Y-m-d H:i:s");
-            self::$respuesta["version"] = "1.0.0";
-            return self::$respuesta;
-
-        }
 
         public static function getUsers(){
             try{
