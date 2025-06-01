@@ -4,7 +4,7 @@
           <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
         <form class="form-inline mr-auto searchform text-muted">
-          <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search" placeholder="Type something..." aria-label="Search">
+          <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search" placeholder="Buscar" aria-label="Search">
         </form>
         <ul class="nav">
           <li class="nav-item">
@@ -90,7 +90,7 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./ui-color.html">
+                  <a class="nav-link pl-3" href="./views/empleados.php">
                     <i class="fe fe-user-plus fe-16"></i>
 
                     <span class="ml-1 item-text">Nuevo Empleado</span>
