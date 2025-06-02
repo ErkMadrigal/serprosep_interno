@@ -6,6 +6,8 @@ require_once './usuarios/ControllerUsuarios.php';
 require_once './usuarios/ConsultasUsuarios.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -22,9 +24,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// Leer el contenido bruto de la petición
-$rawInput = file_get_contents("php://input");
+define('API_KEY', $_ENV['API_KEY'] ?? '');
 
+// Función para obtener todos los headers normalizados en minúsculas
+function getAllHeadersNormalized() {
+    $headers = [];
+    if (function_exists('getallheaders')) {
+        $headers = getallheaders();
+    } elseif (function_exists('apache_request_headers')) {
+        $headers = apache_request_headers();
+    } else {
+        foreach ($_SERVER as $key => $value) {
+            if (strpos($key, 'HTTP_') === 0) {
+                $header = str_replace('_', '-', strtolower(substr($key, 5)));
+                $headers[$header] = $value;
+            }
+        }
+    }
+    // Normalizar claves a minúsculas
+    $normalized = [];
+    foreach ($headers as $k => $v) {
+        $normalized[strtolower($k)] = $v;
+    }
+    return $normalized;
+}
+
+// Función para obtener API Key desde header X-API-KEY
+function getApiKey() {
+    $headers = getAllHeadersNormalized();
+    return $headers['x-api-key'] ?? null;
+}
+
+// Función para obtener Bearer token desde header Authorization
+function getBearerToken() {
+    $headers = getAllHeadersNormalized();
+    if (isset($headers['authorization']) && preg_match('/Bearer\s(\S+)/', $headers['authorization'], $matches)) {
+        return $matches[1];
+    }
+    return null;
+}
+
+// Leer input JSON
+$rawInput = file_get_contents("php://input");
 $data = null;
 $opcionTemp = null;
 
@@ -38,52 +79,13 @@ if (!empty($rawInput)) {
 $opcion = $opcionTemp ?? 'pruebaVida';
 
 // Validar JSON sólo si NO es pruebaVida
-if ($opcion !== 'pruebaVida') {
-    if ($data === null) {
-        echo json_encode(["status" => "error", "message" => "JSON inválido"], JSON_UNESCAPED_UNICODE);
-        exit;
-    }
+if ($opcion !== 'pruebaVida' && $data === null) {
+    echo json_encode(["status" => "error", "message" => "JSON inválido"], JSON_UNESCAPED_UNICODE);
+    exit;
 }
 
 // Validar API Key SOLO si la acción NO es pruebaVida
 if ($opcion !== 'pruebaVida') {
-    define('API_KEY', $_ENV['API_KEY']);
-
-    function getApiKey() {
-        function normalizeHeaders($headers) {
-            $normalized = [];
-            foreach ($headers as $key => $value) {
-                $normalized[strtolower($key)] = $value;
-            }
-            return $normalized;
-        }
-
-        $headers = [];
-        if (function_exists('getallheaders')) {
-            $headers = getallheaders();
-        } elseif (function_exists('apache_request_headers')) {
-            $headers = apache_request_headers();
-        } else {
-            foreach ($_SERVER as $key => $value) {
-                if (strpos($key, 'HTTP_') === 0) {
-                    $header = str_replace('_', '-', strtolower(substr($key, 5)));
-                    $headers[$header] = $value;
-                }
-            }
-        }
-        $headers = normalizeHeaders($headers);
-
-        if (isset($headers['authorization']) && stripos($headers['authorization'], 'Bearer ') === 0) {
-            return substr($headers['authorization'], 7);
-        }
-
-        if (isset($headers['x-api-key'])) {
-            return $headers['x-api-key'];
-        }
-
-        return null;
-    }
-
     $apiKey = getApiKey();
     if (!$apiKey || $apiKey !== API_KEY) {
         http_response_code(401);
@@ -96,12 +98,12 @@ date_default_timezone_set('America/Mexico_City');
 
 switch ($opcion) {
     case "pruebaVida":
-            $consultas = new Consultas();
-            echo json_encode([
-                "status" => "ok",
-                "message" => "Conexión exitosa",
-                "data" => $consultas::prueba()
-            ], JSON_UNESCAPED_UNICODE);
+        $consultas = new Consultas();
+        echo json_encode([
+            "status" => "ok",
+            "message" => "Conexión exitosa",
+            "data" => $consultas::prueba()
+        ], JSON_UNESCAPED_UNICODE);
         break;
 
     case "registro":
@@ -115,7 +117,7 @@ switch ($opcion) {
             $estatus    = 1;
             $id_rol     = 1;
 
-            if (in_array(false, [$nombre, $paterno, $materno, $name_user, $correo, $password])) {
+            if (in_array(false, [$nombre, $paterno, $materno, $name_user, $correo, $password], true)) {
                 echo json_encode(["status" => "error", "message" => "Todos los campos son requeridos"], JSON_UNESCAPED_UNICODE);
             } else {
                 $consultas = new ConsultasUsuarios();
@@ -161,6 +163,69 @@ switch ($opcion) {
             ], JSON_UNESCAPED_UNICODE);
         }
         break;
+
+    case "info":
+        $jwt = getBearerToken();
+
+        if (!$jwt) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "message" => "Token JWT no proporcionado"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        try {
+            $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
+
+            echo json_encode([
+                "status" => "ok",
+                "message" => "Acceso autorizado",
+                "user" => $decoded->data
+            ], JSON_UNESCAPED_UNICODE);
+
+        } catch (Exception $e) {
+            http_response_code(401);
+            echo json_encode(["status" => "error", "message" => "Token JWT inválido: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+        break;
+
+        case "refreshToken":
+            $jwt = getBearerToken();
+
+            if (!$jwt) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "message" => "Token JWT no proporcionado"], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+
+            try {
+                $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
+
+                // Aquí puedes definir cuánto tiempo quieres que dure el nuevo token (por ejemplo, 1 hora)
+                $issuedAt   = time();
+                $expiration = $issuedAt + 3600; // 1 hora
+
+                $newPayload = [
+                    'iat'  => $issuedAt,
+                    'exp'  => $expiration,
+                    'data' => $decoded->data // Reutilizamos los datos del token anterior
+                ];
+
+                $newJwt = JWT::encode($newPayload, $_ENV['JWT_SECRET'], 'HS256');
+
+                echo json_encode([
+                    "status" => "ok",
+                    "message" => "Token refrescado",
+                    "token" => $newJwt
+                ], JSON_UNESCAPED_UNICODE);
+
+            } catch (Exception $e) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "message" => "Token JWT inválido: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+            break;
+
 
     default:
         echo json_encode(["status" => "error", "message" => "Acción no reconocida"], JSON_UNESCAPED_UNICODE);
