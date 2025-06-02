@@ -26,7 +26,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="./assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
+                <img src="<?=$root?>assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
@@ -90,14 +90,14 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./views/empleados.php">
+                  <a class="nav-link pl-3" href="empleados">
                     <i class="fe fe-user-plus fe-16"></i>
 
                     <span class="ml-1 item-text">Nuevo Empleado</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="./ui-typograpy.html">
+                  <a class="nav-link pl-3" href="incidencias">
                     <i class="fe fe-file-text fe-16"></i>
                   <span class="ml-1 item-text">Incidencias</span></a>
                 </li>
