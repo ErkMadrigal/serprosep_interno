@@ -1,5 +1,5 @@
 <?php 
-require_once __DIR__ . '/env.php'; // carga el archivo env.php
+require_once __DIR__ . '/../methods/env.php'; // carga el archivo env.php
 loadEnv(__DIR__ . '/.env'); // carga las variables del archivo .env
 
 class DataBase {
