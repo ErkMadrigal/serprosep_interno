@@ -5,6 +5,7 @@ require_once './pruebas/Consultas.pruebas.php';
 require_once './usuarios/ControllerUsuarios.php';
 require_once './usuarios/ConsultasUsuarios.php';
 require_once __DIR__ . '/vendor/autoload.php';
+require_once './methods/method.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -26,43 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 define('API_KEY', $_ENV['API_KEY'] ?? '');
 
-// Función para obtener todos los headers normalizados en minúsculas
-function getAllHeadersNormalized() {
-    $headers = [];
-    if (function_exists('getallheaders')) {
-        $headers = getallheaders();
-    } elseif (function_exists('apache_request_headers')) {
-        $headers = apache_request_headers();
-    } else {
-        foreach ($_SERVER as $key => $value) {
-            if (strpos($key, 'HTTP_') === 0) {
-                $header = str_replace('_', '-', strtolower(substr($key, 5)));
-                $headers[$header] = $value;
-            }
-        }
-    }
-    // Normalizar claves a minúsculas
-    $normalized = [];
-    foreach ($headers as $k => $v) {
-        $normalized[strtolower($k)] = $v;
-    }
-    return $normalized;
-}
-
-// Función para obtener API Key desde header X-API-KEY
-function getApiKey() {
-    $headers = getAllHeadersNormalized();
-    return $headers['x-api-key'] ?? null;
-}
-
-// Función para obtener Bearer token desde header Authorization
-function getBearerToken() {
-    $headers = getAllHeadersNormalized();
-    if (isset($headers['authorization']) && preg_match('/Bearer\s(\S+)/', $headers['authorization'], $matches)) {
-        return $matches[1];
-    }
-    return null;
-}
 
 // Leer input JSON
 $rawInput = file_get_contents("php://input");
@@ -84,15 +48,18 @@ if ($opcion !== 'pruebaVida' && $data === null) {
     exit;
 }
 
+
 // Validar API Key SOLO si la acción NO es pruebaVida
 if ($opcion !== 'pruebaVida') {
     $apiKey = getApiKey();
+    var_dump($apiKey);
     if (!$apiKey || $apiKey !== API_KEY) {
         http_response_code(401);
         echo json_encode(["status" => "error", "message" => "API Key inválida o no proporcionada"], JSON_UNESCAPED_UNICODE);
         exit();
     }
 }
+
 
 date_default_timezone_set('America/Mexico_City');
 
@@ -178,7 +145,7 @@ switch ($opcion) {
 
             echo json_encode([
                 "status" => "ok",
-                "message" => "Acceso autorizado",
+                "message" => "Acceso autorizado correctamente",
                 "user" => $decoded->data
             ], JSON_UNESCAPED_UNICODE);
 

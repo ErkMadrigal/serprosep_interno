@@ -1,7 +1,4 @@
 <?php
-
-
-
     class ControllerEmpleados{
         private static $database;
         private static $respuesta;
@@ -16,52 +13,34 @@
             self::$respuesta = null;
         }
 
-        public static function login($name_user, $password) {
-            try {
-                $sql = "SELECT * FROM usuario WHERE name_user = :name_user AND estatus = 1";
-                $db = self::$database::getConnection();
-                $stmt = $db->prepare($sql);
-                $stmt->bindParam(":name_user", $name_user);
-                $stmt->execute();
-                $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if ($usuario && password_verify($password, $usuario['password'])) {
-                    self::$respuesta["status"] = "ok";
-                    self::$respuesta["mensaje"] = "Login exitoso";
-                    self::$respuesta["usuario"] = [
-                        "id"        => $usuario["id"],
-                        "correo"    => $usuario["correo"],
-                        "name_user" => $usuario["name_user"],
-                        "id_rol"    => $usuario["id_rol"],
-                    ];
-                } else {
-                    self::$respuesta["status"] = "error";
-                    self::$respuesta["mensaje"] = "Credenciales inválidas";
-                }
-
-            } catch (PDOException $e) {
-                self::$respuesta["status"] = "error";
-                self::$respuesta["mensaje"] = $e->getMessage();
-            }
-
-            return self::$respuesta;
-        }
-
-
-        public static function registro($nombre, $correo, $name_user, $paterno, $materno, $password, $estatus, $id_rol){
+       
+        public static function registro( $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss,$fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
             try{
                 
-                $sql = "INSERT INTO usuario ( nombre, correo, name_user, paterno, materno, password, estatus, id_rol) values(:nombre, :correo, :name_user, :paterno, :materno, :password, :estatus, :id_rol)";
+                $sql = "INSERT INTO empleados (no_empleado, id_unidad_negocio, id_regional, id_zona, id_empresa, id_servicio, curp, rfc, nss, fecha_ingreso, paterno, materno, nombre, id_turno, id_puesto, sueldo, id_periocidad, cuenta, clave_interbancaria, id_banco, estatus) values(:no_empleado, :id_unidad_negocio, :id_regional, :id_zona, :id_empresa, :id_servicio, :curp, :rfc, :nss, :fecha_ingreso, :paterno, :materno, :nombre, :id_turno, :id_puesto, :sueldo, :id_periocidad, :cuenta, :clave_interbancaria, :id_banco, :estatus)";
                 $db = self::$database::getConnection();
                 $stmt = $db->prepare($sql);
-                $stmt->bindParam(":nombre", $nombre);
-                $stmt->bindParam(":correo", $correo);
-                $stmt->bindParam(":name_user", $name_user);
-                $stmt->bindParam(":paterno", $paterno);
-                $stmt->bindParam(":materno", $materno);
-                $stmt->bindParam(":password", $password);
+                $stmt->bindParam(":no_empleado", $no_empleado);
+                $stmt->bindParam(":id_unidad_negocio", $id_unidad_negocio);
+                $stmt->bindParam(":id_regional", $id_regional);
+                $stmt->bindParam(":id_zona", $id_zona);
+               $stmt->bindParam(":id_empresa", $id_empresa,); 
+                $stmt->bindParam(":id_servicio", $id_servicio); 
+                $stmt->bindParam(":curp", $curp); 
+                $stmt->bindParam(":rfc", $rfc); 
+                $stmt->bindParam(":nss", $nss); 
+                $stmt->bindParam(":fecha_ingreso", $fecha_ingreso); 
+                $stmt->bindParam(":paterno", $paterno); 
+                $stmt->bindParam(":materno", $materno); 
+                $stmt->bindParam(":nombre", $nombre); 
+                $stmt->bindParam(":id_turno", $id_turno); 
+                $stmt->bindParam(":id_puesto", $id_puesto); 
+                $stmt->bindParam(":sueldo", $sueldo); 
+                $stmt->bindParam(":id_periocidad", $id_periocidad); 
+                $stmt->bindParam(":cuenta", $cuenta); 
+                $stmt->bindParam(":clave_interbancaria", $clave_interbancaria); 
+                $stmt->bindParam(":id_banco", $id_banco); 
                 $stmt->bindParam(":estatus", $estatus);
-                $stmt->bindParam(":id_rol", $id_rol);
                 $stmt->execute();
                 $lastInsertID = $db->lastInsertId();
 
@@ -80,24 +59,51 @@
             
         }
 
-        
-        public static function updateUsuario($id, $etapa){
+         public static function actualizar( $id, $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss,$fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
             try{
-                $sql = "UPDATE datos_personales SET etapa = :etapa where id = :id";
+                
+                $sql = "UPDATE empleados SET no_empleado = :no_empleado, id_unidad_negocio = :id_unidad_negocio, id_regional = :id_regional, id_zona = :id_zona, id_empresa = :id_empresa, id_servicio = :id_servicio, curp = :curp, rfc = :rfc, nss = :nss, fecha_ingreso = :fecha_ingreso, paterno = :paterno, materno = :materno, nombre = :nombre, id_turno = :id_turno, id_puesto = :id_puesto, sueldo = :sueldo, id_periocidad = :id_periocidad, cuenta = :cuenta, clave_interbancaria = :clave_interbancaria, id_banco = :id_banco, estatus = :estatus WHERE id = :id";
                 $db = self::$database::getConnection();
                 $stmt = $db->prepare($sql);
-                $stmt->bindParam(":etapa", $etapa);
+                $stmt->bindParam(":no_empleado", $no_empleado);
+                $stmt->bindParam(":id_unidad_negocio", $id_unidad_negocio);
+                $stmt->bindParam(":id_regional", $id_regional);
+                $stmt->bindParam(":id_zona", $id_zona);
+               $stmt->bindParam(":id_empresa", $id_empresa,); 
+                $stmt->bindParam(":id_servicio", $id_servicio); 
+                $stmt->bindParam(":curp", $curp); 
+                $stmt->bindParam(":rfc", $rfc); 
+                $stmt->bindParam(":nss", $nss); 
+                $stmt->bindParam(":fecha_ingreso", $fecha_ingreso); 
+                $stmt->bindParam(":paterno", $paterno); 
+                $stmt->bindParam(":materno", $materno); 
+                $stmt->bindParam(":nombre", $nombre); 
+                $stmt->bindParam(":id_turno", $id_turno); 
+                $stmt->bindParam(":id_puesto", $id_puesto); 
+                $stmt->bindParam(":sueldo", $sueldo); 
+                $stmt->bindParam(":id_periocidad", $id_periocidad); 
+                $stmt->bindParam(":cuenta", $cuenta); 
+                $stmt->bindParam(":clave_interbancaria", $clave_interbancaria); 
+                $stmt->bindParam(":id_banco", $id_banco); 
+                $stmt->bindParam(":estatus", $estatus);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();
+                $lastInsertID = $id;
+
                 self::$respuesta["status"] = "ok";
-                self::$respuesta["mensaje"] = "Exitoso";
+                self::$respuesta["mensaje"] = "Registro Actualizado";
+                self::$respuesta["last_insert_id"] = $lastInsertID;
+                
+            } catch (RuntimeException $e) {
+                self::$respuesta["status"] = "error";
+                self::$respuesta["mensaje"] = $e->getMessage();
             }catch(PDOException $e){
                 self::$respuesta["status"] = "error";
                 self::$respuesta["mensaje"] = $e->getMessage();
             }
             return self::$respuesta;
+            
         }
-
 
 
     }

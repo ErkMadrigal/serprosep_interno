@@ -1,6 +1,6 @@
 POST http://localhost/serprosep_interno/API/auth HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
+X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
 
 {
   "action": "login",
@@ -12,7 +12,7 @@ Authorization: Bearer k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
 
 POST http://localhost/serprosep_interno/API/auth HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
+X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
 
 {   
     "action": "registro",
@@ -43,4 +43,71 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vb
 
 {
   "action": "refreshToken"
+}
+
+###
+POST http://localhost/serprosep_interno/API/employees
+Content-Type: application/json
+X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlhdCI6MTc0ODgzOTcxMCwiZXhwIjoxNzQ4ODQzMzEwLCJkYXRhIjp7ImlkIjoxLCJuYW1lX3VzZXIiOiJjYXJsb3NyIiwiY29ycmVvIjoiY2FybG9zQGV4YW1wbGUuY29tIiwicm9sIjoxfX0.DZ9T1CD4pySBe2NtoN7afqleMSjiepCqCHtkictKgao
+
+{
+  "action": "empleados"
+}
+
+
+###
+POST http://localhost/serprosep_interno/API/employees
+Content-Type: application/json
+X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlhdCI6MTc0ODg0NTE5MCwiZXhwIjoxNzQ4OTMxNTkwLCJkYXRhIjp7ImlkIjoxLCJuYW1lX3VzZXIiOiJjYXJsb3NyIiwiY29ycmVvIjoiY2FybG9zQGV4YW1wbGUuY29tIiwicm9sIjoxfX0.Dv5n5iYuo4NhIuF4KOSFSJhCywIeOeWh7_5aIKn8GCc
+
+{
+  "action": "empleados",
+  "id": 3,
+  "clave_interbancaria": "123456789012345678",
+  "id_banco": "BBVA",
+
+  "paterno": "Madrigal",
+  "materno": "Flores",
+  "nombre": "Erick",
+  "curp": "MAFE990706HMCDRLR05",
+  "rfc": "MAFE9900706DU3",
+  "nss": "12345678901",
+
+  "no_empleado": "301006",
+  "id_unidad_negocio": "UN01",
+  "id_regional": "R01",
+  "id_zona": "Z01",
+  "id_empresa": "EMP001",
+  "id_servicio": "SVC01",
+  "id_turno": "T01",
+  "id_puesto": "P01",
+  "sueldo": "12500.00",
+  "id_periocidad": "Q1",
+  "cuenta": "000123456789",
+  "estatus": 1
+}
+
+
+###
+POST http://localhost/serprosep_interno/API/employees
+Content-Type: application/json
+X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlhdCI6MTc0ODg0NTE5MCwiZXhwIjoxNzQ4OTMxNTkwLCJkYXRhIjp7ImlkIjoxLCJuYW1lX3VzZXIiOiJjYXJsb3NyIiwiY29ycmVvIjoiY2FybG9zQGV4YW1wbGUuY29tIiwicm9sIjoxfX0.Dv5n5iYuo4NhIuF4KOSFSJhCywIeOeWh7_5aIKn8GCc
+
+{
+  "action": "getEmpleados"
+}
+
+
+###
+POST http://localhost/serprosep_interno/API/employees
+Content-Type: application/json
+X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlhdCI6MTc0ODg0NTE5MCwiZXhwIjoxNzQ4OTMxNTkwLCJkYXRhIjp7ImlkIjoxLCJuYW1lX3VzZXIiOiJjYXJsb3NyIiwiY29ycmVvIjoiY2FybG9zQGV4YW1wbGUuY29tIiwicm9sIjoxfX0.Dv5n5iYuo4NhIuF4KOSFSJhCywIeOeWh7_5aIKn8GCc
+
+{
+  "action": "getEmpleado",
+  "id_empleado": 3
 }

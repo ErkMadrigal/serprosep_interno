@@ -31,7 +31,7 @@ class ControllerUsuarios {
                     'iss' => 'http://localhost',      // Emisor
                     'aud' => 'http://localhost',      // Audiencia
                     'iat' => time(),                  // Fecha de emisión
-                    'exp' => time() + 3600,           // Expira en 1 hora
+                    'exp' => time() + 86400,           // 3600 = Expira en 1 hora
                     'data' => [
                         'id' => $user['id'],
                         'name_user' => $user['name_user'],
