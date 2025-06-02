@@ -1,6 +1,10 @@
 <?php 
-require_once __DIR__ . '/../methods/env.php'; // carga el archivo env.php
-loadEnv(__DIR__ . '/.env'); // carga las variables del archivo .env
+// require_once __DIR__ . '/../methods/env.php'; // carga el archivo env.php
+// loadEnv(__DIR__ . '/.env'); // carga las variables del archivo .env
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 class DataBase {
     private static $host;
@@ -10,10 +14,10 @@ class DataBase {
 
     public static function getConnection() {
         // Asignamos desde el .env
-        self::$host = getenv('DB_HOST');
-        self::$user = getenv('DB_USER');
-        self::$password = getenv('DB_PASSWORD');
-        self::$name = getenv('DB_NAME');
+        self::$host = $_ENV['DB_HOST'];
+        self::$user = $_ENV['DB_USER'];
+        self::$password = $_ENV['DB_PASSWORD'];
+        self::$name = $_ENV['DB_NAME'];
 
         try {
             $dsn = "mysql:host=" . self::$host . ";dbname=" . self::$name;

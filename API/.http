@@ -1,4 +1,4 @@
-POST http://localhost/interno-serprosep/API/ HTTP/1.1
+POST http://localhost/serprosep_interno/API/auth HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
 
@@ -10,16 +10,17 @@ Authorization: Bearer k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
 
 ###
 
-POST http://localhost/interno-serprosep/API/ HTTP/1.1
+POST http://localhost/serprosep_interno/API/auth HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
 
 {   
     "action": "registro",
-    "nombre": "Carlos",
-    "paterno": "Ramírez",
-    "materno": "Gómez",
-    "name_user": "carlosr",
-    "correo": "carlos@example.com",
+    "nombre": "Ellioth",
+    "paterno": "Madrigal",
+    "materno": "Gonzalez",
+    "name_user": "ElliothM",
+    "correo": "Ellioth@example.com",
     "password": "supersegura123"
 }
 
