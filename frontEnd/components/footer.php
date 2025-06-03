@@ -1,3 +1,4 @@
+ 
  </div> <!-- .wrapper -->
     <script src="<?=$root?>js/jquery.min.js"></script>
     <script src="<?=$root?>js/popper.min.js"></script>
@@ -9,6 +10,7 @@
     <script src="<?=$root?>js/tinycolor-min.js"></script>
     <script src="<?=$root?>js/config.js"></script>
     <script src="<?=$root?>js/apps.js"></script>
+    <script src="<?=$root?>js/buscador.js"></script>
     <?php if( isset( $scripts ) ) : ?>
         <?php foreach( $scripts as $script ) : ?>
             <script src="<?=$script; ?>"></script>

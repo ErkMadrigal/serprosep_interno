@@ -14,7 +14,7 @@
         break;
 
         case 'home':
-            $title = "home";
+            $title = "Home";
             $links = [];
             include "./components/header.php";
             include "./components/menu.php";
@@ -24,12 +24,42 @@
         break;
 
         case 'empleados':
-            $title = "empleados";
-            $links = ['css/dataTables.bootstrap4.css'];
+            $title = "Empleados";
+            $links = ['css/select2.css','css/dropzone.css','css/uppy.min.css','css/jquery.steps.css','css/jquery.timepicker.css','css/quill.snow.css'];
             include "./components/header.php";
             include "./components/menu.php";
             include "$ruta/empleados/empleados.php";
-            $scripts = ['js/jquery.dataTables.min.js', 'js/dataTables.bootstrap4.min.js', 'js/empleadosDataTable.js'];
+            $scripts = ['js/jquery.mask.min.js','js/select2.min.js','js/jquery.steps.min.js','js/jquery.validate.min.js','js/jquery.timepicker.js','js/dropzone.min.js','js/uppy.min.js','js/quill.min.js', 'js/table-users.js'];
+            include "./components/footer.php";
+        break;
+
+        case 'nuevo-empleado':
+            $title = "Nuevo Empleado";
+            $links = ['css/select2.css','css/dropzone.css','css/uppy.min.css','css/jquery.steps.css','css/jquery.timepicker.css','css/quill.snow.css'];
+            include "./components/header.php";
+            include "./components/menu.php";
+            include "$ruta/empleados/nuevo-empleado.php";
+            $scripts = ['js/jquery.mask.min.js','js/select2.min.js','js/jquery.steps.min.js','js/jquery.validate.min.js','js/jquery.timepicker.js','js/dropzone.min.js','js/uppy.min.js','js/quill.min.js', 'js/nuevo-empleado.js'];
+            include "./components/footer.php";
+        break;
+
+        case 'importaciones':
+            $title = "Importaciones";
+            $links = [];
+            include "./components/header.php";
+            include "./components/menu.php";
+            include "$ruta/imports/importaciones.php";
+            $scripts = [];
+            include "./components/footer.php";
+        break;
+
+        case 'carga-masiva-empleados':
+            $title = "Carga Masiva Empleados";
+            $links = ["css/dropzone.css",];
+            include "./components/header.php";
+            include "./components/menu.php";
+            include "$ruta/imports/carga-masiva-empleados.php";
+            $scripts = ['js/dropzone.min.js', 'js/dropzone.min.js'];
             include "./components/footer.php";
         break;
 

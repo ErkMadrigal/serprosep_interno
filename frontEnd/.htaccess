@@ -15,6 +15,9 @@ RewriteRule ^index$ index.php
 RewriteRule ^auth$ index.php?dir=auth
 RewriteRule ^empleados$ index.php?dir=empleados
 RewriteRule ^home$ index.php?dir=home
+RewriteRule ^nuevo-empleado$ index.php?dir=nuevo-empleado
+RewriteRule ^importaciones$ index.php?dir=importaciones
+RewriteRule ^carga-masiva-empleados$ index.php?dir=carga-masiva-empleados
 
 
 ErrorDocument 404 /404.html

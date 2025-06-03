@@ -3,8 +3,8 @@
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
           <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
-        <form class="form-inline mr-auto searchform text-muted">
-          <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search" placeholder="Buscar" aria-label="Search">
+        <form class="form-inline mr-auto text-muted">
+          <button type="button" class="btn btn-outline-dark btn-lg" onclick="openSearch()" ><i class="fe fe-search fe-16"></i> Buscar (Ctrl + K)</button>
         </form>
         <ul class="nav">
           <li class="nav-item">
@@ -69,21 +69,28 @@
             <li class="nav-item dropdown">
               <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
                 <i class="fe fe-users fe-16"></i>
-                <span class="ml-3 item-text">Ver Empleados</span>
+                <span class="ml-3 item-text">Empleados</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="empleados">
+                    <i class="fe fe-user-check fe-16"></i>
+
+                    <span class="ml-1 item-text">Ver Empleados</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link pl-3" href="nuevo-empleado">
                     <i class="fe fe-user-plus fe-16"></i>
 
                     <span class="ml-1 item-text">Nuevo Empleado</span>
                   </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a class="nav-link pl-3" href="incidencias">
                     <i class="fe fe-file-text fe-16"></i>
                   <span class="ml-1 item-text">Incidencias</span></a>
-                </li>
+                </li> -->
                 
               </ul>
             </li>
@@ -98,125 +105,143 @@
         </nav>
       </aside>
       <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Notificaciones</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="list-group list-group-flush my-n3">
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-box fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Package has uploaded successfull</strong></small>
-                        <div class="my-0 text-muted small">Package is zipped and uploaded</div>
-                        <small class="badge badge-pill badge-light text-muted">1m ago</small>
-                      </div>
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="defaultModalLabel">Notificaciones</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="list-group list-group-flush my-n3">
+                <div class="list-group-item bg-transparent">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="fe fe-box fe-24"></span>
+                    </div>
+                    <div class="col">
+                      <small><strong>Package has uploaded successfull</strong></small>
+                      <div class="my-0 text-muted small">Package is zipped and uploaded</div>
+                      <small class="badge badge-pill badge-light text-muted">1m ago</small>
                     </div>
                   </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-download fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Widgets are updated successfull</strong></small>
-                        <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
-                        <small class="badge badge-pill badge-light text-muted">2m ago</small>
-                      </div>
+                </div>
+                <div class="list-group-item bg-transparent">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="fe fe-download fe-24"></span>
+                    </div>
+                    <div class="col">
+                      <small><strong>Widgets are updated successfull</strong></small>
+                      <div class="my-0 text-muted small">Just create new layout Index, form, table</div>
+                      <small class="badge badge-pill badge-light text-muted">2m ago</small>
                     </div>
                   </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-inbox fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Notifications have been sent</strong></small>
-                        <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
-                        <small class="badge badge-pill badge-light text-muted">30m ago</small>
-                      </div>
-                    </div> <!-- / .row -->
-                  </div>
-                  <div class="list-group-item bg-transparent">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <span class="fe fe-link fe-24"></span>
-                      </div>
-                      <div class="col">
-                        <small><strong>Link was attached to menu</strong></small>
-                        <div class="my-0 text-muted small">New layout has been attached to the menu</div>
-                        <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                      </div>
+                </div>
+                <div class="list-group-item bg-transparent">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="fe fe-inbox fe-24"></span>
+                    </div>
+                    <div class="col">
+                      <small><strong>Notifications have been sent</strong></small>
+                      <div class="my-0 text-muted small">Fusce dapibus, tellus ac cursus commodo</div>
+                      <small class="badge badge-pill badge-light text-muted">30m ago</small>
                     </div>
                   </div> <!-- / .row -->
-                </div> <!-- / .list-group -->
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Borrar todo </button>
-              </div>
+                </div>
+                <div class="list-group-item bg-transparent">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="fe fe-link fe-24"></span>
+                    </div>
+                    <div class="col">
+                      <small><strong>Link was attached to menu</strong></small>
+                      <div class="my-0 text-muted small">New layout has been attached to the menu</div>
+                      <small class="badge badge-pill badge-light text-muted">1h ago</small>
+                    </div>
+                  </div>
+                </div> <!-- / .row -->
+              </div> <!-- / .list-group -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Borrar todo </button>
             </div>
           </div>
         </div>
-        <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="defaultModalLabel">Metodos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body px-5">
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-success justify-content-center">
-                      <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Control area</p>
+      </div>
+      <div class="modal fade modal-shortcut modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="defaultModalLabel">Metodos</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body px-5">
+              <div class="row align-items-center">
+                <div class="col-6 text-center">
+                  <div class="squircle bg-success justify-content-center">
+                    <i class="fe fe-cpu fe-32 align-self-center text-white"></i>
                   </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-activity fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Actividades</p>
-                  </div>
+                  <p>Control area</p>
                 </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-download-cloud fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Exportaciones</p>
+                <div class="col-6 text-center">
+                  <div class="squircle bg-primary justify-content-center">
+                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
                   </div>
-                  <div class="col-6 text-center">
+                  <p>Actividades</p>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-6 text-center">
+                  <div class="squircle bg-primary justify-content-center">
+                    <i class="fe fe-download-cloud fe-32 align-self-center text-white"></i>
+                  </div>
+                  <p>Exportaciones</p>
+                </div>
+                <div class="col-6 text-center">
+                  <a class="nav-link pl-3" href="importaciones">
                     <div class="squircle bg-primary justify-content-center">
                       <i class="fe fe-upload-cloud fe-32 align-self-center text-white"></i>
                     </div>
                     <p>Importaciones</p>
-                  </div>
+                  </a>
                 </div>
-                <div class="row align-items-center">
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-users fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Usuarios</p>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-6 text-center">
+                  <div class="squircle bg-primary justify-content-center">
+                    <i class="fe fe-users fe-32 align-self-center text-white"></i>
                   </div>
-                  <div class="col-6 text-center">
-                    <div class="squircle bg-primary justify-content-center">
-                      <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                    </div>
-                    <p>Configuración</p>
+                  <p>Usuarios</p>
+                </div>
+                <div class="col-6 text-center">
+                  <div class="squircle bg-primary justify-content-center">
+                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
                   </div>
+                  <p>Configuración</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="modal fade bd-example-modal-xl" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="input-group input-group-lg ">
+                
+                <input type="text" class="form-control searchform" id="buscador" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Buscar..." >
+              </div>
+            </div>
+            <div class="modal-body" id="searchResults">
+
+            </div>
+          </div>
+        </div>
+      </div>

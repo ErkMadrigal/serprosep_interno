@@ -52,7 +52,7 @@ if ($opcion !== 'pruebaVida' && $data === null) {
 // Validar API Key SOLO si la acción NO es pruebaVida
 if ($opcion !== 'pruebaVida') {
     $apiKey = getApiKey();
-    var_dump($apiKey);
+    // var_dump($apiKey);
     if (!$apiKey || $apiKey !== API_KEY) {
         http_response_code(401);
         echo json_encode(["status" => "error", "message" => "API Key inválida o no proporcionada"], JSON_UNESCAPED_UNICODE);
