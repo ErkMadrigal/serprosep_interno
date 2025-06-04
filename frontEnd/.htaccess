@@ -1,28 +1,27 @@
-# nos dice si un directorio es un enlace simbólico, que lo siga.
-Options +FollowSymLinks
-
-#  le decimos a Apache que queremos sobre escribir las URLs para crear URLs amigables.
+# Activa el motor de reescritura
 RewriteEngine on
+RewriteBase /serprosep_interno/frontend/
 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
-#configuración para redirección con url amigables
+# Redirección de rutas amigables a index.php con parámetro ?dir=
+RewriteRule ^index$ index.php [L,QSA]
+RewriteRule ^auth$ index.php?dir=auth [L,QSA]
+RewriteRule ^login$ index.php?dir=login [L,QSA]
+RewriteRule ^empleados$ index.php?dir=empleados [L,QSA]
+RewriteRule ^home$ index.php?dir=home [L,QSA]
+RewriteRule ^nuevo-empleado$ index.php?dir=nuevo-empleado [L,QSA]
+RewriteRule ^importaciones$ index.php?dir=importaciones [L,QSA]
+RewriteRule ^carga-masiva-empleados$ index.php?dir=carga-masiva-empleados [L,QSA]
 
-Options All -Indexes
-
-DirectoryIndex index.php
-
-RewriteRule ^index$ index.php
-RewriteRule ^auth$ index.php?dir=auth
-RewriteRule ^empleados$ index.php?dir=empleados
-RewriteRule ^home$ index.php?dir=home
-RewriteRule ^nuevo-empleado$ index.php?dir=nuevo-empleado
-RewriteRule ^importaciones$ index.php?dir=importaciones
-RewriteRule ^carga-masiva-empleados$ index.php?dir=carga-masiva-empleados
-
-
+# Página de error personalizada
 ErrorDocument 404 /404.html
 
+# Opciones de seguridad y limpieza
+<IfModule mod_autoindex.c>
+  Options -Indexes
+</IfModule>
 
-
-# evitar que se muestren ciertos tipos de archivo
+# Evitar mostrar archivos
 IndexIgnore *.css *.map *.js *.png *.jpg *.wmv *.mp4 *.avi *.etc

@@ -46,6 +46,9 @@
         console.log('Login successful:', data);
         localStorage.setItem('user', JSON.stringify(data));
         localStorage.setItem('token', data.token);
+        document.cookie = `jwt=${data.token}; path=/;`;
+        console.log(document.cookie);
+
       }).catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });

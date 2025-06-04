@@ -6,6 +6,9 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
   url: "#", // No se envía automáticamente
   autoProcessQueue: false,
   acceptedFiles: ".xlsx",
+  addRemoveLinks: true,
+dictRemoveFile: "Eliminar",
+
   init: function () {
     this.on("addedfile", function (file) {
       const reader = new FileReader();
@@ -19,13 +22,14 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
         let errores = [];
         datosValidados = [];
 
+        
         rows.forEach((fila, i) => {
           const filaIndex = i + 2;
           const curp = (fila.CURP || "").trim();
           const rfc = (fila.RFC || "").trim();
           const nombre = (fila.Nombre || "").trim();
-
-          if (curp.length !== 18) {
+          console.log(fila)
+          if (curp.length !== 18 || !/^[A-Z]{4}\d{6}[A-Z]{6}\d{2}$/.test(curp)) {
             errores.push(`Fila ${filaIndex}: CURP inválido (${curp})`);
           }
 
@@ -36,32 +40,53 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
           datosValidados.push({ curp, rfc, nombre });
         });
 
-        const errorDiv = document.getElementById("errores");
         const enviarBtn = document.getElementById("enviar");
+        const countErrors = document.getElementById("countErrors");
+        const errorSection = document.getElementById("errorSection");
 
         if (errores.length > 0) {
-          errorDiv.innerHTML = errores.map(e => `<p>${e}</p>`).join("");
-          enviarBtn.disabled = true;
+            errorSection.style.display = "block";
+            enviarBtn.disabled = true;
+            countErrors.textContent = ` ${errores.length} `;
+            const errorTable = document.getElementById("errorTable");
+            errorTable.innerHTML = ""; // Limpiar errores anteriores
+
+            errores.forEach((error) => {
+              const filaMatch = error.match(/Fila (\d+):/);
+              const filaNum = filaMatch ? filaMatch[1] : "—";
+              const mensaje = error.split(": ").slice(1).join(": ");
+
+              const row = document.createElement("tr");
+              row.innerHTML = `<td>${filaNum}</td><td>${mensaje}</td>`;
+              errorTable.appendChild(row);
+            });
         } else {
-          errorDiv.innerHTML = "<p class='text-success'>Datos correctos. Listo para enviar.</p>";
+          console.log("Datos validados:", datosValidados);
           enviarBtn.disabled = false;
+          document.getElementById("errorTable").innerHTML = "";
         }
       };
 
       reader.readAsArrayBuffer(file);
     });
+    this.on("removedfile", function (file) {
+      console.log("Archivo eliminado:", file.name);
+      datosValidados = [];
+      document.getElementById("enviar").disabled = true;
+      // document.getElementById("errores").innerHTML = "";
+    });
   }
 });
 
-document.getElementById("enviar").addEventListener("click", () => {
-  fetch("backend.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(datosValidados)
-  })
-    .then(res => res.json())
-    .then(data => {
-      alert(data.message || "Todo cargado correctamente.");
-    })
-    .catch(err => alert("Error al enviar: " + err));
-});
+// document.getElementById("enviar").addEventListener("click", () => {
+//   fetch("backend.php", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(datosValidados)
+//   })
+//     .then(res => res.json())
+//     .then(data => {
+//       alert(data.message || "Todo cargado correctamente.");
+//     })
+//     .catch(err => alert("Error al enviar: " + err));
+// });

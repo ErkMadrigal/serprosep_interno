@@ -1,13 +1,33 @@
 
 <?php
+
     include './components/_root.php'; 
+    include './jwt/verify_jwt.php';
+    
     $ruta = './views/';
 
-    $url=(isset($_GET['dir']))?$_GET['dir']:'index';
+
+    
+    $publicas = ['auth', 'index', 'login']; // rutas sin protección
+
+    $url = (isset($_GET['dir'])) ? $_GET['dir'] : 'index';
+    if (!in_array($url, $publicas)) {
+        // var_dump($_COOKIE['jwt']);
+        // Verificar si el token JWT está presente y es válido
+        $direcition = $root.'login';
+        if (!isset($_COOKIE['jwt']) || !verificarToken($_COOKIE['jwt'])) {
+            
+            header("Location: $direcition");
+            exit;
+        }
+    }
+
 
     switch ($url) {
       
         case 'auth':
+        case 'login':
+        case 'index':
             $title = "auth";
             include "$ruta/auth/auth.php";
             
@@ -55,11 +75,11 @@
 
         case 'carga-masiva-empleados':
             $title = "Carga Masiva Empleados";
-            $links = ["https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"];
+            $links = ["css/dropzone.min.css"];
             include "./components/header.php";
             include "./components/menu.php";
             include "$ruta/imports/carga-masiva-empleados.php";
-            $scripts = ['js/dropzone.min.js', 'js/dropzone.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'];
+            $scripts = ['js/dropzone.min.js', 'js/xlsx.full.min.js', 'js/dropzone.js'];
             include "./components/footer.php";
         break;
 

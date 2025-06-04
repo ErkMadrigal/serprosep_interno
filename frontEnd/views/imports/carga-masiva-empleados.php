@@ -11,7 +11,7 @@
                       <strong>Carga tu Documento</strong>
                     </div>
                     <div class="card-body">
-                      <form class="dropzone bg-light rounded-lg" id="tinydash-dropzone">
+                      <form action="/" class="dropzone bg-light rounded-lg" id="tinydash-dropzone">
                         <div class="dz-message needsclick">
                           <div class="circle circle-lg bg-primary">
                             <i class="fe fe-upload fe-24 text-white"></i>
@@ -19,8 +19,8 @@
                           <h5 class="text-muted mt-4">Suelte los archivos aquí o haga clic para cargarlos</h5>
                         </div>
                       </form>
-                      <div id="errores" class="mt-2 text-danger"></div>
-                      <button id="enviar" class="btn btn-primary mt-2" disabled>Enviar a BD</button>
+                      <button id="enviar" class="btn btn-primary mt-2" disabled>Enviar</button>
+                      
                       <!-- Preview -->
                       <!-- <div class="dropzone-previews mt-3" id="file-previews"></div> -->
                       <!-- file preview template -->
@@ -52,39 +52,20 @@
             </div>
           </div> <!-- .row -->
 
-          <div class="col-md-12 my-4">
+          <div class="col-md-12 my-4" id="errorSection" style="display: none;">
             <div class="card shadow">
                 <div class="card-body">
-                    <h5 class="card-title">Se encontraron 9 Errores en la plantilla</h5>
+                    <h5 class="card-title" >La pantilla tiene Errores, Cantidad de errores (<strong id="countErrors"></strong>)</h5>
                     <p class="card-text">Soluciona los siguientes Errores y intenta cargar de nuevo</p>
                     <table class="table table-bordered table-hover mb-0">
                         <thead>
                             <tr>
-                                <th>Columna</th>
+                                <th>Fila</th>
                                 <th>Posible Error</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>3224</td>
-                                <td>Keith Baird</td>
-                            </tr>
-                            <tr>
-                                <td>3218</td>
-                                <td>Graham Price</td>
-                            </tr>
-                            <tr>
-                                <td>2651</td>
-                                <td>Reuben Orr</td>
-                            </tr>
-                            <tr>
-                                <td>2636</td>
-                                <td>Akeem Holder</td>
-                            </tr>
-                            <tr>
-                                <td>2757</td>
-                                <td>Beau Barrera</td>
-                            </tr>
+                        <tbody id="errorTable">
+                            
                         </tbody>
                     </table>
                 </div>
