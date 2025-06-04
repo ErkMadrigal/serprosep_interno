@@ -23,7 +23,7 @@
   <body class="light ">
     <div class="wrapper vh-100">
       <div class="row align-items-center h-100">
-        <form class="col-lg-3 col-md-4 col-10 mx-auto text-center">
+        <form class="col-lg-3 col-md-4 col-10 mx-auto text-center needs-validation" novalidate>
           <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
             <svg version="1.1" id="logo" class="navbar-brand-img brand-md" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
               <g>
@@ -37,11 +37,17 @@
           <div class="form-group">
             <label for="inputEmail" class="sr-only">Correo o Usuario</label>
             <input type="email" id="inputEmail" class="form-control form-control-lg" placeholder="Correo o Usuario " required="" autofocus="">
+            <div class="invalid-feedback">
+              Por favor, ingrese un correo o usuario válido.
+            </div>
           </div>
           <div class="form-group">
             <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" pattern="[0-9*]" inputmode="numeric" class="form-control form-control-lg" placeholder="Password" required=""  oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-
+            <!--<input type="password" id="inputPassword" pattern="[0-9*]" inputmode="numeric" class="form-control form-control-lg" placeholder="Password" required=""  oninput="this.value = this.value.replace(/[^0-9]/g, '')">-->
+            <input type="password" id="inputPassword"  class="form-control form-control-lg" placeholder="Password" required="" >
+            <div class="invalid-feedback">
+              Por favor, ingrese una contraseña válida.
+            </div>
           </div>
           <div class="checkbox mb-3">
             <label>
@@ -79,6 +85,7 @@
     <script src="js/apps.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script src="js/auth.js"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
