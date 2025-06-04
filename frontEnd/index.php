@@ -55,11 +55,11 @@
 
         case 'carga-masiva-empleados':
             $title = "Carga Masiva Empleados";
-            $links = ["css/dropzone.css",];
+            $links = ["https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css"];
             include "./components/header.php";
             include "./components/menu.php";
             include "$ruta/imports/carga-masiva-empleados.php";
-            $scripts = ['js/dropzone.min.js', 'js/dropzone.min.js'];
+            $scripts = ['js/dropzone.min.js', 'js/dropzone.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'];
             include "./components/footer.php";
         break;
 

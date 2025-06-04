@@ -11,7 +11,7 @@
                       <strong>Carga tu Documento</strong>
                     </div>
                     <div class="card-body">
-                      <form action="/file-upload" class="dropzone bg-light rounded-lg" id="tinydash-dropzone">
+                      <form class="dropzone bg-light rounded-lg" id="tinydash-dropzone">
                         <div class="dz-message needsclick">
                           <div class="circle circle-lg bg-primary">
                             <i class="fe fe-upload fe-24 text-white"></i>
@@ -19,6 +19,8 @@
                           <h5 class="text-muted mt-4">Suelte los archivos aquí o haga clic para cargarlos</h5>
                         </div>
                       </form>
+                      <div id="errores" class="mt-2 text-danger"></div>
+                      <button id="enviar" class="btn btn-primary mt-2" disabled>Enviar a BD</button>
                       <!-- Preview -->
                       <!-- <div class="dropzone-previews mt-3" id="file-previews"></div> -->
                       <!-- file preview template -->

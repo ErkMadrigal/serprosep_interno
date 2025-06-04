@@ -4,7 +4,7 @@
           <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
         <form class="form-inline mr-auto text-muted">
-          <button type="button" class="btn btn-outline-dark btn-lg" onclick="openSearch()" ><i class="fe fe-search fe-16"></i> Buscar (Ctrl + K)</button>
+          <button type="button" class="btn btn-outline-secondary btn-lg" onclick="openSearch()" ><i class="fe fe-search fe-16"></i> Buscar (Ctrl + K)</button>
         </form>
         <ul class="nav">
           <li class="nav-item">
@@ -230,8 +230,8 @@
         </div>
       </div>
 
-      <div class="modal fade bd-example-modal-xl" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+      <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <div class="input-group input-group-lg ">
