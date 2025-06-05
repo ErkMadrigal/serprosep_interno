@@ -7,7 +7,7 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
   autoProcessQueue: false,
   acceptedFiles: ".xlsx",
   addRemoveLinks: true,
-dictRemoveFile: "Eliminar",
+  dictRemoveFile: "Eliminar",
 
   init: function () {
     this.on("addedfile", function (file) {
@@ -43,6 +43,7 @@ dictRemoveFile: "Eliminar",
         const enviarBtn = document.getElementById("enviar");
         const countErrors = document.getElementById("countErrors");
         const errorSection = document.getElementById("errorSection");
+        const notificationsContainer = document.getElementById("notificationsContainer");
 
         if (errores.length > 0) {
             errorSection.style.display = "block";
@@ -62,7 +63,9 @@ dictRemoveFile: "Eliminar",
             });
         } else {
           console.log("Datos validados:", datosValidados);
+          notificationsContainer.style.display = "block";
           enviarBtn.disabled = false;
+          errores.length = []
           document.getElementById("errorTable").innerHTML = "";
         }
       };
@@ -72,8 +75,9 @@ dictRemoveFile: "Eliminar",
     this.on("removedfile", function (file) {
       console.log("Archivo eliminado:", file.name);
       datosValidados = [];
+      errorSection.style.display = "none";
+
       document.getElementById("enviar").disabled = true;
-      // document.getElementById("errores").innerHTML = "";
     });
   }
 });

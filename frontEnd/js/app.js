@@ -37,7 +37,7 @@ document.addEventListener("keydown", (e) => {
     }
 });
 
-buscador.addEventListener("input", () => {
+  buscador.addEventListener("input", () => {
     const query = buscador.value.toLowerCase();
     results.innerHTML = "";
 

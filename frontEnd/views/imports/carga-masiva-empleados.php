@@ -19,7 +19,29 @@
                           <h5 class="text-muted mt-4">Suelte los archivos aquí o haga clic para cargarlos</h5>
                         </div>
                       </form>
-                      <button id="enviar" class="btn btn-primary mt-2" disabled>Enviar</button>
+
+                      <!-- From Uiverse.io by kennyotsu --> 
+                      <div class="notifications-container mt-4" id="notificationsContainer" style="display: none;">
+                        <div class="success">
+                          <div class="flex">
+                            <div class="flex-shrink-0">
+                              
+                              <svg class="succes-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                              </svg>
+                            </div>
+                            <div class="success-prompt-wrap">
+                              <p class="success-prompt-heading">Plantilla Cargada con Exito</p>
+                              <div class="success-prompt-prompt">
+                                <p>Tu plantilla ha sido cargada con exito, ahora puedes enviarla para poder procesarla.</p>
+                              </div>
+                                
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <button id="enviar" class="btn btn-primary mt-4" disabled>Enviar</button>
                       
                       <!-- Preview -->
                       <!-- <div class="dropzone-previews mt-3" id="file-previews"></div> -->

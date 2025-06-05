@@ -20,6 +20,7 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="css/app-light.css" id="lightTheme">
     <link rel="stylesheet" href="css/app-dark.css" id="darkTheme" disabled>
+    <link rel="stylesheet" href="css/app.css">
 
     <?php if(isset($links)):?>
           <?php foreach($links as $link): ?>
