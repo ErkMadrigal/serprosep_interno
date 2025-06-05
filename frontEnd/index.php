@@ -83,5 +83,25 @@
             include "./components/footer.php";
         break;
 
+        case 'configuraciones':
+            $title = "configuraciones";
+            $links = [];
+            include "./components/header.php";
+            include "./components/menu.php";
+            include "$ruta/conf/configuraciones.php";
+            $scripts = [];
+            include "./components/footer.php";
+        break;
+
+        case 'actividades':
+            $title = "actividades";
+            $links = [];
+            include "./components/header.php";
+            include "./components/menu.php";
+            include "$ruta/activities/activities.php";
+            $scripts = [];
+            include "./components/footer.php";
+        break;
+
     }
     

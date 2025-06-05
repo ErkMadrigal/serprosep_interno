@@ -14,6 +14,8 @@ RewriteRule ^home$ index.php?dir=home [L,QSA]
 RewriteRule ^nuevo-empleado$ index.php?dir=nuevo-empleado [L,QSA]
 RewriteRule ^importaciones$ index.php?dir=importaciones [L,QSA]
 RewriteRule ^carga-masiva-empleados$ index.php?dir=carga-masiva-empleados [L,QSA]
+RewriteRule ^configuraciones$ index.php?dir=configuraciones [L,QSA]
+RewriteRule ^actividades$ index.php?dir=actividades [L,QSA]
 
 # Página de error personalizada
 ErrorDocument 404 /404.html

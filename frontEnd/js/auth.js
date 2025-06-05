@@ -28,7 +28,6 @@
         password: passwordInput.value,
       };
 
-      console.log('Login successful');
       fetch('http://localhost/serprosep_interno/API/auth', {
         method: 'POST',
         headers: {
@@ -43,12 +42,10 @@
           throw new Error('Network response was not ok');
         }
       }).then(data => {
-        console.log('Login successful:', data);
         localStorage.setItem('user', JSON.stringify(data));
         localStorage.setItem('token', data.token);
         document.cookie = `jwt=${data.token}; path=/;`;
-        console.log(document.cookie);
-
+        window.location.href = 'http://localhost/serprosep_interno/frontEnd/home';
       }).catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });

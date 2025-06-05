@@ -1,19 +1,19 @@
  
  </div> <!-- .wrapper -->
-    <script src="<?=$root?>js/jquery.min.js"></script>
-    <script src="<?=$root?>js/popper.min.js"></script>
-    <script src="<?=$root?>js/moment.min.js"></script>
-    <script src="<?=$root?>js/bootstrap.min.js"></script>
-    <script src="<?=$root?>js/simplebar.min.js"></script>
-    <script src='<?=$root?>js/daterangepicker.js'></script>
-    <script src='<?=$root?>js/jquery.stickOnScroll.js'></script>
-    <script src="<?=$root?>js/tinycolor-min.js"></script>
-    <script src="<?=$root?>js/config.js"></script>
-    <script src="<?=$root?>js/apps.js"></script>
-    <script src="<?=$root?>js/buscador.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/simplebar.min.js"></script>
+    <script src='js/daterangepicker.js'></script>
+    <script src='js/jquery.stickOnScroll.js'></script>
+    <script src="js/tinycolor-min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/apps.js"></script>
+    <script src="js/app.js"></script>
     <?php if( isset( $scripts ) ) : ?>
         <?php foreach( $scripts as $script ) : ?>
-            <script src="<?=$script; ?>"></script>
+            <script src="<?=$script;?>"></script>
         <?php endforeach;?>
     <?php endif;?>
 

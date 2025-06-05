@@ -14,6 +14,8 @@ const datos = [
     {nombre : 'nuevo empleado', ruta: 'nuevo-empleado'},
     {nombre : 'importaciones', ruta: 'importaciones'},
     {nombre : 'carga masiva empleados', ruta: 'carga-masiva-empleados'},
+    {nombre : 'configuraciones', ruta: 'configuraciones'},
+    {nombre : 'actividades', ruta: 'actividades'},
   ];
 
   
@@ -55,3 +57,11 @@ buscador.addEventListener("input", () => {
       results.appendChild(div);
     });
   });
+
+  
+
+  document.querySelector('#logout').onclick = () => {
+    document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }

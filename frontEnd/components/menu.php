@@ -26,14 +26,14 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="<?=$root?>assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
+                <img src="assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
               </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Perfil</a>
-              <a class="dropdown-item" href="#">Configuración</a>
-              <a class="dropdown-item" href="#">Actividades</a>
-            </div>
+            <ul class="dropdown-menu dropdown-menu-right"  aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#"><i class="fe fe-user fe-16"></i> Perfil </a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="text-center"><a class="dropdown-item text-primary" href="auth" id="logout"><i class="fe fe-log-out fe-16"></i> Cerrar sesión</a></li>
+            </ul>
           </li>
         </ul>
       </nav>
@@ -44,14 +44,9 @@
         <nav class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
-            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
-              <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
-                <g>
-                  <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
-                  <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
-                  <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
-                </g>
-              </svg>
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="home">
+              <img src="assets/images/favicon.ico" alt="logo" class="navbar-brand-img brand-md">
+              <span class="text-muted">Serprosep</span>
             </a>
           </div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
@@ -189,11 +184,13 @@
                   <p>Control area</p>
                 </div>
                 <div class="col-6 text-center">
-                  <div class="squircle bg-primary justify-content-center">
-                    <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                  <a class="nav-link pl-3" href="actividades">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-activity fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Actividades</p>
                   </div>
-                  <p>Actividades</p>
-                </div>
+                  </a>
               </div>
               <div class="row align-items-center">
                 <div class="col-6 text-center">
@@ -219,10 +216,12 @@
                   <p>Usuarios</p>
                 </div>
                 <div class="col-6 text-center">
-                  <div class="squircle bg-primary justify-content-center">
-                    <i class="fe fe-settings fe-32 align-self-center text-white"></i>
-                  </div>
-                  <p>Configuración</p>
+                  <a class="nav-link pl-3" href="configuraciones">
+                    <div class="squircle bg-primary justify-content-center">
+                      <i class="fe fe-settings fe-32 align-self-center text-white"></i>
+                    </div>
+                    <p>Configuración</p>
+                  </a>
                 </div>
               </div>
             </div>
