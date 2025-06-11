@@ -2,56 +2,148 @@
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-12">
-        <h2 class="page-title">Form validation</h2>
-        <p class="text-muted">Provide valuable, actionable feedback to your users with HTML5 form validation</p>
+        <h2 class="page-title">Nuevo empleado</h2>
+        <p class="text-muted"></p>
         <div class="row">
           <div class="col-md-12">
             <div class="card shadow mb-4">
               <div class="card-header">
-                <strong class="card-title">Advanced Validation</strong>
+      <!--     <strong class="card-title">Advanced invalidation</strong>  -->
               </div>
               <div class="card-body">
-                <form class="needs-validation" novalidate>
+                <form class="needs-invalidation" noinvalidate>
                   <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                      <label for="validationCustom3">First name</label>
-                      <input type="text" class="form-control" id="validationCustom3" value="Mark" required>
-                      <div class="valid-feedback"> Looks good! </div>
+                     <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">Apellido Paterno <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="paterno" required>
+                      <div class="invalid-feedback"> El campo es requerido </div>
+                    </div>
+                     <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">Apellido Materno <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="materno" required>
+                      <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label for="validationCustom4">Last name</label>
-                      <input type="text" class="form-control" id="validationCustom4" value="Otto" required>
-                      <div class="valid-feedback"> Looks good! </div>
+                      <label for="invalidationCustom3">Nombre (s) <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="nombre" required>
+                      <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
-                  </div> <!-- /.form-row -->
+                    <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">CURP <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="curp" required>
+                      <div class="invalid-feedback"> El campo es requerido </div>
+                    </div>
+                     <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">RFC <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="rfc" required>
+                      <div class="invalid-feedback"> El campo es requerido </div>
+                    </div>
+                     <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">NSS <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="nss" required>
+                      <div class="invalid-feedback"> El campo es requerido </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="Codigo postal">Codigo Postal <strong class="text-danger">*</strong></label>
+                      <input class="form-control input-code" type="text" id="cp" autocomplete="off" maxlength="5" required>
+                      <div class="ininvalid-feedback"> El campo es requerido </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom4">Empresa <strong class="text-danger">*</strong></label>
+                       <select class="form-control select2" id="empresa" required>
+                         <option value="">Selecciona una Empresa</option>
+                       </select>
+                      <div class="invalid-feedback"> El campo es requerido </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">Unidad de negocio <strong class="text-danger">*</strong></label>
+                      <select class="form-control select2" id="unidadNegocio" required>
+                         <option value="">Selecciona una Unidad de Negocio</option>
+                       </select>
+                      <div class="invalid-feedback"> El campo es requerido </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom4">Regional </label>
+                      <input type="text" class="form-control" id="regional" >
+                    </div>
+                      <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom4">Zona/ Área </label>
+                      <select class="form-control select2" id="zona">
+                         <option value="">Selecciona una Zona/ Área</option>
+                       </select>                      
+                     </div>
+                      <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom4">Servicio </label>
+                      <select class="form-control select2" id="servicio">
+                         <option value="">Selecciona un servicio </option>
+                       </select>                      
+                    </div>
+                      <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom4">Turno </label>
+                      <select class="form-control select2" id="turno">
+                         <option value="">Selecciona un turno </option>
+                       </select>                      
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">Puesto <strong class="text-danger">*</strong></label>
+                      <select class="form-control select2" id="puesto">
+                         <option value="">Selecciona un puesto </option>
+                       </select> 
+                    </div>                      
+                    <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">Sueldo <strong class="text-danger">*</strong></label>
+                      <input type="number" class="form-control" id="sueldo" required>
+                      <div class="invalid-feedback"> El campo es requerido</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">Periocidad <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="periocidad" required>
+                      <div class="invalid-feedback"> El campo es requerido</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">No. Cuenta <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="cuenta" required>
+                      <div class="invalid-feedback"> El campo es requerido</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">No. Clave Interbancaria <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control input-bank" id="interbancaria" autocomplete="off" maxlength="5" required>
+                      <div class="invalid-feedback"> El campo es requerido</div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="Bancaria">Institución Bancaria <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="instituciónB" required>
+                      <div class="invalid-feedback"> El campo es requerido</div>
+                    </div>
+                  </div> <!-- /.form-row 
                   <div class="form-row">
                     <div class="col-md-8 mb-3">
                       <label for="exampleInputEmail2">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp1" required>
-                      <div class="invalid-feedback"> Please use a valid email </div>
+                      <input type="email" name class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp1" required>
+                      <div class="ininvalid-feedback"> Please use a invalid email </div>
                       <small id="emailHelp1" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="custom-phone">US Telephone</label>
                       <input class="form-control input-phoneus" id="custom-phone" maxlength="14" required>
-                      <div class="invalid-feedback"> Please enter a correct phone </div>
+                      <div class="ininvalid-feedback"> Please enter a correct phone </div>
                     </div>
-                  </div> <!-- /.form-row -->
+                  </div> 
                   <div class="form-group mb-3">
                     <label for="address-wpalaceholder">Address</label>
                     <input type="text" id="address-wpalaceholder" class="form-control" placeholder="Enter your address">
-                    <div class="valid-feedback"> Looks good! </div>
-                    <div class="invalid-feedback"> Badd address </div>
+                    <div class="invalid-feedback"> Looks good! </div>
+                    <div class="ininvalid-feedback"> Badd address </div>
                   </div>
                   <div class="form-row">
                     <div class="col-md-6 mb-3">
-                      <label for="validationCustom33">City</label>
-                      <input type="text" class="form-control" id="validationCustom33" required>
-                      <div class="invalid-feedback"> Please provide a valid city. </div>
+                      <label for="invalidationCustom33">City</label>
+                      <input type="text" class="form-control" id="invalidationCustom33" required>
+                      <div class="ininvalid-feedback"> Please provide a invalid city. </div>
                     </div>
                     <div class="col-md-3 mb-3">
-                      <label for="validationSelect2">State</label>
-                      <select class="form-control select2" id="validationSelect2" required>
+                      <label for="invalidationSelect2">State</label>
+                      <select class="form-control select2" id="invalidationSelect2" required>
                         <option value="">Select state</option>
                         <optgroup label="Mountain Time Zone">
                           <option value="AZ">Arizona</option>
@@ -82,12 +174,12 @@
                           <option value="WI">Wisconsin</option>
                         </optgroup>
                       </select>
-                      <div class="invalid-feedback"> Please select a valid state. </div>
+                      <div class="ininvalid-feedback"> Please select a invalid state. </div>
                     </div>
                     <div class="col-md-3 mb-3">
-                      <label for="custom-zip">Zip code</label>
-                      <input class="form-control input-zip" id="custom-zip" autocomplete="off" maxlength="9" required>
-                      <div class="invalid-feedback"> Please provide a valid zip. </div>
+                      <label for="custom-zip">C.P.</label>
+                      <input class="form-control input-zip" id="cp" autocomplete="off" maxlength="9" required>
+                      <div class="ininvalid-feedback"> Please provide a invalid zip. </div>
                     </div>
                   </div>
                   <div class="form-row mb-3">
@@ -117,31 +209,31 @@
                     <div class="form-row">
                       <div class="col-md-6">
                         <div class="custom-control custom-radio">
-                          <input type="radio" class="custom-control-input" id="customControlValidation22" name="radio-stacked" required>
-                          <label class="custom-control-label" for="customControlValidation22">Card</label>
+                          <input type="radio" class="custom-control-input" id="customControlinvalidation22" name="radio-stacked" required>
+                          <label class="custom-control-label" for="customControlinvalidation22">Card</label>
                           <p class="text-muted"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="custom-control custom-radio mb-3">
-                          <input type="radio" class="custom-control-input" id="customControlValidation33" name="radio-stacked" required>
-                          <label class="custom-control-label" for="customControlValidation33">Paypal</label>
+                          <input type="radio" class="custom-control-input" id="customControlinvalidation33" name="radio-stacked" required>
+                          <label class="custom-control-label" for="customControlinvalidation33">Paypal</label>
                           <p class="text-muted"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="form-group mb-3">
-                    <label for="validationTextarea1">Note</label>
-                    <textarea class="form-control" id="validationTextarea1" placeholder="Take a note here" required="" rows="3"></textarea>
-                    <div class="invalid-feedback"> Please enter a message in the textarea. </div>
+                    <label for="invalidationTextarea1">Note</label>
+                    <textarea class="form-control" id="invalidationTextarea1" placeholder="Take a note here" required="" rows="3"></textarea>
+                    <div class="ininvalid-feedback"> Please enter a message in the textarea. </div>
                   </div>
                   <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" class="custom-control-input" id="customControlValidation16" required="">
-                    <label class="custom-control-label" for="customControlValidation16"> Agree to terms and conditions</label>
-                    <div class="invalid-feedback"> You must agree before submitting. </div>
-                  </div>
-                  <button class="btn btn-primary" type="submit">Submit form</button>
+                    <input type="checkbox" class="custom-control-input" id="customControlinvalidation16" required="">
+                    <label class="custom-control-label" for="customControlinvalidation16"> Agree to terms and conditions</label>
+                    <div class="ininvalid-feedback"> You must agree before submitting. </div>
+                  </div>-->
+                  <button class="btn btn-primary" type="submit">Agregar</button>
                 </form>
               </div> <!-- /.card-body -->
             </div> <!-- /.card -->
