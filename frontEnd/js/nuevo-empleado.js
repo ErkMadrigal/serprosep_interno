@@ -1,12 +1,40 @@
+
+      $('.input-code').mask('00-000',
+      {
+         translation:
+        {
+          'Z':
+          {
+            pattern: /[0-9]/,
+            optional: true
+          }
+        },
+        placeholder: "__-___"
+      });
+      $('.input-bank').mask('0000-0000-0000-0000-00',
+      {
+         translation:
+        {
+          'Z':
+          {
+            pattern: /[0-9]/,
+            optional: true
+          }
+        },
+        placeholder: "____-____-____-____-__"
+      });
       $('.select2').select2(
       {
+        multiple: false,
         theme: 'bootstrap4',
       });
-      $('.select2-multi').select2(
-      {
-        multiple: true,
-        theme: 'bootstrap4',
-      });
+     
+
+
+
+
+
+     
       $('.drgpicker').daterangepicker(
       {
         singleDatePicker: true,
@@ -198,3 +226,5 @@
           console.log('Upload complete! We’ve uploaded these files:', result.successful)
         });
       }
+
+
