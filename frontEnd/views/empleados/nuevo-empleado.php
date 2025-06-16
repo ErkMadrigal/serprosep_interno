@@ -14,6 +14,11 @@
                 <form class="needs-invalidation" noinvalidate>
                   <div class="form-row">
                      <div class="col-md-6 mb-3">
+                      <label for="invalidationCustom3">Nombre (s) <strong class="text-danger">*</strong></label>
+                      <input type="text" class="form-control" id="nombre" required>
+                      <div class="invalid-feedback"> El campo es requerido </div>
+                    </div>
+                     <div class="col-md-6 mb-3">
                       <label for="invalidationCustom3">Apellido Paterno <strong class="text-danger">*</strong></label>
                       <input type="text" class="form-control" id="paterno" required>
                       <div class="invalid-feedback"> El campo es requerido </div>
@@ -23,11 +28,7 @@
                       <input type="text" class="form-control" id="materno" required>
                       <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">Nombre (s) <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="nombre" required>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
+                   
                     <div class="col-md-6 mb-3">
                       <label for="invalidationCustom3">CURP <strong class="text-danger">*</strong></label>
                       <input type="text" class="form-control" id="curp" required>
@@ -52,6 +53,7 @@
                       <label for="invalidationCustom4">Empresa <strong class="text-danger">*</strong></label>
                        <select class="form-control select2" id="empresa" required>
                          <option value="">Selecciona una Empresa</option>
+                         <option value="1">ejemplo</option>
                        </select>
                       <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
@@ -59,6 +61,7 @@
                       <label for="invalidationCustom3">Unidad de negocio <strong class="text-danger">*</strong></label>
                       <select class="form-control select2" id="unidadNegocio" required>
                          <option value="">Selecciona una Unidad de Negocio</option>
+                        <option value="1">ejemplo</option>
                        </select>
                       <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
@@ -70,25 +73,29 @@
                       <label for="invalidationCustom4">Zona/ Área </label>
                       <select class="form-control select2" id="zona">
                          <option value="">Selecciona una Zona/ Área</option>
+                         <option value="1">ejemplo</option>
                        </select>                      
                      </div>
                       <div class="col-md-6 mb-3">
                       <label for="invalidationCustom4">Servicio </label>
                       <select class="form-control select2" id="servicio">
                          <option value="">Selecciona un servicio </option>
-                       </select>                      
+                         <option value="1">ejemplo</option>      
+                        </select>                      
                     </div>
                       <div class="col-md-6 mb-3">
                       <label for="invalidationCustom4">Turno </label>
                       <select class="form-control select2" id="turno">
                          <option value="">Selecciona un turno </option>
-                       </select>                      
+                         <option value="1">ejemplo</option>
+                        </select>                      
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="invalidationCustom3">Puesto <strong class="text-danger">*</strong></label>
                       <select class="form-control select2" id="puesto">
                          <option value="">Selecciona un puesto </option>
-                       </select> 
+                         <option value="1">ejemplo</option>                      
+                        </select> 
                     </div>                      
                     <div class="col-md-6 mb-3">
                       <label for="invalidationCustom3">Sueldo <strong class="text-danger">*</strong></label>
@@ -112,7 +119,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="Bancaria">Institución Bancaria <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="instituciónB" required>
+                      <input type="text" class="form-control" id="institucionBancaria" required>
                       <div class="invalid-feedback"> El campo es requerido</div>
                     </div>
                   </div> <!-- /.form-row 
@@ -233,7 +240,7 @@
                     <label class="custom-control-label" for="customControlinvalidation16"> Agree to terms and conditions</label>
                     <div class="ininvalid-feedback"> You must agree before submitting. </div>
                   </div>-->
-                  <button class="btn btn-primary" type="submit">Agregar</button>
+                  <button class="btn btn-primary" id="add">Agregar</button>
                 </form>
               </div> <!-- /.card-body -->
             </div> <!-- /.card -->
