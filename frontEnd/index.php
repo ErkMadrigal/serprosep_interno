@@ -59,7 +59,7 @@
             include "./components/header.php";
             include "./components/menu.php";
             include "$ruta/empleados/nuevo-empleado.php";
-            $scripts = ['js/jquery.mask.min.js','js/select2.min.js','js/jquery.steps.min.js','js/jquery.validate.min.js','js/jquery.timepicker.js','js/dropzone.min.js','js/uppy.min.js','js/quill.min.js', 'js/nuevo-empleado.js'];
+            $scripts = ['js/jquery.mask.min.js','js/select2.min.js','js/jquery.steps.min.js','js/jquery.validate.min.js','js/jquery.timepicker.js','js/dropzone.min.js','js/uppy.min.js','js/quill.min.js', 'js/nuevo-empleado.js', 'js/getCatalogos.js'];
             include "./components/footer.php";
         break;
 

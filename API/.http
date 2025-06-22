@@ -111,3 +111,16 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vb
   "action": "getEmpleado",
   "id_empleado": 3
 }
+
+
+### 
+POST http://localhost/serprosep_interno/API/catalogs
+Content-Type: application/json
+X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlhdCI6MTc1MDYwOTIwNiwiZXhwIjoxNzUwNjk1NjA2LCJkYXRhIjp7ImlkIjoxLCJuYW1lX3VzZXIiOiJjYXJsb3NyIiwiY29ycmVvIjoiY2FybG9zQGV4YW1wbGUuY29tIiwicm9sIjoxfX0.N9oEwxxTH7DursMMG-xJeqvJnD9IAaX12aOXIwzPBc8
+
+{
+  "action": "getCatalogos",
+  "id_catalogo": "13"
+
+}

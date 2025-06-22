@@ -12,7 +12,7 @@
               </div>
               <div class="card-body">
                 <form class="needs-invalidation" noinvalidate>
-                  <div class="form-row">
+                  <div class="form-row">  
                      <div class="col-md-6 mb-3">
                       <label for="invalidationCustom3">Nombre (s) <strong class="text-danger">*</strong></label>
                       <input type="text" class="form-control" id="nombre" required>
@@ -45,15 +45,14 @@
                       <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label for="Codigo postal">Codigo Postal <strong class="text-danger">*</strong></label>
+                      <label for="Codigo postal">Codigo Postal Fiscal<strong class="text-danger">*</strong></label>
                       <input class="form-control input-code" type="text" id="cp" autocomplete="off" maxlength="5" required>
-                      <div class="ininvalid-feedback"> El campo es requerido </div>
+                      <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="invalidationCustom4">Empresa <strong class="text-danger">*</strong></label>
                        <select class="form-control select2" id="empresa" required>
                          <option value="">Selecciona una Empresa</option>
-                         <option value="1">ejemplo</option>
                        </select>
                       <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
@@ -61,12 +60,11 @@
                       <label for="invalidationCustom3">Unidad de negocio <strong class="text-danger">*</strong></label>
                       <select class="form-control select2" id="unidadNegocio" required>
                          <option value="">Selecciona una Unidad de Negocio</option>
-                        <option value="1">ejemplo</option>
                        </select>
                       <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom4">Regional </label>
+                      <label for="invalidationCustom4">Gerente Regional </label>
                       <input type="text" class="form-control" id="regional" >
                     </div>
                       <div class="col-md-6 mb-3">
@@ -77,12 +75,11 @@
                        </select>                      
                      </div>
                       <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom4">Servicio </label>
-                      <select class="form-control select2" id="servicio">
-                         <option value="">Selecciona un servicio </option>
-                         <option value="1">ejemplo</option>      
-                        </select>                      
-                    </div>
+                        <label for="invalidationCustom4">Servicio </label>
+                        <input class="form-control" type="text" id="servicio" list="servicios">
+                        <input type="hidden" id="servicioId">
+                        <datalist id="servicios"></datalist>
+                      </div>
                       <div class="col-md-6 mb-3">
                       <label for="invalidationCustom4">Turno </label>
                       <select class="form-control select2" id="turno">

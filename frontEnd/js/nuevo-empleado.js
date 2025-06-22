@@ -49,6 +49,7 @@
           "cuenta": document.getElementById('cuenta').value,
           "interbancaria": document.getElementById('interbancaria').value,
           "institucionBancaria": document.getElementById('institucionBancaria').value,
+          "servicio": document.getElementById('servicioId').value,
         }
 
         fetch('https://httpbin.org/post', {
