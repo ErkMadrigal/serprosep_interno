@@ -64,4 +64,8 @@ document.addEventListener("keydown", (e) => {
     document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-  }
+}
+  
+window.env = {
+  API_URL: "http://localhost/serprosep_interno/API/"
+};

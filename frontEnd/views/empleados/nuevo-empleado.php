@@ -1,125 +1,136 @@
 <main role="main" class="main-content">
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-12">
-        <h2 class="page-title">Nuevo empleado</h2>
-        <p class="text-muted"></p>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card shadow mb-4">
-              <div class="card-header">
-      <!--     <strong class="card-title">Advanced invalidation</strong>  -->
-              </div>
-              <div class="card-body">
-                <form class="needs-invalidation" noinvalidate>
-                  <div class="form-row">  
-                     <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">Nombre (s) <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="nombre" required>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
-                     <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">Apellido Paterno <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="paterno" required>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
-                     <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">Apellido Materno <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="materno" required>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
-                   
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">CURP <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="curp" required>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
-                     <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">RFC <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="rfc" required>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
-                     <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">NSS <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="nss" required>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="Codigo postal">Codigo Postal Fiscal<strong class="text-danger">*</strong></label>
-                      <input class="form-control input-code" type="text" id="cp" autocomplete="off" maxlength="5" required>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom4">Empresa <strong class="text-danger">*</strong></label>
-                       <select class="form-control select2" id="empresa" required>
-                         <option value="">Selecciona una Empresa</option>
-                       </select>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">Unidad de negocio <strong class="text-danger">*</strong></label>
-                      <select class="form-control select2" id="unidadNegocio" required>
-                         <option value="">Selecciona una Unidad de Negocio</option>
-                       </select>
-                      <div class="invalid-feedback"> El campo es requerido </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom4">Gerente Regional </label>
-                      <input type="text" class="form-control" id="regional" >
-                    </div>
-                      <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom4">Zona/ Área </label>
-                      <select class="form-control select2" id="zona">
-                         <option value="">Selecciona una Zona/ Área</option>
-                         <option value="1">ejemplo</option>
-                       </select>                      
-                     </div>
-                      <div class="col-md-6 mb-3">
-                        <label for="invalidationCustom4">Servicio </label>
-                        <input class="form-control" type="text" id="servicio" list="servicios">
-                        <input type="hidden" id="servicioId">
-                        <datalist id="servicios"></datalist>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom4">Turno </label>
-                      <select class="form-control select2" id="turno">
-                         <option value="">Selecciona un turno </option>
-                         <option value="1">ejemplo</option>
-                        </select>                      
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">Puesto <strong class="text-danger">*</strong></label>
-                      <select class="form-control select2" id="puesto">
-                         <option value="">Selecciona un puesto </option>
-                         <option value="1">ejemplo</option>                      
-                        </select> 
-                    </div>                      
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">Sueldo <strong class="text-danger">*</strong></label>
-                      <input type="number" class="form-control" id="sueldo" required>
-                      <div class="invalid-feedback"> El campo es requerido</div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">Periocidad <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="periocidad" required>
-                      <div class="invalid-feedback"> El campo es requerido</div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">No. Cuenta <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="cuenta" required>
-                      <div class="invalid-feedback"> El campo es requerido</div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="invalidationCustom3">No. Clave Interbancaria <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control input-bank" id="interbancaria" autocomplete="off" maxlength="5" required>
-                      <div class="invalid-feedback"> El campo es requerido</div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="Bancaria">Institución Bancaria <strong class="text-danger">*</strong></label>
-                      <input type="text" class="form-control" id="institucionBancaria" required>
-                      <div class="invalid-feedback"> El campo es requerido</div>
-                    </div>
-                  </div> <!-- /.form-row 
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <h2 class="page-title">Nuevo empleado</h2>
+                <p class="text-muted"></p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card shadow mb-4">
+                            <div class="card-header">
+                                <!--     <strong class="card-title">Advanced invalidation</strong>  -->
+                            </div>
+                            <div class="card-body">
+                                <form class="needs-invalidation" noinvalidate>
+                                    <div class="form-row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">Nombre (s) <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="nombre" required>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">Apellido Paterno <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="paterno" required>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">Apellido Materno <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="materno" required>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">CURP <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="curp" required>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">RFC <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="rfc" required>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">NSS <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="nss" required>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="Codigo postal">Codigo Postal Fiscal<strong
+                                                    class="text-danger">*</strong></label>
+                                            <input class="form-control input-code" type="text" id="cp"
+                                                autocomplete="off" maxlength="6" required>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom4">Empresa <strong
+                                                    class="text-danger">*</strong></label>
+                                            <select class="form-control select2" id="empresa" required>
+                                            </select>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">Unidad de negocio <strong
+                                                    class="text-danger">*</strong></label>
+                                            <select class="form-control select2" id="unidadNegocio" required>
+                                            </select>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom4">Gerente Regional </label>
+                                            <input type="text" class="form-control" id="regional">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom4">Zona/ Área </label>
+                                            <select class="form-control select2" id="zona">
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom4">Servicio </label>
+                                            <input class="form-control" type="text" id="servicio" list="servicios">
+                                            <input type="hidden" id="servicioId">
+                                            <datalist id="servicios"></datalist>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom4">Turno </label>
+                                            <select class="form-control select2" id="turno">
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">Puesto <strong
+                                                    class="text-danger">*</strong></label>
+                                            <select class="form-control select2" id="puesto">
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">Sueldo <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="number" class="form-control" id="sueldo" required>
+                                            <div class="invalid-feedback"> El campo es requerido</div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">Periocidad <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="periocidad" required>
+                                            <div class="invalid-feedback"> El campo es requerido</div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">No. Cuenta</label>
+                                            <input type="text" class="form-control" id="cuenta">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">No. Clave Interbancaria <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="interbancaria"
+                                                autocomplete="off" maxlength="23" placeholder="____-____-____-____-__"
+                                                required>
+                                            <div class="invalid-feedback"> El campo es requerido</div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="Bancaria">Institución Bancaria <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="institucionBancaria" required
+                                                disabled>
+                                            <input type="hidden" class="form-control" id="banco" required disabled>
+                                            <div class="invalid-feedback"> El campo es requerido</div>
+                                        </div>
+                                    </div>
+                                    <!-- /.form-row 
                   <div class="form-row">
                     <div class="col-md-8 mb-3">
                       <label for="exampleInputEmail2">Email address</label>
@@ -237,13 +248,13 @@
                     <label class="custom-control-label" for="customControlinvalidation16"> Agree to terms and conditions</label>
                     <div class="ininvalid-feedback"> You must agree before submitting. </div>
                   </div>-->
-                  <button class="btn btn-primary" id="add">Agregar</button>
-                </form>
-              </div> <!-- /.card-body -->
-            </div> <!-- /.card -->
-          </div> <!-- /.col -->
-        </div> <!-- end section -->
-      </div> <!-- /.col-12 col-lg-10 col-xl-10 -->
-    </div> <!-- .row -->
-  </div> <!-- .container-fluid -->
+                                    <button class="btn btn-primary" id="add">Agregar</button>
+                                </form>
+                            </div> <!-- /.card-body -->
+                        </div> <!-- /.card -->
+                    </div> <!-- /.col -->
+                </div> <!-- end section -->
+            </div> <!-- /.col-12 col-lg-10 col-xl-10 -->
+        </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
 </main>

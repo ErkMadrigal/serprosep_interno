@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost/serprosep_interno/API/catalogs'; // Replace with your actual API base URL
+const API_BASE_URL = window.env.API_URL+'catalogs'; // Replace with your actual API base URL
 
 const getCatalogos = async (url, id) => {
   try {
@@ -32,8 +32,7 @@ let empresa = document.getElementById('empresa');
 
 getCatalogos(API_BASE_URL, 13)
 .then(data => {
-    console.log('Catalogos data:', data);
-    empresa.innerHTML = `<option value="">Seleccione una empresa</option>`;
+    empresa.innerHTML = `<option>Seleccione una empresa</option>`;
     data.data.forEach(item => {  
         empresa.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
     });
@@ -47,8 +46,7 @@ getCatalogos(API_BASE_URL, 13)
 let unidadNegocio = document.getElementById('unidadNegocio');
 getCatalogos(API_BASE_URL, 12)
 .then(data => { 
-    console.log('Catalogos data:', data);
-    unidadNegocio.innerHTML = `<option value="">Seleccione una unidad de negocio</option>`;
+    unidadNegocio.innerHTML = `<option>Seleccione una unidad de negocio</option>`;
     data.data.forEach(item => {
         unidadNegocio.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
     });
@@ -61,12 +59,37 @@ getCatalogos(API_BASE_URL, 12)
 let zona = document.getElementById('zona');
 getCatalogos(API_BASE_URL, 11)
 .then(data => { 
-    console.log('Catalogos data:', data);
-    zona.innerHTML = `<option value="">Seleccione una zona/área</option>`;
+    zona.innerHTML = `<option>Seleccione una zona/área</option>`;
     data.data.forEach(item => {
         zona.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
     });
     zona.disabled = false; // Habilitar el select después de cargar los datos
+})
+.catch(error => {
+  console.error('Error in getCatalogos:', error);
+});
+
+let turno = document.getElementById('turno');
+getCatalogos(API_BASE_URL, 7)
+.then(data => { 
+    turno.innerHTML = `<option>Seleccione un turno</option>`;
+    data.data.forEach(item => {
+        turno.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
+    });
+    turno.disabled = false; // Habilitar el select después de cargar los datos
+})
+.catch(error => {
+  console.error('Error in getCatalogos:', error);
+});
+
+let puesto = document.getElementById('puesto');
+getCatalogos(API_BASE_URL, 10)
+.then(data => { 
+    puesto.innerHTML = `<option>Seleccione un puesto</option>`;
+    data.data.forEach(item => {
+        puesto.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
+    });
+    puesto.disabled = false; // Habilitar el select después de cargar los datos
 })
 .catch(error => {
   console.error('Error in getCatalogos:', error);
@@ -124,12 +147,108 @@ servicioInput.addEventListener('change', () => {
   const inputValue = servicioInput.value.trim();
   const selected = serviciosData.find(item => item.valor === inputValue);
 
-  if (selected) {
-    console.log('ID del servicio seleccionado:', selected.id);
-    // Aquí puedes usar selected.id para enviar al backend, guardar, etc.
-  } else {
+  if (!selected) {
     console.warn('Servicio no encontrado');
   }
 });
 
 
+let interbancaria = document.getElementById('interbancaria');
+const invalidFeedback = interbancaria.parentElement.querySelector('.invalid-feedback');
+
+// Formatear mientras escribe (solo números, hasta 18)
+interbancaria.addEventListener('input', () => {
+  let value = interbancaria.value.replace(/\D/g, '').slice(0, 18);
+  interbancaria.value = formatCLABE(value);
+  clearError();
+});
+
+// Al salir del input, rellenar con ceros al inicio si es menor a 18 y validar
+interbancaria.addEventListener('blur', () => {
+  let digits = interbancaria.value.replace(/\D/g, '');
+  if (digits.length < 18) {
+    digits = digits.padStart(18, '0');
+  }
+  interbancaria.value = formatCLABE(digits);
+  validateLeadingZeros(digits);
+  getBanco(); // Llamar a la función para obtener el banco  
+});
+
+// Formatear CLABE con guiones
+function formatCLABE(digits) {
+  let parts = [];
+  parts.push(digits.substring(0, 4));
+  parts.push(digits.substring(4, 8));
+  parts.push(digits.substring(8, 12));
+  parts.push(digits.substring(12, 16));
+  parts.push(digits.substring(16, 18));
+  return `${parts[0]}-${parts[1]}-${parts[2]}-${parts[3]}-${parts[4]}`;
+}
+
+// Validar ceros al inicio
+function validateLeadingZeros(digits) {
+  const match = digits.match(/^0+/);
+  const zerosCount = match ? match[0].length : 0;
+
+  if (zerosCount > 3) {
+    showError(`la CLABE interbancaria no es correcta le faltan digitos, debe tener 18 dígitos y no más de 3 ceros al inicio.`);
+  } else {
+    clearError();
+  }
+}
+
+// Mostrar error usando clases Bootstrap
+function showError(msg) {
+  interbancaria.classList.add('is-invalid');
+  if (invalidFeedback) {
+    invalidFeedback.textContent = msg;
+    invalidFeedback.style.display = 'block';
+  }
+}
+
+// Limpiar error
+function clearError() {
+  interbancaria.classList.remove('is-invalid');
+  if (invalidFeedback) {
+    invalidFeedback.textContent = 'El campo es requerido'; // mensaje original
+    invalidFeedback.style.display = 'none';
+  }
+}
+
+
+const getBanco = () => {
+  const digits = interbancaria.value.replace(/\D/g, '');
+  
+  // Extraer los primeros 3 dígitos
+  const primerosTres = digits.substring(0, 3);
+  
+  if (primerosTres.length === 3) {
+    // URL de ejemplo, cambia a la que necesites
+  
+    fetch(API_BASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': 'k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        action: "getInstitucionBancaria",
+        clabe: primerosTres
+      })
+    })
+      .then(response => {
+        if (!response.ok) throw new Error('Error en la respuesta');
+        return response.json();
+      })
+      .then(data => {
+        document.getElementById('institucionBancaria').value = data.data.valor || '';
+        document.getElementById('banco').value = data.data.id; 
+      })
+      .catch(error => {
+        console.error('Error en fetch:', error);
+      });
+  } else {
+    console.log('No hay suficientes dígitos para hacer la consulta');
+  }
+}

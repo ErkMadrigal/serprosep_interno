@@ -62,6 +62,32 @@
             return self::$respuesta;
         }
 
+        public static function getInstitucionBancaria($clabe) {
+            try {
+                $sql = "SELECT m.id, m.valor, m.descripcion, c.descripcion AS catalogo 
+                        FROM multicatalogo m 
+                        LEFT JOIN catalogo c ON m.id_catalogo = c.id 
+                        WHERE c.id = 15 AND m.descripcion = :clabe";
+
+                $dbc = self::$database::getConnection();
+                $stmt = $dbc->prepare($sql);
+
+                $stmt->bindParam(":clabe", $clabe, PDO::PARAM_STR);
+                $stmt->execute();
+                $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                self::$respuesta["status"] = "ok";
+                self::$respuesta["data"] = $data;
+
+            } catch (PDOException $e) {
+                self::$respuesta["status"] = "error";
+                self::$respuesta["data"] = [];
+                self::$respuesta["mensaje"] = $e->getMessage();
+            }
+
+            return self::$respuesta;
+        }
+
         
     }
     

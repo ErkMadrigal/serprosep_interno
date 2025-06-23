@@ -11,18 +11,9 @@
         },
         placeholder: "__-___"
       });
-      $('.input-bank').mask('0000-0000-0000-0000-00',
-      {
-         translation:
-        {
-          'Z':
-          {
-            pattern: /[0-9]/,
-            optional: true
-          }
-        },
-        placeholder: "____-____-____-____-__"
-      });
+      
+      const input = document.getElementById('interbancaria');
+
       $('.select2').select2(
       {
         multiple: false,
@@ -48,11 +39,13 @@
           "periocidad": document.getElementById('periocidad').value,
           "cuenta": document.getElementById('cuenta').value,
           "interbancaria": document.getElementById('interbancaria').value,
-          "institucionBancaria": document.getElementById('institucionBancaria').value,
+          "institucionBancaria": document.getElementById('banco').value,
           "servicio": document.getElementById('servicioId').value,
         }
 
-        fetch('https://httpbin.org/post', {
+        const API_BASE_URL = window.env.API_URL+'';
+
+        fetch(url, {
         method: 'POST',
 
         headers: {
