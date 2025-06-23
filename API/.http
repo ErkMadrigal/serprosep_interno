@@ -74,6 +74,7 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vb
   "curp": "MAFE990706HMCDRLR05",
   "rfc": "MAFE9900706DU3",
   "nss": "12345678901",
+  "cp": "20904"
 
   "no_empleado": "301006",
   "id_unidad_negocio": "UN01",

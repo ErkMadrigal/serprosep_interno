@@ -1,12 +1,43 @@
 const API_BASE_URL = window.env.API_URL+'catalogs'; // Replace with your actual API base URL
 
+(async() => {
+  try {
+    const response = await fetch(API_BASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': window.env.API_KEY, // API Key fija
+        'Authorization': `Bearer ${localStorage.getItem('token')}` // Token guardado en localStorage
+      },
+      body: JSON.stringify({ action: "getRegionales", })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    let regional = document.getElementById('regional');
+    regional.innerHTML = `<option selected disabled value="">Seleccione un Gerente Regional</option>`;
+    data.data.forEach(item => {  
+        regional.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
+    });
+    regional.disabled = false; // Habilitar el select después de cargar los datos
+    
+  } catch (error) {
+    console.error('Error fetching catalogos:', error);
+    throw error;
+  }
+})();
+
 const getCatalogos = async (url, id) => {
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-API-KEY': 'k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh', // API Key fija
+        'X-API-KEY': window.env.API_KEY, // API Key fija
         'Authorization': `Bearer ${localStorage.getItem('token')}` // Token guardado en localStorage
       },
       body: id ? JSON.stringify({ 
@@ -28,11 +59,12 @@ const getCatalogos = async (url, id) => {
   }
 };
 
+
 let empresa = document.getElementById('empresa');
 
 getCatalogos(API_BASE_URL, 13)
 .then(data => {
-    empresa.innerHTML = `<option>Seleccione una empresa</option>`;
+    empresa.innerHTML = `<option selected disabled value="">Seleccione una empresa</option>`;
     data.data.forEach(item => {  
         empresa.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
     });
@@ -46,7 +78,7 @@ getCatalogos(API_BASE_URL, 13)
 let unidadNegocio = document.getElementById('unidadNegocio');
 getCatalogos(API_BASE_URL, 12)
 .then(data => { 
-    unidadNegocio.innerHTML = `<option>Seleccione una unidad de negocio</option>`;
+    unidadNegocio.innerHTML = `<option selected disabled value="">Seleccione una unidad de negocio</option>`;
     data.data.forEach(item => {
         unidadNegocio.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
     });
@@ -59,7 +91,7 @@ getCatalogos(API_BASE_URL, 12)
 let zona = document.getElementById('zona');
 getCatalogos(API_BASE_URL, 11)
 .then(data => { 
-    zona.innerHTML = `<option>Seleccione una zona/área</option>`;
+    zona.innerHTML = `<option selected disabled value="">Seleccione una zona/área</option>`;
     data.data.forEach(item => {
         zona.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
     });
@@ -72,7 +104,7 @@ getCatalogos(API_BASE_URL, 11)
 let turno = document.getElementById('turno');
 getCatalogos(API_BASE_URL, 7)
 .then(data => { 
-    turno.innerHTML = `<option>Seleccione un turno</option>`;
+    turno.innerHTML = `<option selected disabled value="">Seleccione un turno</option>`;
     data.data.forEach(item => {
         turno.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
     });
@@ -85,11 +117,24 @@ getCatalogos(API_BASE_URL, 7)
 let puesto = document.getElementById('puesto');
 getCatalogos(API_BASE_URL, 10)
 .then(data => { 
-    puesto.innerHTML = `<option>Seleccione un puesto</option>`;
+    puesto.innerHTML = `<option selected disabled value="">Seleccione un puesto</option>`;
     data.data.forEach(item => {
         puesto.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
     });
     puesto.disabled = false; // Habilitar el select después de cargar los datos
+})
+.catch(error => {
+  console.error('Error in getCatalogos:', error);
+});
+
+let periocidad = document.getElementById('periocidad');
+getCatalogos(API_BASE_URL, 9)
+.then(data => { 
+    periocidad.innerHTML = `<option selected disabled value="">Seleccione una periocidad</option>`;
+    data.data.forEach(item => {
+        periocidad.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
+    });
+    periocidad.disabled = false; // Habilitar el select después de cargar los datos
 })
 .catch(error => {
   console.error('Error in getCatalogos:', error);
@@ -115,7 +160,7 @@ servicioInput.addEventListener('input', () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-API-KEY': 'k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh',
+        'X-API-KEY': window.env.API_KEY,
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify({
@@ -229,7 +274,7 @@ const getBanco = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-API-KEY': 'k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh',
+        'X-API-KEY': window.env.API_KEY,
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify({
@@ -252,3 +297,5 @@ const getBanco = () => {
     console.log('No hay suficientes dígitos para hacer la consulta');
   }
 }
+
+

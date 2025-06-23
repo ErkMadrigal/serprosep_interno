@@ -73,6 +73,7 @@ switch ($opcion) {
                 $curp                = $data['curp']                ?? false;
                 $rfc                 = $data['rfc']                 ?? false;
                 $nss                 = $data['nss']                 ?? false;
+                $cp                  = $data['cp']                  ?? false;
 
                 // Campos opcionales
                 $no_empleado         = $data['no_empleado']         ?? '';
@@ -109,7 +110,7 @@ switch ($opcion) {
                         echo json_encode(
                             $empleados::registro(
                                 $no_empleado, $id_unidad_negocio, $id_regional, $id_zona,
-                                $id_empresa, $id_servicio, $curp, $rfc, $nss, $fecha_ingreso,
+                                $id_empresa, $id_servicio, $curp, $rfc, $nss, $cp, $fecha_ingreso,
                                 $paterno, $materno, $nombre, $id_turno, $id_puesto, $sueldo,
                                 $id_periocidad, $cuenta, $clave_interbancaria, $id_banco, $estatus
                             ),
@@ -118,8 +119,8 @@ switch ($opcion) {
                     }else{
                         echo json_encode(
                             $empleados::actualizar(
-                                intval($id), $no_empleado, $id_unidad_negocio, $id_regional, $id_zona,
-                                $id_empresa, $id_servicio, $curp, $rfc, $nss, $fecha_ingreso,
+                                intval(value: $id), $no_empleado, $id_unidad_negocio, $id_regional, $id_zona,
+                                $id_empresa, $id_servicio, $curp, $rfc, $nss, $cp, $fecha_ingreso,
                                 $paterno, $materno, $nombre, $id_turno, $id_puesto, $sueldo,
                                 $id_periocidad, $cuenta, $clave_interbancaria, $id_banco, $estatus
                             ),

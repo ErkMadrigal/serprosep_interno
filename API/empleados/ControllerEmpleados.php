@@ -14,21 +14,22 @@
         }
 
        
-        public static function registro( $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss,$fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
+        public static function registro( $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss, $cp, $fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
             try{
                 
-                $sql = "INSERT INTO empleados (no_empleado, id_unidad_negocio, id_regional, id_zona, id_empresa, id_servicio, curp, rfc, nss, fecha_ingreso, paterno, materno, nombre, id_turno, id_puesto, sueldo, id_periocidad, cuenta, clave_interbancaria, id_banco, estatus) values(:no_empleado, :id_unidad_negocio, :id_regional, :id_zona, :id_empresa, :id_servicio, :curp, :rfc, :nss, :fecha_ingreso, :paterno, :materno, :nombre, :id_turno, :id_puesto, :sueldo, :id_periocidad, :cuenta, :clave_interbancaria, :id_banco, :estatus)";
+                $sql = "INSERT INTO empleados (no_empleado, id_unidad_negocio, id_regional, id_zona, id_empresa, id_servicio, curp, rfc, nss, CP_fiscal, fecha_ingreso, paterno, materno, nombre, id_turno, id_puesto, sueldo, id_periocidad, cuenta, clave_interbancaria, id_banco, estatus) values(:no_empleado, :id_unidad_negocio, :id_regional, :id_zona, :id_empresa, :id_servicio, :curp, :rfc, :nss, :CP_fiscal, :fecha_ingreso, :paterno, :materno, :nombre, :id_turno, :id_puesto, :sueldo, :id_periocidad, :cuenta, :clave_interbancaria, :id_banco, :estatus)";
                 $db = self::$database::getConnection();
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(":no_empleado", $no_empleado);
                 $stmt->bindParam(":id_unidad_negocio", $id_unidad_negocio);
                 $stmt->bindParam(":id_regional", $id_regional);
                 $stmt->bindParam(":id_zona", $id_zona);
-               $stmt->bindParam(":id_empresa", $id_empresa,); 
+                $stmt->bindParam(":id_empresa", $id_empresa,); 
                 $stmt->bindParam(":id_servicio", $id_servicio); 
                 $stmt->bindParam(":curp", $curp); 
                 $stmt->bindParam(":rfc", $rfc); 
-                $stmt->bindParam(":nss", $nss); 
+                $stmt->bindParam(":nss", $nss);
+                $stmt->bindParam(":CP_fiscal", $cp); 
                 $stmt->bindParam(":fecha_ingreso", $fecha_ingreso); 
                 $stmt->bindParam(":paterno", $paterno); 
                 $stmt->bindParam(":materno", $materno); 
@@ -59,21 +60,22 @@
             
         }
 
-         public static function actualizar( $id, $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss,$fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
+         public static function actualizar( $id, $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss, $cp, $fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
             try{
                 
-                $sql = "UPDATE empleados SET no_empleado = :no_empleado, id_unidad_negocio = :id_unidad_negocio, id_regional = :id_regional, id_zona = :id_zona, id_empresa = :id_empresa, id_servicio = :id_servicio, curp = :curp, rfc = :rfc, nss = :nss, fecha_ingreso = :fecha_ingreso, paterno = :paterno, materno = :materno, nombre = :nombre, id_turno = :id_turno, id_puesto = :id_puesto, sueldo = :sueldo, id_periocidad = :id_periocidad, cuenta = :cuenta, clave_interbancaria = :clave_interbancaria, id_banco = :id_banco, estatus = :estatus WHERE id = :id";
+                $sql = "UPDATE empleados SET no_empleado = :no_empleado, id_unidad_negocio = :id_unidad_negocio, id_regional = :id_regional, id_zona = :id_zona, id_empresa = :id_empresa, id_servicio = :id_servicio, curp = :curp, rfc = :rfc, nss = :nss, CP_fiscal = :CP_fiscal, fecha_ingreso = :fecha_ingreso, paterno = :paterno, materno = :materno, nombre = :nombre, id_turno = :id_turno, id_puesto = :id_puesto, sueldo = :sueldo, id_periocidad = :id_periocidad, cuenta = :cuenta, clave_interbancaria = :clave_interbancaria, id_banco = :id_banco, estatus = :estatus WHERE id = :id";
                 $db = self::$database::getConnection();
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(":no_empleado", $no_empleado);
                 $stmt->bindParam(":id_unidad_negocio", $id_unidad_negocio);
                 $stmt->bindParam(":id_regional", $id_regional);
                 $stmt->bindParam(":id_zona", $id_zona);
-               $stmt->bindParam(":id_empresa", $id_empresa,); 
+                $stmt->bindParam(":id_empresa", $id_empresa,); 
                 $stmt->bindParam(":id_servicio", $id_servicio); 
                 $stmt->bindParam(":curp", $curp); 
                 $stmt->bindParam(":rfc", $rfc); 
                 $stmt->bindParam(":nss", $nss); 
+                $stmt->bindParam(":CP_fiscal", $cp); 
                 $stmt->bindParam(":fecha_ingreso", $fecha_ingreso); 
                 $stmt->bindParam(":paterno", $paterno); 
                 $stmt->bindParam(":materno", $materno); 
