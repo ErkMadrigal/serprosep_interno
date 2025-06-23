@@ -73,7 +73,8 @@
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              // Agrega aquí si usas token o API Key
+              'X-API-KEY': window.env.API_KEY, // API Key fija
+              'Authorization': `Bearer ${localStorage.getItem('token')}` // Token guardado en localStorage
             },
             body: JSON.stringify(data)
           })

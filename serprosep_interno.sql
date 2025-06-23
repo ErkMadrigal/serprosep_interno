@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-06-2025 a las 00:30:29
+-- Tiempo de generación: 23-06-2025 a las 23:11:16
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -69,6 +69,7 @@ CREATE TABLE `empleados` (
   `id_servicio` int(10) DEFAULT NULL,
   `curp` varchar(20) DEFAULT NULL,
   `rfc` varchar(15) DEFAULT NULL,
+  `CP_fiscal` varchar(5) NOT NULL,
   `nss` varchar(12) DEFAULT NULL,
   `fecha_ingreso` date DEFAULT NULL,
   `paterno` varchar(255) DEFAULT NULL,
@@ -88,11 +89,11 @@ CREATE TABLE `empleados` (
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`id`, `no_empleado`, `id_unidad_negocio`, `id_regional`, `id_zona`, `id_empresa`, `id_servicio`, `curp`, `rfc`, `nss`, `fecha_ingreso`, `paterno`, `materno`, `nombre`, `id_turno`, `id_puesto`, `sueldo`, `id_periocidad`, `cuenta`, `clave_interbancaria`, `id_banco`, `estatus`) VALUES
-(1, '230473', 0, 0, 0, 0, 0, 'GOJM850101HDFRRL03', 'GOJM850101ABC', '12345678901', '2025-06-02', 'González', 'Martínez', 'Juan', 0, 0, 12500.00, 0, '0001234567', '123456789012345678', 0, 1),
-(3, '301006', 0, 0, 0, 0, 0, 'MAFE990706HMCDRLR05', 'MAFE9900706DU3', '12345678901', '2025-06-02', 'Madrigal', 'Flores', 'Erick', 0, 0, 12500.00, 0, '0001234567', '123456789012345678', 0, 1),
-(4, '301006', 0, 0, 0, 0, 0, 'GOJM850101HDFRRL03', 'GOJM850101ABC', '12345678901', '2025-06-02', 'Madrigal', 'Flores', 'Nestor', 0, 0, 12500.00, 0, '0001234567', '123456789012345678', 0, 1),
-(5, '301006', 0, 0, 0, 0, 0, 'GOJM850101HDFRRL03', 'GOJM850101ABC', '12345678901', '2025-06-02', 'Madrigal', 'Flores', 'Angel', 0, 0, 12500.00, 0, '0001234567', '123456789012345678', 0, 1);
+INSERT INTO `empleados` (`id`, `no_empleado`, `id_unidad_negocio`, `id_regional`, `id_zona`, `id_empresa`, `id_servicio`, `curp`, `rfc`, `CP_fiscal`, `nss`, `fecha_ingreso`, `paterno`, `materno`, `nombre`, `id_turno`, `id_puesto`, `sueldo`, `id_periocidad`, `cuenta`, `clave_interbancaria`, `id_banco`, `estatus`) VALUES
+(1, '230473', 0, 0, 0, 0, 0, 'GOJM850101HDFRRL03', 'GOJM850101ABC', '', '12345678901', '2025-06-02', 'González', 'Martínez', 'Juan', 0, 0, 12500.00, 0, '0001234567', '123456789012345678', 0, 1),
+(3, '301006', 0, 0, 0, 0, 0, 'MAFE990706HMCDRLR05', 'MAFE9900706DU3', '', '12345678901', '2025-06-02', 'Madrigal', 'Flores', 'Erick', 0, 0, 12500.00, 0, '0001234567', '123456789012345678', 0, 1),
+(4, '301006', 0, 0, 0, 0, 0, 'GOJM850101HDFRRL03', 'GOJM850101ABC', '', '12345678901', '2025-06-02', 'Madrigal', 'Flores', 'Nestor', 0, 0, 12500.00, 0, '0001234567', '123456789012345678', 0, 1),
+(5, '301006', 0, 0, 0, 0, 0, 'GOJM850101HDFRRL03', 'GOJM850101ABC', '', '12345678901', '2025-06-02', 'Madrigal', 'Flores', 'Angel', 0, 0, 12500.00, 0, '0001234567', '123456789012345678', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1477,6 +1478,26 @@ INSERT INTO `multicatalogo` (`id`, `descripcion`, `valor`, `id_catalogo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `regional`
+--
+
+CREATE TABLE `regional` (
+  `id` int(10) NOT NULL,
+  `id_empleado` int(10) NOT NULL,
+  `id_zona` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `regional`
+--
+
+INSERT INTO `regional` (`id`, `id_empleado`, `id_zona`) VALUES
+(1, 3, 0),
+(2, 4, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuario`
 --
 
@@ -1541,6 +1562,12 @@ ALTER TABLE `multicatalogo`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `regional`
+--
+ALTER TABLE `regional`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -1585,6 +1612,12 @@ ALTER TABLE `menu`
 --
 ALTER TABLE `multicatalogo`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1320;
+
+--
+-- AUTO_INCREMENT de la tabla `regional`
+--
+ALTER TABLE `regional`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
