@@ -191,8 +191,10 @@ servicioInput.addEventListener('input', () => {
 servicioInput.addEventListener('change', () => {
   const inputValue = servicioInput.value.trim();
   const selected = serviciosData.find(item => item.valor === inputValue);
-
-  if (!selected) {
+  if (selected) {
+    document.getElementById('servicioId').value = selected.id; // asigna el id al input oculto
+  } else {
+    document.getElementById('servicioId').value = ''; // limpia si no hay match
     console.warn('Servicio no encontrado');
   }
 });

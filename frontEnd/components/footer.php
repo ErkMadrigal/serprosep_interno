@@ -9,6 +9,7 @@
     <script src='js/jquery.stickOnScroll.js'></script>
     <script src="js/tinycolor-min.js"></script>
     <script src="js/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/apps.js"></script>
     <script src="js/app.js"></script>
     <?php if( isset( $scripts ) ) : ?>
@@ -18,7 +19,7 @@
     <?php endif;?>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
 
@@ -28,6 +29,6 @@
       }
       gtag('js', new Date());
       gtag('config', 'UA-56159088-1');
-    </script>
+    </script> -->
   </body>
 </html>

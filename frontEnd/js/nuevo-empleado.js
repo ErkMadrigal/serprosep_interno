@@ -86,13 +86,19 @@
             })
             .then(result => {
               console.log('Empleado agregado:', result);
-              alert("Empleado agregado con éxito ✅");
-              formulario.reset(); // Limpia el formularioulario
+              Toast.fire({
+                icon: "success",
+                title: result.mensaje
+              });
+              formulario.reset();
               formulario.classList.remove('was-validated');
             })
             .catch(error => {
               console.error('Error en el fetch:', error);
-              alert("Hubo un error al guardar el empleado ❌");
+              Toast.fire({
+                icon: "error",
+                title: error.message
+              });
             });
         } else {
           formulario.classList.add('was-validated');

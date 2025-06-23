@@ -63,9 +63,32 @@ switch ($opcion) {
             try {
                 $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
 
+                $clave_interbancaria = $data['interbancaria'] ?? null;
+
+                if ($clave_interbancaria) {
+                    $partes = explode('-', $clave_interbancaria);
+
+                    $clave_final = implode('', $partes);
+
+                }else{
+                    $clave_final =  false;
+                }
+
+                $cp = $data['cp'] ?? null;
+
+                if ($cp) {
+                    $partes = explode('-', $cp);
+
+                    $cp_final = implode('', $partes);
+
+                }else{
+                    $cp_final = false;
+                }
+
+
                 // Campos requeridos
-                $clave_interbancaria = $data['clave_interbancaria'] ?? false;
-                $id_banco            = $data['id_banco']            ?? false;
+                $clave_interbancaria =  $clave_final;
+                $id_banco            = $data['institucionBancaria']            ?? false;
 
                 $paterno             = $data['paterno']             ?? false;
                 $materno             = $data['materno']             ?? false;
@@ -73,7 +96,7 @@ switch ($opcion) {
                 $curp                = $data['curp']                ?? false;
                 $rfc                 = $data['rfc']                 ?? false;
                 $nss                 = $data['nss']                 ?? false;
-                $cp                  = $data['cp']                  ?? false;
+                $cp                  = $cp_final;
 
                 // Campos opcionales
                 $no_empleado         = $data['no_empleado']         ?? '';
@@ -95,7 +118,7 @@ switch ($opcion) {
                 $camposRequeridos = [
                     $clave_interbancaria, $id_banco,
                     $paterno, $materno, $nombre,
-                    $curp, $rfc, $nss
+                    $curp, $rfc, $nss, $cp
                 ];
 
                 if (in_array(false, $camposRequeridos, true)) {
