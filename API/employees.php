@@ -178,13 +178,18 @@ switch ($opcion) {
                 // Campos requeridos
                     $empleados = new ConsultasEmpleados();
                     
+                    $zonas = isset($data["zonas"]) ? $data["zonas"] : [];
+                    $puestos = isset($data["puestos"]) ? $data["puestos"] : [];
+                    $fechas = isset($data["fechas"]) ? $data["fechas"] : null;
+                    $status = isset($data["status"]) ? $data["status"] : null;
+
                     $pagina = isset($data['pagina']) ? (int)$data['pagina'] : 1;
                     $limite = isset($data['limit']) ? (int)$data['limit'] : 50;
                     $offset = ($pagina - 1) * $limite;
                     
                     $respuesta = [
-                        'empleado' => $empleados::getEmpleados($limite, $offset),
-                        'AllEmpleados' => $empleados::getCountData(),
+                        'empleado' => $empleados::getEmpleados($limite, $offset, $zonas, $puestos, $fechas, $status),
+                        'AllTotal' => $empleados::getCountData(),
                         'completados' => $empleados::getTotalByEstatus(1225),
                         'pendientes' => $empleados::getTotalByEstatus(1320),
                         'bajas' => $empleados::getTotalByEstatus(1226),

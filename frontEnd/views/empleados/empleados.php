@@ -7,7 +7,7 @@
                 <div class="col-md">
                   <ul class="nav nav-pills justify-content-start">
                     <li class="nav-item">
-                      <p class="nav-link active bg-transparent pr-2 pl-0 text-primary">| Cantidad Total <span class="badge badge-pill bg-primary text-white ml-2" id="total"></span></p>
+                      <p class="nav-link active bg-transparent pr-2 pl-0 text-primary">| Cantidad Total <span class="badge badge-pill bg-primary text-white ml-2" id="AllTotal"></span></p>
                     </li>
                     <li class="nav-item">
                       <p class="nav-link text-muted px-2">| Completados <span class="badge badge-pill bg-success text-white " id="completado"></span></p>
@@ -23,6 +23,7 @@
                 <div class="form-group">
                   <label for="inputLang">Registros Visibles</label>
                   <select id="inputLang" class="form-control">
+                    <option value="2">2</option>
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -124,6 +125,7 @@
                   </div>
                 </div>
               </div>
+              <p class="nav-link active bg-transparent pr-2 pl-0 text-primary">| Cantidad mostrada <span class="badge badge-pill bg-primary text-white ml-2" id="total"></span></p>
               <table class="table table-hover bg-white">
                 <thead>
                   <tr role="row">

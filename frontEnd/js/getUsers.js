@@ -7,9 +7,9 @@ const loadingContainer = document.querySelector("#loadingContainer");
 const searchInput = document.getElementById("search");
 const reload = document.querySelector("#reload");
 const btnReset = document.querySelector("#btnReset");
-const btnFiltro = document.querySelector("#btnFiltro")
+const btnFiltro = document.querySelector("#btnFiltro");
 
-let getEmpleados = {}
+let getEmpleados = {};
 
 let totalEmpleados = 0;
 let paginaActual = 1;
@@ -19,39 +19,45 @@ let fechas = document.getElementById("fechas");
 let zona = document.getElementById("zona");
 const radios = document.getElementsByName('estatusRadio');
 
-radios.forEach = Array.prototype.forEach; // por compatibilidad si hace falta
-
 let selectedValue = null;
 
-radios.forEach(radio => {
+// Listener para radios estatus
+Array.from(radios).forEach(radio => {
   radio.addEventListener('change', () => {
     if (radio.checked) {
-      selectedValue = radio.value; // o radio.id si prefieres
-      getEmpleados.status = selectedValue
+      selectedValue = radio.value;
+      getEmpleados.status = selectedValue;
     }
   });
 });
 
+// Aplicar filtros al hacer clic en filtro
 btnFiltro.onclick = () => {
-  const zonasSeleccionadas = Array.from(zona.selectedOptions).map(option => option.value);
-  const puestosSeleccionados = Array.from(puesto.selectedOptions).map(option => option.value);
-  if(zonasSeleccionadas.length > 0){
+  const zonasSeleccionadas = Array.from(zona.selectedOptions).map(o => o.value);
+  const puestosSeleccionados = Array.from(puesto.selectedOptions).map(o => o.value);
+
+  if (zonasSeleccionadas.length > 0) {
     getEmpleados.zonas = zonasSeleccionadas;
+  } else {
+    delete getEmpleados.zonas;
   }
-  if(puestosSeleccionados.length > 0){
+
+  if (puestosSeleccionados.length > 0) {
     getEmpleados.puestos = puestosSeleccionados;
+  } else {
+    delete getEmpleados.puestos;
   }
 
-  // console.log("Valores seleccionados:", zonasSeleccionadas);
-  if(fechas.value != ''){
+  if (fechas.value !== '') {
     getEmpleados.fechas = fechas.value;
+  } else {
+    delete getEmpleados.fechas;
   }
 
-  console.log(getEmpleados)
+  getData(1, parseInt(inputLang.value));
 };
 
-
-// Muestra barra de carga progresiva
+// Mostrar barra de carga con progreso simulado
 const showLoading = () => {
   loadingContainer.style.display = 'block';
   progressBar.style.width = '0%';
@@ -67,6 +73,7 @@ const showLoading = () => {
   }, 100);
 };
 
+// Ocultar barra de carga
 const hideLoading = (interval) => {
   clearInterval(interval);
   progressBar.style.width = '100%';
@@ -77,6 +84,7 @@ const hideLoading = (interval) => {
   }, 300);
 };
 
+// Renderizar tabla con empleados
 const renderTablaEmpleados = (lista = []) => {
   dataTable.innerHTML = lista.map(value => `
     <tr>
@@ -89,7 +97,7 @@ const renderTablaEmpleados = (lista = []) => {
       <td>${value.estatus}</td>
       <td>
         <div class="dropdown">
-          <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown">
+          <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="text-muted sr-only">Action</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
@@ -104,10 +112,17 @@ const renderTablaEmpleados = (lista = []) => {
   `).join('');
 };
 
-const generarPaginacion = (totalItems, itemsPorPagina, paginaActual, isSearch = false, searchTerm = '') => {
+// Generar paginación con manejo para búsqueda o carga normal
+const generarPaginacion = (totalItems, itemsPorPagina, paginaActual) => {
   const totalPaginas = Math.ceil(totalItems / itemsPorPagina);
   const ul = document.querySelector('.pagination');
+  if (!ul) {
+    console.error('No se encontró el elemento con la clase .pagination en el DOM.');
+    return;
+  }
   ul.innerHTML = '';
+
+  // console.log("Total Items:", totalItems, "Items per Page:", itemsPorPagina, "Total Pages:", totalPaginas, "Current Page:", paginaActual);
 
   const crearLi = (label, pagina, disabled = false, active = false) => {
     const li = document.createElement('li');
@@ -116,8 +131,8 @@ const generarPaginacion = (totalItems, itemsPorPagina, paginaActual, isSearch = 
     if (!disabled) {
       li.addEventListener('click', e => {
         e.preventDefault();
-        if (isSearch) {
-          searchData(searchTerm, itemsPorPagina, pagina);
+        if (searchInput.value != '') {
+          searchData(searchInput.value, itemsPorPagina, pagina);
         } else {
           getData(pagina, itemsPorPagina);
         }
@@ -126,26 +141,27 @@ const generarPaginacion = (totalItems, itemsPorPagina, paginaActual, isSearch = 
     return li;
   };
 
-  // Previous
+  // Botón Anterior
   ul.appendChild(crearLi("«", paginaActual - 1, paginaActual === 1));
 
-  // Número de páginas
+  // Botones numéricos de páginas
   for (let i = 1; i <= totalPaginas; i++) {
     ul.appendChild(crearLi(i, i, false, i === paginaActual));
   }
 
-  // Next
+  // Botón Siguiente
   ul.appendChild(crearLi("»", paginaActual + 1, paginaActual === totalPaginas));
 };
 
+// Obtener datos con filtros y paginación
 const getData = async (pagina = 1, items = parseInt(inputLang.value)) => {
   paginaActual = pagina;
   reload.disabled = true;
   reload.innerText = "Cargando...";
- 
-  getEmpleados.action = "getEmpleados",
-  getEmpleados.pagina = pagina
-  getEmpleados.limit = items
+
+  getEmpleados.action = "getEmpleados";
+  getEmpleados.pagina = pagina;
+  getEmpleados.limit = items;
 
   const interval = showLoading();
 
@@ -169,9 +185,10 @@ const getData = async (pagina = 1, items = parseInt(inputLang.value)) => {
     document.querySelector("#completado").innerText = data?.completados?.empleadosTotales ?? 0;
     document.querySelector("#bajas").innerText = data?.bajas?.empleadosTotales ?? 0;
     document.querySelector("#pendeintes").innerText = data?.pendientes?.empleadosTotales ?? 0;
-    document.querySelector("#total").innerText = data?.AllEmpleados?.empleadosTotales ?? 0;
+    document.querySelector("#AllTotal").innerText = data?.AllTotal?.empleadosTotales ?? 0;
+    document.querySelector("#total").innerText = data?.empleado?.total ?? 0;
 
-    totalEmpleados = data?.AllEmpleados?.empleadosTotales ?? 0;
+    totalEmpleados = data?.empleado?.total ?? 0;
     generarPaginacion(totalEmpleados, items, pagina);
 
   } catch (error) {
@@ -183,6 +200,7 @@ const getData = async (pagina = 1, items = parseInt(inputLang.value)) => {
   }
 };
 
+// Buscar datos con paginación
 const searchData = async (search, limit = 10, pagina = 1) => {
   const offset = (pagina - 1) * limit;
   const interval = showLoading();
@@ -207,7 +225,9 @@ const searchData = async (search, limit = 10, pagina = 1) => {
 
     const data = await response.json();
     renderTablaEmpleados(data.data);
-    generarPaginacion(data.total, limit, pagina, true, search);
+    document.querySelector("#total").innerText = data?.total ?? 0;
+
+    generarPaginacion(data.total, limit, pagina);
 
   } catch (error) {
     console.error('Error en la búsqueda:', error);
@@ -234,8 +254,10 @@ searchInput.onkeyup = () => {
 };
 
 btnReset.onclick = () => {
-  searchInput.value = '';        // Limpiar el input de búsqueda
-  getData(1, parseInt(inputLang.value)); // Recargar datos desde la página 1
+  searchInput.value = '';
+  delete getEmpleados.search;
+  getData(1, parseInt(inputLang.value));
 };
+
 // Carga inicial
 getData();
