@@ -92,9 +92,9 @@ const renderTablaEmpleados = (lista = []) => {
       <td>${value.nombre}</td>
       <td>${value.curp}</td>
       <td>${value.fecha_ingreso}</td>
-      <td>${value.id_puesto}</td>
-      <td>${value.id_zona}</td>
-      <td>${value.estatus}</td>
+      <td>${value.puesto ? value.puesto:''}</td>
+      <td>${value.zona ? value.zona:''}</td>
+      <td>${asignIcon(value.estatus)}</td>
       <td>
         <div class="dropdown">
           <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -111,6 +111,18 @@ const renderTablaEmpleados = (lista = []) => {
     </tr>
   `).join('');
 };
+
+const badgeClasses = {
+  activo: 'badge-success',
+  pendiente: 'badge-warning',
+  baja: 'badge-danger',
+  // otros estados si quieres...
+};
+
+const asignIcon = (status) => {
+  const badgeClass = badgeClasses[status] || 'badge-secondary'; // clase por defecto
+  return `<span class="badge badge-pill ${badgeClass}">${status}</span>`;
+}
 
 // Generar paginación con manejo para búsqueda o carga normal
 const generarPaginacion = (totalItems, itemsPorPagina, paginaActual) => {

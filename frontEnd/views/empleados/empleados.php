@@ -135,8 +135,8 @@
                     <th>Ingreso</th>
                     <th>Puesto</th>
                     <th>Zona</th>
-                    <th>activo</th>
-                    <th>Action</th>
+                    <th>Estatus</th>
+                    <th>Acción</th>
                   </tr>
                 </thead>
                 <tbody id="dataTable">

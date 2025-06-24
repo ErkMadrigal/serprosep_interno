@@ -14,101 +14,81 @@
             self::$respuesta = null;
         }   
         
-        public static function getEmpleados($limit, $offset, $zonas = [], $puestos = [], $fechas = null, $status = null) {
-            try {
-                $dbc = self::$database::getConnection();
+     public static function getEmpleados($limit, $offset, $zonas = [], $puestos = [], $fechas = null, $status = null) {
+    try {
+        $dbc = self::$database::getConnection();
 
-                $whereClauses = [];
-                $params = [];
+        $whereClauses = [];
+        $params = [];
 
-                // Filtro zonas (array)
-                if (!empty($zonas)) {
-                    // placeholders para IN
-                    $placeholdersZonas = implode(',', array_fill(0, count($zonas), '?'));
-                    $whereClauses[] = "id_zona IN ($placeholdersZonas)";
-                    $params = array_merge($params, $zonas);
-                }
-
-                // Filtro puestos (array)
-                if (!empty($puestos)) {
-                    $placeholdersPuestos = implode(',', array_fill(0, count($puestos), '?'));
-                    $whereClauses[] = "id_puesto IN ($placeholdersPuestos)";
-                    $params = array_merge($params, $puestos);
-                }
-
-                // Filtro fechas (suponiendo que $fechas es un string tipo "2023-01-01 - 2023-01-31")
-                if (!empty($fechas)) {
-                    // Separar fechas por ' a '
-                    $rangos = explode(' a ', $fechas);
-                    if (count($rangos) === 2) {
-                        $whereClauses[] = "fecha_ingreso BETWEEN ? AND ?";
-                        $params[] = $rangos[0];
-                        $params[] = $rangos[1];
-                    }
-                }
-
-                // Filtro status (string o número)
-                if (!empty($status)) {
-                    $whereClauses[] = "estatus = ?";
-                    $params[] = $status;
-                }
-
-                // Construir cláusula WHERE si hay condiciones
-                $whereSQL = "";
-                if (count($whereClauses) > 0) {
-                    $whereSQL = " WHERE " . implode(" AND ", $whereClauses);
-                }
-
-                // Consulta con filtros
-                $sql = "SELECT id, CONCAT(nombre, ' ', paterno, ' ', materno) AS nombre, curp, fecha_ingreso, id_puesto, id_zona, estatus 
-                        FROM empleados 
-                        $whereSQL
-                        ORDER BY id DESC 
-                        LIMIT :limit OFFSET :offset";
-
-                $stmt = $dbc->prepare($sql);
-
-                // Bind limit y offset (son int)
-                $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-                $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-
-                // Bind params para filtros dinámicos (empieza en posición 1)
-                // Como usamos placeholders `?` para IN y filtros, los parámetros van bind en orden
-                $pos = 1;
-                foreach ($params as $param) {
-                    $stmt->bindValue($pos, $param);
-                    $pos++;
-                }
-
-                $stmt->execute();
-
-                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                // Obtener total con filtros para paginación
-                $sqlCount = "SELECT COUNT(*) as total FROM empleados $whereSQL";
-                $stmtCount = $dbc->prepare($sqlCount);
-
-                // Bind parámetros para count
-                $pos = 1;
-                foreach ($params as $param) {
-                    $stmtCount->bindValue($pos, $param);
-                    $pos++;
-                }
-                $stmtCount->execute();
-                $totalData = $stmtCount->fetch(PDO::FETCH_ASSOC);
-
-                self::$respuesta["status"] = "ok";
-                self::$respuesta["total"] = $totalData['total'] ?? 0;
-                self::$respuesta["data"] = $data;
-
-            } catch (PDOException $e) {
-                self::$respuesta["status"] = "error";
-                self::$respuesta["data"] = [];
-                self::$respuesta["mensaje"] = $e->getMessage();
-            }
-
-            return self::$respuesta;
+        if (!empty($zonas)) {
+            $placeholdersZonas = implode(',', array_fill(0, count($zonas), '?'));
+            $whereClauses[] = "id_zona IN ($placeholdersZonas)";
+            $params = array_merge($params, $zonas);
         }
+
+        if (!empty($puestos)) {
+            $placeholdersPuestos = implode(',', array_fill(0, count($puestos), '?'));
+            $whereClauses[] = "id_puesto IN ($placeholdersPuestos)";
+            $params = array_merge($params, $puestos);
+        }
+
+        if (!empty($fechas)) {
+            $rangos = explode(' a ', $fechas);
+            if (count($rangos) === 2) {
+                $whereClauses[] = "fecha_ingreso BETWEEN ? AND ?";
+                $params[] = $rangos[0];
+                $params[] = $rangos[1];
+            }
+        }
+
+        if (!empty($status) && $status !== '000') {
+            
+            $whereClauses[] = "estatus = ?";
+            $params[] = $status;
+        }
+
+        $whereSQL = "";
+        if (count($whereClauses) > 0) {
+            $whereSQL = " WHERE " . implode(" AND ", $whereClauses);
+        }
+
+        // Convierte a int para evitar inyección y errores
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+
+        $sql = "SELECT  e.id, CONCAT(e.nombre, ' ', e.paterno, ' ', e.materno) AS nombre, e.curp, e.fecha_ingreso, mp.valor puesto, mz.valor zona, ms.valor estatus 
+                FROM empleados e
+                LEFT JOIN multicatalogo mz on e.id_zona = mz.id
+                LEFT JOIN multicatalogo mp on e.id_puesto = mp.id
+                LEFT JOIN multicatalogo ms on e.estatus = ms.id
+                $whereSQL
+                ORDER BY id DESC 
+                LIMIT $limit OFFSET $offset";
+
+        $stmt = $dbc->prepare($sql);
+        $stmt->execute($params);
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sqlCount = "SELECT COUNT(*) as total FROM empleados $whereSQL";
+        $stmtCount = $dbc->prepare($sqlCount);
+        $stmtCount->execute($params);
+
+        $totalData = $stmtCount->fetch(PDO::FETCH_ASSOC);
+
+        self::$respuesta["status"] = "ok";
+        self::$respuesta["total"] = $totalData['total'] ?? 0;
+        self::$respuesta["data"] = $data;
+
+    } catch (PDOException $e) {
+        self::$respuesta["status"] = "error";
+        self::$respuesta["data"] = [];
+        self::$respuesta["mensaje"] = $e->getMessage();
+    }
+
+    return self::$respuesta;
+}
 
 
         public static function getEmpleado($id_empleado){
@@ -177,7 +157,10 @@
 
         public static function searchEmpleado($search, $limit, $offset) {
             try {
-                $sqlBase = "FROM empleados 
+                $sqlBase = "FROM empleados e
+                            LEFT JOIN multicatalogo mz on e.id_zona = mz.id
+                            LEFT JOIN multicatalogo mp on e.id_puesto = mp.id
+                            LEFT JOIN multicatalogo ms on e.estatus = ms.id
                             WHERE nombre LIKE :termino 
                             OR paterno LIKE :termino 
                             OR materno LIKE :termino 
@@ -186,7 +169,7 @@
                             OR nss LIKE :termino";
 
                 // Consulta de datos
-                $sqlSelect = "SELECT id, CONCAT(nombre, ' ', paterno, ' ', materno) AS nombre, curp, fecha_ingreso, id_puesto, id_zona, estatus " . $sqlBase. " LIMIT :limit OFFSET :offset";
+                $sqlSelect = "e.id, CONCAT(e.nombre, ' ', e.paterno, ' ', e.materno) AS nombre, e.curp, e.fecha_ingreso, mp.valor puesto, mz.valor zona, ms.valor estatus" . $sqlBase. " LIMIT :limit OFFSET :offset";
                 $dbc = self::$database::getConnection();
                 $stmt = $dbc->prepare($sqlSelect);
                 $like = '%' . $search . '%';
