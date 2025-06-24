@@ -59,102 +59,51 @@
                         <div class="form-group my-4">
                           <p class="mb-2"><strong>Zona</strong></p>
                           <label for="multi-select2" class="sr-only"></label>
-                          <select class="form-control select2-multi" id="multi-select1">
-                            <optgroup label="Mountain Time Zone">
-                              <option value="AZ">Arizona</option>
-                              <option value="CO">Colorado</option>
-                              <option value="ID">Idaho</option>
-                              <option value="MT">Montana</option>
-                              <option value="NE">Nebraska</option>
-                              <option value="NM">New Mexico</option>
-                              <option value="ND">North Dakota</option>
-                              <option value="UT">Utah</option>
-                              <option value="WY">Wyoming</option>
-                            </optgroup>
-                            <optgroup label="Central Time Zone">
-                              <option value="AL">Alabama</option>
-                              <option value="AR">Arkansas</option>
-                              <option value="IL">Illinois</option>
-                              <option value="IA">Iowa</option>
-                              <option value="KS">Kansas</option>
-                              <option value="KY">Kentucky</option>
-                              <option value="LA">Louisiana</option>
-                              <option value="MN">Minnesota</option>
-                              <option value="MS">Mississippi</option>
-                              <option value="MO">Missouri</option>
-                              <option value="OK">Oklahoma</option>
-                              <option value="SD">South Dakota</option>
-                              <option value="TX">Texas</option>
-                              <option value="TN">Tennessee</option>
-                              <option value="WI">Wisconsin</option>
-                            </optgroup>
+                          <select class="form-control select2-multi" multiple id="zona">
+                            
                           </select>
                         </div> <!-- form-group -->
                         <div class="form-group my-4">
                           <p class="mb-2">
                             <strong>Estatus</strong>
                           </p>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Activos</label>
+                          <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" value="1225" id="radioActivos" name="estatusRadio">
+                            <label class="custom-control-label" for="radioActivos">Activos</label>
                           </div>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                            <label class="custom-control-label" for="customCheck2">Pendientes</label>
+
+                          <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" value="1320" id="radioPendientes" name="estatusRadio">
+                            <label class="custom-control-label" for="radioPendientes">Pendientes</label>
                           </div>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1-1" checked>
-                            <label class="custom-control-label" for="customCheck1">Bajas</label>
+
+                          <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" value="1226" id="radioBajas" name="estatusRadio">
+                            <label class="custom-control-label" for="radioBajas">Bajas</label>
                           </div>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1-2">
-                            <label class="custom-control-label" for="customCheck1">Todos</label>
+
+                          <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" value="000" id="radioTodos" name="estatusRadio">
+                            <label class="custom-control-label" for="radioTodos">Todos</label>
                           </div>
                         </div> <!-- form-group -->
                         <div class="form-group my-4">
                           <p class="mb-2"><strong>Puesto</strong></p>
                           <label for="multi-select2" class="sr-only"></label>
-                          <select class="form-control select2-multi" id="multi-select2">
-                            <optgroup label="Mountain Time Zone">
-                              <option value="AZ">Arizona</option>
-                              <option value="CO">Colorado</option>
-                              <option value="ID">Idaho</option>
-                              <option value="MT">Montana</option>
-                              <option value="NE">Nebraska</option>
-                              <option value="NM">New Mexico</option>
-                              <option value="ND">North Dakota</option>
-                              <option value="UT">Utah</option>
-                              <option value="WY">Wyoming</option>
-                            </optgroup>
-                            <optgroup label="Central Time Zone">
-                              <option value="AL">Alabama</option>
-                              <option value="AR">Arkansas</option>
-                              <option value="IL">Illinois</option>
-                              <option value="IA">Iowa</option>
-                              <option value="KS">Kansas</option>
-                              <option value="KY">Kentucky</option>
-                              <option value="LA">Louisiana</option>
-                              <option value="MN">Minnesota</option>
-                              <option value="MS">Mississippi</option>
-                              <option value="MO">Missouri</option>
-                              <option value="OK">Oklahoma</option>
-                              <option value="SD">South Dakota</option>
-                              <option value="TX">Texas</option>
-                              <option value="TN">Tennessee</option>
-                              <option value="WI">Wisconsin</option>
-                            </optgroup>
+                          <select class="form-control select2-multi" multiple id="puesto">
+                            
                           </select>
                         </div> <!-- form-group -->
                         <div class="form-group my-4">
                           <label for="date-input1">Rango de Fechas</label>
-                          <input type="text" name="datetimes" class="form-control datetimes" />
+                          <input type="text" name="datetimes" class="form-control datetimes" id="fechas"/>
 
                         </div>
                       </div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn mb-2 btn-primary btn-block">Apply</button>
-                      <button type="button" class="btn mb-2 btn-secondary btn-block">Reset</button>
+                      <button type="button" class="btn mb-2 btn-primary btn-block" id="btnFiltro">Aplicar Filtros</button>
+                      <button type="button" class="btn mb-2 btn-secondary btn-block" id="btnRecargar">Borrar Filtros</button>
                     </div>
                   </div>
                 </div>

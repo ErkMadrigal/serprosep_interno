@@ -7,9 +7,49 @@ const loadingContainer = document.querySelector("#loadingContainer");
 const searchInput = document.getElementById("search");
 const reload = document.querySelector("#reload");
 const btnReset = document.querySelector("#btnReset");
+const btnFiltro = document.querySelector("#btnFiltro")
+
+let getEmpleados = {}
 
 let totalEmpleados = 0;
 let paginaActual = 1;
+
+let puesto = document.getElementById("puesto");
+let fechas = document.getElementById("fechas");
+let zona = document.getElementById("zona");
+const radios = document.getElementsByName('estatusRadio');
+
+radios.forEach = Array.prototype.forEach; // por compatibilidad si hace falta
+
+let selectedValue = null;
+
+radios.forEach(radio => {
+  radio.addEventListener('change', () => {
+    if (radio.checked) {
+      selectedValue = radio.value; // o radio.id si prefieres
+      getEmpleados.status = selectedValue
+    }
+  });
+});
+
+btnFiltro.onclick = () => {
+  const zonasSeleccionadas = Array.from(zona.selectedOptions).map(option => option.value);
+  const puestosSeleccionados = Array.from(puesto.selectedOptions).map(option => option.value);
+  if(zonasSeleccionadas.length > 0){
+    getEmpleados.zonas = zonasSeleccionadas;
+  }
+  if(puestosSeleccionados.length > 0){
+    getEmpleados.puestos = puestosSeleccionados;
+  }
+
+  // console.log("Valores seleccionados:", zonasSeleccionadas);
+  if(fechas.value != ''){
+    getEmpleados.fechas = fechas.value;
+  }
+
+  console.log(getEmpleados)
+};
+
 
 // Muestra barra de carga progresiva
 const showLoading = () => {
@@ -102,6 +142,10 @@ const getData = async (pagina = 1, items = parseInt(inputLang.value)) => {
   paginaActual = pagina;
   reload.disabled = true;
   reload.innerText = "Cargando...";
+ 
+  getEmpleados.action = "getEmpleados",
+  getEmpleados.pagina = pagina
+  getEmpleados.limit = items
 
   const interval = showLoading();
 
@@ -113,11 +157,7 @@ const getData = async (pagina = 1, items = parseInt(inputLang.value)) => {
         'X-API-KEY': window.env.API_KEY,
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
-      body: JSON.stringify({
-        action: "getEmpleados",
-        pagina,
-        limit: items
-      })
+      body: JSON.stringify(getEmpleados)
     });
 
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -147,6 +187,11 @@ const searchData = async (search, limit = 10, pagina = 1) => {
   const offset = (pagina - 1) * limit;
   const interval = showLoading();
 
+  getEmpleados.action = "searchEmpleado";
+  getEmpleados.search = search;
+  getEmpleados.limit = limit;
+  getEmpleados.offset = offset;
+
   try {
     const response = await fetch(API_BASE_URL, {
       method: 'POST',
@@ -155,12 +200,7 @@ const searchData = async (search, limit = 10, pagina = 1) => {
         'X-API-KEY': window.env.API_KEY,
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
-      body: JSON.stringify({
-        action: "searchEmpleado",
-        search,
-        limit,
-        offset
-      })
+      body: JSON.stringify(getEmpleados)
     });
 
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
