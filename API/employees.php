@@ -110,7 +110,7 @@ switch ($opcion) {
                 $sueldo              = $data['sueldo']              ?? '';
                 $id_periocidad       = $data['id_periocidad']       ?? '';
                 $cuenta              = $data['cuenta']              ?? '';
-                $estatus             = 1; // o lo que aplique
+                $estatus             = 1225; // o lo que aplique
                 $fecha_ingreso       = date('Y-m-d'); // Fecha actual
 
                 
@@ -177,10 +177,22 @@ switch ($opcion) {
 
                 // Campos requeridos
                     $empleados = new ConsultasEmpleados();
-                    $data['limit'] = $data['limit'] ?? 50; // Valor por defecto si no se proporciona
-                    echo json_encode(
-                        $empleados::getEmpleados($data['limit']), JSON_UNESCAPED_UNICODE
-                    );
+                    
+                    $pagina = isset($data['pagina']) ? (int)$data['pagina'] : 1;
+                    $limite = isset($data['limit']) ? (int)$data['limit'] : 50;
+                    $offset = ($pagina - 1) * $limite;
+                    
+                    $respuesta = [
+                        'empleado' => $empleados::getEmpleados($limite, $offset),
+                        'AllEmpleados' => $empleados::getCountData(),
+                        'completados' => $empleados::getTotalByEstatus(1225),
+                        'pendientes' => $empleados::getTotalByEstatus(1320),
+                        'bajas' => $empleados::getTotalByEstatus(1226),
+                        'estatus' => 'ok',
+                        'mensaje' => 'Empleados obtenidos correctamente',
+                        'timestamp' => date('Y-m-d H:i:s')
+                    ];
+                    echo json_encode( $respuesta, JSON_UNESCAPED_UNICODE );
             } catch (Exception $e) {
                 http_response_code(401);
                 echo json_encode(["status" => "error", "message" => "Token JWT inválido: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
@@ -221,6 +233,7 @@ switch ($opcion) {
 
         break;
 
+    
     default:
         echo json_encode(["status" => "error", "message" => "Acción no reconocida"], JSON_UNESCAPED_UNICODE);
         break;
