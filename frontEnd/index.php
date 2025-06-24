@@ -45,11 +45,11 @@
 
         case 'empleados':
             $title = "Empleados";
-            $links = ['css/select2.css'];
+            $links = ['css/select2.css', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'];
             include "./components/header.php";
             include "./components/menu.php";
             include "$ruta/empleados/empleados.php";
-            $scripts = ['js/jquery.mask.min.js','js/select2.min.js', 'js/table-users.js', 'js/getUsers.js'];
+            $scripts = ['https://cdn.jsdelivr.net/npm/flatpickr', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js', 'js/jquery.mask.min.js','js/select2.min.js', 'js/table-users.js', 'js/getUsers.js'];
             include "./components/footer.php";
         break;
 

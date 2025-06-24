@@ -1,46 +1,111 @@
 const API_BASE_URL = window.env.API_URL + 'employees';
 
+const dataTable = document.querySelector("#dataTable");
+const inputLang = document.getElementById("inputLang");
+const progressBar = document.querySelector("#progressBar");
+const loadingContainer = document.querySelector("#loadingContainer");
+const searchInput = document.getElementById("search");
+const reload = document.querySelector("#reload");
+const btnReset = document.querySelector("#btnReset");
 
-let inputLang = document.getElementById("inputLang"); 
-// Variables globales para estado de paginación
-let totalEmpleados = 0;  // mutable porque lo actualizarás después
-const itemsPorPagina = inputLang.value;
+let totalEmpleados = 0;
 let paginaActual = 1;
 
-inputLang.onchange = () => {
-
-  getData(1, inputLang.value);
-}
-
-const getData = async (pagina = 1, items = 5 ) => {
-  paginaActual = pagina; // Actualiza la página activa global
-
-  const reload = document.querySelector("#reload");
-  const progressBar = document.querySelector("#progressBar");
-  const loadingContainer = document.querySelector("#loadingContainer");
-
-  // Mostrar barra de carga
+// Muestra barra de carga progresiva
+const showLoading = () => {
   loadingContainer.style.display = 'block';
   progressBar.style.width = '0%';
   progressBar.setAttribute('aria-valuenow', 0);
 
-  // Simular progreso visual
   let progreso = 0;
-  const interval = setInterval(() => {
+  return setInterval(() => {
     progreso += 10;
     if (progreso <= 90) {
       progressBar.style.width = `${progreso}%`;
       progressBar.setAttribute('aria-valuenow', progreso);
     }
   }, 100);
+};
 
-  if (reload) {
-    reload.disabled = true;
-    reload.innerText = "Cargando...";
+const hideLoading = (interval) => {
+  clearInterval(interval);
+  progressBar.style.width = '100%';
+  progressBar.setAttribute('aria-valuenow', 100);
+  setTimeout(() => {
+    loadingContainer.style.display = 'none';
+    progressBar.style.width = '0%';
+  }, 300);
+};
+
+const renderTablaEmpleados = (lista = []) => {
+  dataTable.innerHTML = lista.map(value => `
+    <tr>
+      <td>${value.id}</td>
+      <td>${value.nombre}</td>
+      <td>${value.curp}</td>
+      <td>${value.fecha_ingreso}</td>
+      <td>${value.id_puesto}</td>
+      <td>${value.id_zona}</td>
+      <td>${value.estatus}</td>
+      <td>
+        <div class="dropdown">
+          <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown">
+            <span class="text-muted sr-only">Action</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="#">Editar</a>
+            <a class="dropdown-item" href="#">Activar</a>
+            <a class="dropdown-item" href="#">Eliminar</a>
+            <a class="dropdown-item" href="#">Asignar</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+};
+
+const generarPaginacion = (totalItems, itemsPorPagina, paginaActual, isSearch = false, searchTerm = '') => {
+  const totalPaginas = Math.ceil(totalItems / itemsPorPagina);
+  const ul = document.querySelector('.pagination');
+  ul.innerHTML = '';
+
+  const crearLi = (label, pagina, disabled = false, active = false) => {
+    const li = document.createElement('li');
+    li.className = `page-item ${disabled ? 'disabled' : ''} ${active ? 'active' : ''}`;
+    li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+    if (!disabled) {
+      li.addEventListener('click', e => {
+        e.preventDefault();
+        if (isSearch) {
+          searchData(searchTerm, itemsPorPagina, pagina);
+        } else {
+          getData(pagina, itemsPorPagina);
+        }
+      });
+    }
+    return li;
+  };
+
+  // Previous
+  ul.appendChild(crearLi("«", paginaActual - 1, paginaActual === 1));
+
+  // Número de páginas
+  for (let i = 1; i <= totalPaginas; i++) {
+    ul.appendChild(crearLi(i, i, false, i === paginaActual));
   }
 
+  // Next
+  ul.appendChild(crearLi("»", paginaActual + 1, paginaActual === totalPaginas));
+};
+
+const getData = async (pagina = 1, items = parseInt(inputLang.value)) => {
+  paginaActual = pagina;
+  reload.disabled = true;
+  reload.innerText = "Cargando...";
+
+  const interval = showLoading();
+
   try {
-    // Enviar la página y cantidad por página para paginar en backend
     const response = await fetch(API_BASE_URL, {
       method: 'POST',
       headers: {
@@ -50,7 +115,7 @@ const getData = async (pagina = 1, items = 5 ) => {
       },
       body: JSON.stringify({
         action: "getEmpleados",
-        pagina: paginaActual,
+        pagina,
         limit: items
       })
     });
@@ -59,90 +124,78 @@ const getData = async (pagina = 1, items = 5 ) => {
 
     const data = await response.json();
 
-    // Actualizar contadores en el DOM
+    renderTablaEmpleados(data?.empleado?.data || []);
+
     document.querySelector("#completado").innerText = data?.completados?.empleadosTotales ?? 0;
     document.querySelector("#bajas").innerText = data?.bajas?.empleadosTotales ?? 0;
     document.querySelector("#pendeintes").innerText = data?.pendientes?.empleadosTotales ?? 0;
     document.querySelector("#total").innerText = data?.AllEmpleados?.empleadosTotales ?? 0;
 
-    // Actualizar totalEmpleados y paginación
     totalEmpleados = data?.AllEmpleados?.empleadosTotales ?? 0;
     generarPaginacion(totalEmpleados, items, pagina);
 
-    // Aquí deberías actualizar la tabla o listado con los empleados de la página actual
-    cargarPagina(paginaActual, data.empleados || []);
-
   } catch (error) {
-    console.error('Error fetching catalogos:', error);
+    console.error('Error al obtener datos:', error);
   } finally {
-    clearInterval(interval);
-    progressBar.style.width = '100%';
-    progressBar.setAttribute('aria-valuenow', 100);
-
-    setTimeout(() => {
-      loadingContainer.style.display = 'none';
-      progressBar.style.width = '0%';
-    }, 300);
-
-    if (reload) {
-      reload.disabled = false;
-      reload.innerHTML = `<span class="fe fe-refresh-ccw fe-16 text-muted"></span>`;
-    }
+    reload.disabled = false;
+    reload.innerHTML = `<span class="fe fe-refresh-ccw fe-16 text-muted"></span>`;
+    hideLoading(interval);
   }
 };
 
-document.querySelector("#reload").onclick = () => getData();
+const searchData = async (search, limit = 10, pagina = 1) => {
+  const offset = (pagina - 1) * limit;
+  const interval = showLoading();
 
-// Función para generar la paginación dinámica
-function generarPaginacion(totalItems, itemsPorPagina, paginaActual) {
-  const totalPaginas = Math.ceil(totalItems / itemsPorPagina);
-  const ul = document.querySelector('.pagination');
-  ul.innerHTML = '';
-
-  // Botón "Previous"
-  const prevLi = document.createElement('li');
-  prevLi.className = 'page-item ' + (paginaActual === 1 ? 'disabled' : '');
-  prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous">&laquo;</a>`;
-  prevLi.addEventListener('click', e => {
-    e.preventDefault();
-    if (paginaActual > 1) {
-      getData(paginaActual - 1);
-    }
-  });
-  ul.appendChild(prevLi);
-
-  // Botones numéricos
-  for(let i = 1; i <= totalPaginas; i++) {
-    const li = document.createElement('li');
-    li.className = 'page-item ' + (i === paginaActual ? 'active' : '');
-    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-    li.addEventListener('click', e => {
-      e.preventDefault();
-      if (i !== paginaActual) {
-        getData(i);
-      }
+  try {
+    const response = await fetch(API_BASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': window.env.API_KEY,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        action: "searchEmpleado",
+        search,
+        limit,
+        offset
+      })
     });
-    ul.appendChild(li);
+
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+    const data = await response.json();
+    renderTablaEmpleados(data.data);
+    generarPaginacion(data.total, limit, pagina, true, search);
+
+  } catch (error) {
+    console.error('Error en la búsqueda:', error);
+  } finally {
+    hideLoading(interval);
   }
+};
 
-  // Botón "Next"
-  const nextLi = document.createElement('li');
-  nextLi.className = 'page-item ' + (paginaActual === totalPaginas ? 'disabled' : '');
-  nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next">&raquo;</a>`;
-  nextLi.addEventListener('click', e => {
-    e.preventDefault();
-    if (paginaActual < totalPaginas) {
-      getData(paginaActual + 1);
+// Eventos
+reload.onclick = () => getData();
+inputLang.onchange = () => getData(1, parseInt(inputLang.value));
+
+let debounceTimer;
+searchInput.onkeyup = () => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    const valor = searchInput.value.trim();
+    if (valor.length > 0) {
+      searchData(valor, parseInt(inputLang.value), 1);
+    } else {
+      getData(1, parseInt(inputLang.value));
     }
-  });
-  ul.appendChild(nextLi);
-}
+  }, 500);
+};
 
-// Función para mostrar datos de la página actual (implementa tú la UI)
-function cargarPagina(pagina, empleados) {
-  console.log(`Cargar datos para página ${pagina}`, empleados);
-  // Aquí actualizas tu tabla o listado con los empleados que te trae el backend
-}
-
+btnReset.onclick = () => {
+  searchInput.value = '';        // Limpiar el input de búsqueda
+  getData(1, parseInt(inputLang.value)); // Recargar datos desde la página 1
+};
 // Carga inicial
 getData();

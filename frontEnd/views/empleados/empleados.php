@@ -49,7 +49,7 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="defaultModalLabel">Filters</h5>
+                      <h5 class="modal-title" id="defaultModalLabel">Filtros</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="fe fe-x fe-12"></i>
                       </button>
@@ -57,7 +57,62 @@
                     <div class="modal-body">
                       <div class="p-2">
                         <div class="form-group my-4">
-                          <p class="mb-2"><strong>Regions</strong></p>
+                          <p class="mb-2"><strong>Zona</strong></p>
+                          <label for="multi-select2" class="sr-only"></label>
+                          <select class="form-control select2-multi" id="multi-select1">
+                            <optgroup label="Mountain Time Zone">
+                              <option value="AZ">Arizona</option>
+                              <option value="CO">Colorado</option>
+                              <option value="ID">Idaho</option>
+                              <option value="MT">Montana</option>
+                              <option value="NE">Nebraska</option>
+                              <option value="NM">New Mexico</option>
+                              <option value="ND">North Dakota</option>
+                              <option value="UT">Utah</option>
+                              <option value="WY">Wyoming</option>
+                            </optgroup>
+                            <optgroup label="Central Time Zone">
+                              <option value="AL">Alabama</option>
+                              <option value="AR">Arkansas</option>
+                              <option value="IL">Illinois</option>
+                              <option value="IA">Iowa</option>
+                              <option value="KS">Kansas</option>
+                              <option value="KY">Kentucky</option>
+                              <option value="LA">Louisiana</option>
+                              <option value="MN">Minnesota</option>
+                              <option value="MS">Mississippi</option>
+                              <option value="MO">Missouri</option>
+                              <option value="OK">Oklahoma</option>
+                              <option value="SD">South Dakota</option>
+                              <option value="TX">Texas</option>
+                              <option value="TN">Tennessee</option>
+                              <option value="WI">Wisconsin</option>
+                            </optgroup>
+                          </select>
+                        </div> <!-- form-group -->
+                        <div class="form-group my-4">
+                          <p class="mb-2">
+                            <strong>Estatus</strong>
+                          </p>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Activos</label>
+                          </div>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                            <label class="custom-control-label" for="customCheck2">Pendientes</label>
+                          </div>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1-1" checked>
+                            <label class="custom-control-label" for="customCheck1">Bajas</label>
+                          </div>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1-2">
+                            <label class="custom-control-label" for="customCheck1">Todos</label>
+                          </div>
+                        </div> <!-- form-group -->
+                        <div class="form-group my-4">
+                          <p class="mb-2"><strong>Puesto</strong></p>
                           <label for="multi-select2" class="sr-only"></label>
                           <select class="form-control select2-multi" id="multi-select2">
                             <optgroup label="Mountain Time Zone">
@@ -91,44 +146,10 @@
                           </select>
                         </div> <!-- form-group -->
                         <div class="form-group my-4">
-                          <p class="mb-2">
-                            <strong>Payment</strong>
-                          </p>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Paypal</label>
-                          </div>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                            <label class="custom-control-label" for="customCheck2">Credit Card</label>
-                          </div>
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1-1" checked>
-                            <label class="custom-control-label" for="customCheck1">Wire Transfer</label>
-                          </div>
-                        </div> <!-- form-group -->
-                        <div class="form-group my-4">
-                          <p class="mb-2">
-                            <strong>Types</strong>
-                          </p>
-                          <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label" for="customRadio1">End users</label>
-                          </div>
-                          <div class="custom-control custom-radio">
-                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" checked>
-                            <label class="custom-control-label" for="customRadio2">Whole Sales</label>
-                          </div>
-                        </div> <!-- form-group -->
-                        <div class="form-group my-4">
-                          <p class="mb-2">
-                            <strong>Completed</strong>
-                          </p>
-                          <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                            <label class="custom-control-label" for="customSwitch1">Include</label>
-                          </div>
-                        </div> <!-- form-group -->
+                          <label for="date-input1">Rango de Fechas</label>
+                          <input type="text" name="datetimes" class="form-control datetimes" />
+
+                        </div>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -138,64 +159,36 @@
                   </div>
                 </div>
               </div>
-               <div id="loadingContainer" style="display: none;">
-                  <p class="mb-1"><strong>Cargando...</strong></p>
-                  <div class="progress mb-3">
-                    <div id="progressBar" class="progress-bar" role="progressbar"
-                        style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    </div>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Buscar Empleados" id="search" aria-label="Buscar Empleados">
+                <div class="input-group-append">
+                  <button class="btn btn-danger" type="button" id="btnReset">
+                      <i class="fe fe-trash align-self-center text-white"></i>
+                  </button>
+                </div>
+              </div>
+              <div id="loadingContainer" style="display: none;">
+                <p class="mb-1"><strong>Cargando...</strong></p>
+                <div class="progress mb-3">
+                  <div id="progressBar" class="progress-bar" role="progressbar"
+                      style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                   </div>
                 </div>
+              </div>
               <table class="table table-hover bg-white">
                 <thead>
                   <tr role="row">
-                    <th>
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="all">
-                        <label class="custom-control-label" for="all"></label>
-                      </div>
-                    </th>
                     <th>ID</th>
-                    <th>Purchase Date</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Ship To</th>
-                    <th>Total</th>
-                    <th>Payment</th>
-                    <th>Status</th>
+                    <th>Nombre</th>
+                    <th>CRUP</th>
+                    <th>Ingreso</th>
+                    <th>Puesto</th>
+                    <th>Zona</th>
+                    <th>activo</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="align-center">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input">
-                        <label class="custom-control-label"></label>
-                      </div>
-                    </td>
-                    <td>1331</td>
-                    <td>2020-12-26 01:32:21</td>
-                    <td>Kasimir Lindsey</td>
-                    <td>(697) 486-2101</td>
-                    <td>996-3523 Et Ave</td>
-                    <td>$3.64</td>
-                    <td> Paypal</td>
-                    <td><span class="dot dot-lg bg-success mr-2"></span></td>
-                    <td>
-                      <div class="dropdown">
-                        <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <span class="text-muted sr-only">Action</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a class="dropdown-item" href="#">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
-                          <a class="dropdown-item" href="#">Assign</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  
+                <tbody id="dataTable">
                 </tbody>
               </table>
               <nav aria-label="Table Paging" class="my-3">
