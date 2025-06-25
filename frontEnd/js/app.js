@@ -39,14 +39,14 @@ function closeSearch() {
   localResults.innerHTML = "";
   remoteResults.innerHTML = "";
   hideResetButton();
-  hideLoading();
+  hideLoadingSearch();
 }
 
-function showLoading() {
+function showLoadingSearch() {
   loadingIndicator.style.display = "flex";
 }
 
-function hideLoading() {
+function hideLoadingSearch() {
   loadingIndicator.style.display = "none";
 }
 
@@ -105,7 +105,7 @@ async function searchDataMenu(search, limit = 50, pagina = 1) {
     offset
   };
 
-  showLoading();
+  showLoadingSearch();
 
   try {
     const response = await fetch(window.env.API_URL + "employees", {
@@ -153,7 +153,7 @@ async function searchDataMenu(search, limit = 50, pagina = 1) {
     console.error("Error en la búsqueda:", error);
     remoteResults.innerHTML = `<div class="text-danger px-2">Error al buscar empleados</div>`;
   } finally {
-    hideLoading();
+    hideLoadingSearch();
   }
 }
 
