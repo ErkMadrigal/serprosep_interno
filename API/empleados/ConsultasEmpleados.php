@@ -169,7 +169,7 @@
                             OR nss LIKE :termino ";
 
                 // Consulta de datos
-                $sqlSelect = "SELECT e.id, CONCAT(e.nombre, ' ', e.paterno, ' ', e.materno) AS nombre, e.curp, e.fecha_ingreso, mp.valor puesto, mz.valor zona, ms.valor estatus" . $sqlBase. " LIMIT :limit OFFSET :offset";
+                $sqlSelect = "SELECT e.id, CONCAT(e.nombre, ' ', e.paterno, ' ', e.materno) AS nombre, e.curp, e.fecha_ingreso, mp.valor puesto, mz.valor zona, ms.valor estatus" . $sqlBase. " ORDER BY id DESC LIMIT :limit OFFSET :offset";
                 $dbc = self::$database::getConnection();
                 $stmt = $dbc->prepare($sqlSelect);
                 $like = '%' . $search . '%';

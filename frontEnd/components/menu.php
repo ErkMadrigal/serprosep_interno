@@ -233,13 +233,62 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="input-group input-group-lg ">
-                
-                <input type="text" class="form-control searchform" id="buscador" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Buscar..." >
-              </div>
+              <form class="DocSearch-Form">
+                <!-- Icono de lupa -->
+                <label for="docsearch-input" id="docsearch-label" class="DocSearch-MagnifierLabel">
+                  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" class="DocSearch-Search-Icon">
+                    <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+                      stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+                    </path>
+                  </svg>
+                  <span class="DocSearch-VisuallyHiddenForAccessibility">Buscar</span>
+                </label>
+
+                <!-- Indicador de carga (opcional) -->
+                <div class="DocSearch-LoadingIndicator">
+                  <svg viewBox="0 0 38 38" stroke="currentColor" stroke-opacity=".5">
+                    <g fill="none" fill-rule="evenodd">
+                      <g transform="translate(1 1)" stroke-width="2">
+                        <circle stroke-opacity=".3" cx="18" cy="18" r="18"></circle>
+                        <path d="M36 18c0-9.94-8.06-18-18-18">
+                          <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18"
+                            dur="1s" repeatCount="indefinite" />
+                        </path>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+
+                <!-- Input de búsqueda -->
+                <input
+                  aria-autocomplete="both"
+                  aria-labelledby="docsearch-label"
+                  id="buscador"
+                  class="DocSearch-Input"
+                  type="search"
+                  placeholder="Buscar..."
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  enterkeyhint="search"
+                  spellcheck="false"
+                  maxlength="64"
+                >
+
+                <!-- Botón para limpiar -->
+                <button type="reset" title="Limpiar búsqueda" aria-label="Limpiar búsqueda" class="DocSearch-Reset" hidden>
+                  <svg width="20" height="20" viewBox="0 0 20 20">
+                    <path d="M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z"
+                      stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+                    </path>
+                  </svg>
+                </button>
+              </form>
             </div>
             <div class="modal-body" id="searchResults">
-
+                <div id="localResults" class="mb-5"></div>
+                <hr>
+                <div class="mt-5" id="remoteResults"></div>
             </div>
           </div>
         </div>

@@ -1,83 +1,209 @@
+// === Configuración general ===
 const searchModal = new bootstrap.Modal(document.getElementById('searchModal'));
-let buscador = document.getElementById('buscador');
-const results = document.getElementById("searchResults");
+const buscador = document.getElementById('buscador'); // input de búsqueda
+const localResults = document.getElementById("localResults");
+const remoteResults = document.getElementById("remoteResults");
 
-const datos = [
-    { nombre: "Configuración general", ruta: "configuracion" },
-    { nombre: "Usuarios", ruta: "usuarios" },
-    { nombre: "Panel de control", ruta: "dashboard" },
-    { nombre: "Reportes", ruta: "reportes" },
-    { nombre: "Preferencias del sistema", ruta: "preferencias" },
-   
-    {nombre : 'empleados', ruta: 'empleados'},
-    {nombre : 'home', ruta: 'home'},
-    {nombre : 'nuevo empleado', ruta: 'nuevo-empleado'},
-    {nombre : 'importaciones', ruta: 'importaciones'},
-    {nombre : 'carga masiva empleados', ruta: 'carga-masiva-empleados'},
-    {nombre : 'configuraciones', ruta: 'configuraciones'},
-    {nombre : 'actividades', ruta: 'actividades'},
-  ];
+const loadingIndicator = document.querySelector(".DocSearch-LoadingIndicator");
+const resetButton = document.querySelector(".DocSearch-Reset");
 
-  
+const datosLocales = [
+  { nombre: "Configuración general", ruta: "configuracion" },
+  { nombre: "Usuarios", ruta: "usuarios" },
+  { nombre: "Panel de control", ruta: "dashboard" },
+  { nombre: "Reportes", ruta: "reportes" },
+  { nombre: "Preferencias del sistema", ruta: "preferencias" },
+  { nombre: "Empleados", ruta: "empleados" },
+  { nombre: "Home", ruta: "home" },
+  { nombre: "Nuevo empleado", ruta: "nuevo-empleado" },
+  { nombre: "Importaciones", ruta: "importaciones" },
+  { nombre: "Carga masiva empleados", ruta: "carga-masiva-empleados" },
+  { nombre: "Configuraciones", ruta: "configuraciones" },
+  { nombre: "Actividades", ruta: "actividades" },
+];
 
-function openSearch() {
-    searchModal.show();
-
-    setInterval(() => buscador.focus(), 200);
-}
-
-// Ctrl + K para abrir
-document.addEventListener("keydown", (e) => {
-    if (e.ctrlKey && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        openSearch();
-    }
-    if (e.key === "Escape") {
-        closeSearch();
-    }
-});
-
-  buscador.addEventListener("input", () => {
-    const query = buscador.value.toLowerCase();
-    results.innerHTML = "";
-
-    const filtrados = datos.filter(d => d.nombre.toLowerCase().includes(query));
-
-    if (filtrados.length === 0) {
-      results.innerHTML = `<div class="text-muted px-2">Sin resultados...</div>`;
-      return;
-    }
-
-    filtrados.forEach(item => {
-      const div = document.createElement("a");
-      div.className = "list-group-item list-group-item-action modal-search-result";
-      div.textContent = item.nombre;
-      div.href = item.ruta;
-      div.onclick = () => closeSearch();
-      results.appendChild(div);
-    });
-  });
-  
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.onmouseenter = Swal.stopTimer;
-      toast.onmouseleave = Swal.resumeTimer;
-    }
-  });
-  
-
-  document.querySelector('#logout').onclick = () => {
-    document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-}
-  
 window.env = {
   API_URL: "http://localhost/serprosep_interno/API/",
   API_KEY: "k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh"
 };
+
+// === Funciones ===
+function openSearch() {
+  searchModal.show();
+  setTimeout(() => buscador.focus(), 500);
+}
+
+function closeSearch() {
+  searchModal.hide();
+  buscador.value = "";
+  localResults.innerHTML = "";
+  remoteResults.innerHTML = "";
+  hideResetButton();
+  hideLoading();
+}
+
+function showLoading() {
+  loadingIndicator.style.display = "flex";
+}
+
+function hideLoading() {
+  loadingIndicator.style.display = "none";
+}
+
+function showResetButton() {
+  resetButton.hidden = false;
+}
+
+function hideResetButton() {
+  resetButton.hidden = true;
+}
+
+function mostrarResultadosLocales(query) {
+  const filtrados = datosLocales.filter(d =>
+    d.nombre.toLowerCase().includes(query)
+  );
+
+  localResults.innerHTML = `<h6 class="px-2 text-muted">Menú</h6>`;
+
+  if (filtrados.length === 0) {
+    localResults.innerHTML += `<div class="text-muted px-2">Sin resultados...</div>`;
+    return;
+  }
+
+  filtrados.forEach(({ nombre, ruta }) => {
+    const link = document.createElement("a");
+    link.className = "list-group-item list-group-item-action modal-search-result d-flex align-items-center gap-2";
+    link.href = ruta;
+    link.onclick = closeSearch;
+
+    // Crear el ícono
+    const icon = document.createElement("span");
+    icon.className = "fe fe-24 fe-link mr-3";
+
+    // Crear el texto
+    const text = document.createElement("span");
+    text.textContent = nombre;
+
+    // Agregar ícono y texto al enlace
+    link.appendChild(icon);
+    link.appendChild(text);
+
+    // Agregar el enlace al contenedor
+    localResults.appendChild(link);
+  });
+
+  searchDataMenu(query);
+}
+
+async function searchDataMenu(search, limit = 50, pagina = 1) {
+  const offset = (pagina - 1) * limit;
+
+  const payload = {
+    action: "searchEmpleado",
+    search,
+    limit,
+    offset
+  };
+
+  showLoading();
+
+  try {
+    const response = await fetch(window.env.API_URL + "employees", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-KEY": window.env.API_KEY,
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+    const data = await response.json();
+
+    remoteResults.innerHTML = `<h6 class="px-2 mt-3 text-muted">Empleados</h6>`;
+
+    if (!data?.data?.length) {
+      remoteResults.innerHTML += `<div class="text-muted px-2">Sin coincidencias...</div>`;
+      return;
+    }
+
+    data.data.forEach(value => {
+      const link = document.createElement("a");
+      link.className = "list-group-item list-group-item-action modal-search-result d-flex align-items-center gap-2";
+      link.href = value.id; // ajustar si es necesario
+      link.onclick = closeSearch;
+
+      // Ícono
+      const icon = document.createElement("span");
+      icon.className = "fe fe-24 fe-user mr-3";
+
+      // Texto
+      const text = document.createElement("span");
+      text.textContent = value.nombre;
+
+      // Ensamblar
+      link.appendChild(icon);
+      link.appendChild(text);
+      remoteResults.appendChild(link);
+    });
+
+  } catch (error) {
+    console.error("Error en la búsqueda:", error);
+    remoteResults.innerHTML = `<div class="text-danger px-2">Error al buscar empleados</div>`;
+  } finally {
+    hideLoading();
+  }
+}
+
+// === Eventos ===
+document.addEventListener("keydown", e => {
+  if (e.ctrlKey && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    openSearch();
+  } else if (e.key === "Escape") {
+    closeSearch();
+  }
+});
+
+buscador.addEventListener("input", () => {
+  const query = buscador.value.trim().toLowerCase();
+  localResults.innerHTML = "";
+  remoteResults.innerHTML = "";
+
+  if (query.length >= 1) {
+    showResetButton();
+    mostrarResultadosLocales(query);
+  } else {
+    hideResetButton();
+  }
+});
+
+resetButton.addEventListener("click", () => {
+  buscador.value = "";
+  localResults.innerHTML = "";
+  remoteResults.innerHTML = "";
+  hideResetButton();
+  buscador.focus();
+});
+
+// === Logout ===
+document.querySelector('#logout').addEventListener('click', () => {
+  document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+});
+
+// === Toast config ===
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: toast => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});

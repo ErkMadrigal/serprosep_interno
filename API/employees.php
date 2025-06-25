@@ -238,33 +238,33 @@ switch ($opcion) {
 
         break;
 
-        case "searchEmpleado":
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $jwt = getBearerToken();
+    case "searchEmpleado":
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $jwt = getBearerToken();
 
-                if (!$jwt) {
-                    http_response_code(401);
-                    echo json_encode(["status" => "error", "message" => "Token JWT no proporcionado"], JSON_UNESCAPED_UNICODE);
-                    exit();
-                }
-
-                try {
-                    $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
-
-                    // Campos requeridos
-                        $empleados = new ConsultasEmpleados();
-                        echo json_encode(
-                            $empleados::searchEmpleado($data['search'], $data['limit'], $data['offset']), JSON_UNESCAPED_UNICODE
-                        );
-                } catch (Exception $e) {
-                    http_response_code(401);
-                    echo json_encode(["status" => "error", "message" => "Token JWT inválido: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
-                    exit();
-                }
-            } else {
-                echo json_encode(["status" => "error", "message" => "Método no permitido"], JSON_UNESCAPED_UNICODE);
+            if (!$jwt) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "message" => "Token JWT no proporcionado"], JSON_UNESCAPED_UNICODE);
+                exit();
             }
-            break;
+
+            try {
+                $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
+
+                // Campos requeridos
+                    $empleados = new ConsultasEmpleados();
+                    echo json_encode(
+                        $empleados::searchEmpleado($data['search'], $data['limit'], $data['offset']), JSON_UNESCAPED_UNICODE
+                    );
+            } catch (Exception $e) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "message" => "Token JWT inválido: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+        } else {
+            echo json_encode(["status" => "error", "message" => "Método no permitido"], JSON_UNESCAPED_UNICODE);
+        }
+        break;
     
     default:
         echo json_encode(["status" => "error", "message" => "Acción no reconocida"], JSON_UNESCAPED_UNICODE);
