@@ -157,7 +157,7 @@
 
         public static function searchEmpleado($search, $limit, $offset) {
             try {
-                $sqlBase = "FROM empleados e
+                $sqlBase = " FROM empleados e
                             LEFT JOIN multicatalogo mz on e.id_zona = mz.id
                             LEFT JOIN multicatalogo mp on e.id_puesto = mp.id
                             LEFT JOIN multicatalogo ms on e.estatus = ms.id
@@ -166,10 +166,10 @@
                             OR materno LIKE :termino 
                             OR curp LIKE :termino 
                             OR rfc LIKE :termino 
-                            OR nss LIKE :termino";
+                            OR nss LIKE :termino ";
 
                 // Consulta de datos
-                $sqlSelect = "e.id, CONCAT(e.nombre, ' ', e.paterno, ' ', e.materno) AS nombre, e.curp, e.fecha_ingreso, mp.valor puesto, mz.valor zona, ms.valor estatus" . $sqlBase. " LIMIT :limit OFFSET :offset";
+                $sqlSelect = "SELECT e.id, CONCAT(e.nombre, ' ', e.paterno, ' ', e.materno) AS nombre, e.curp, e.fecha_ingreso, mp.valor puesto, mz.valor zona, ms.valor estatus" . $sqlBase. " LIMIT :limit OFFSET :offset";
                 $dbc = self::$database::getConnection();
                 $stmt = $dbc->prepare($sqlSelect);
                 $like = '%' . $search . '%';
