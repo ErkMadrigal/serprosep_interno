@@ -59,7 +59,7 @@
             include "./components/header.php";
             include "./components/menu.php";
             include "$ruta/empleados/empleado.php";
-            $scripts = [];
+            $scripts = [ 'js/getCatalogos.js', 'js/empleado.js'];
             include "./components/footer.php";
         break;
 

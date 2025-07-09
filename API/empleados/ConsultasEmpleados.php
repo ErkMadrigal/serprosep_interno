@@ -94,7 +94,7 @@
         public static function getEmpleado($id_empleado){
             try{
                 $id_empleado = intval($id_empleado);
-                $sql = "SELECT * FROM empleados WHERE id = :id_empleado";
+                $sql = "SELECT e.*, CONCAT(e.nombre, ' ', e.paterno, ' ', e.materno) AS nombreCompleto, mp.valor puesto, mz.valor zona, ms.valor estatus, mb.valor institucionBancaria FROM empleados e LEFT JOIN multicatalogo mz on e.id_zona = mz.id LEFT JOIN multicatalogo mp on e.id_puesto = mp.id LEFT JOIN multicatalogo ms on e.estatus = ms.id LEFT JOIN multicatalogo mb on e.id_banco = mb.id WHERE e.id = :id_empleado";
                 
                 $dbc = self::$database::getConnection();
                 $stmt = $dbc->prepare($sql);
