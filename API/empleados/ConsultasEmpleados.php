@@ -161,9 +161,7 @@
                             LEFT JOIN multicatalogo mz on e.id_zona = mz.id
                             LEFT JOIN multicatalogo mp on e.id_puesto = mp.id
                             LEFT JOIN multicatalogo ms on e.estatus = ms.id
-                            WHERE nombre LIKE :termino 
-                            OR paterno LIKE :termino 
-                            OR materno LIKE :termino 
+                            WHERE CONCAT(e.nombre, ' ', e.paterno, ' ', e.materno) LIKE :termino 
                             OR curp LIKE :termino 
                             OR rfc LIKE :termino 
                             OR nss LIKE :termino ";

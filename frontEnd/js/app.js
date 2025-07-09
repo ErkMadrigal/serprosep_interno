@@ -59,11 +59,16 @@ function hideResetButton() {
 }
 
 function mostrarResultadosLocales(query) {
+  console.log(query)
+  searchDataMenu(query);
+
+
   const filtrados = datosLocales.filter(d =>
     d.nombre.toLowerCase().includes(query)
   );
 
   localResults.innerHTML = `<h6 class="px-2 text-muted">Menú</h6>`;
+
 
   if (filtrados.length === 0) {
     localResults.innerHTML += `<div class="text-muted px-2">Sin resultados...</div>`;
@@ -92,7 +97,6 @@ function mostrarResultadosLocales(query) {
     localResults.appendChild(link);
   });
 
-  searchDataMenu(query);
 }
 
 async function searchDataMenu(search, limit = 50, pagina = 1) {
@@ -121,6 +125,7 @@ async function searchDataMenu(search, limit = 50, pagina = 1) {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const data = await response.json();
+    console.log(data)
 
 
     remoteResults.innerHTML = `<h6 class="px-2 mt-3 text-muted">Empleados</h6>`;
@@ -131,7 +136,6 @@ async function searchDataMenu(search, limit = 50, pagina = 1) {
     }
 
 
-    console.log(data)
 
 
     data.data.forEach(value => {
@@ -172,18 +176,24 @@ document.addEventListener("keydown", e => {
   }
 });
 
-buscador.addEventListener("input", () => {
-  const query = buscador.value.trim().toLowerCase();
+let debounceTimerSearch;
+
+buscador.onkeyup = () => {
+
+  const valor = buscador.value.trim().toLowerCase();
   localResults.innerHTML = "";
   remoteResults.innerHTML = "";
-
-  if (query.length >= 1) {
-    showResetButton();
-    mostrarResultadosLocales(query);
-  } else {
-    hideResetButton();
-  }
-});
+   clearTimeout(debounceTimerSearch);
+  debounceTimerSearch = setTimeout(() => {
+    if (valor.length > 0) {
+      showResetButton();
+      mostrarResultadosLocales(valor);
+    } else {
+      hideResetButton();
+    }
+  }, 500);
+  
+}
 
 resetButton.addEventListener("click", () => {
   buscador.value = "";
