@@ -60,7 +60,7 @@
             
         }
 
-         public static function actualizar( $id, $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss, $cp, $fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
+        public static function actualizar( $id, $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss, $cp, $fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
             try{
                 
                 $sql = "UPDATE empleados SET no_empleado = :no_empleado, id_unidad_negocio = :id_unidad_negocio, id_regional = :id_regional, id_zona = :id_zona, id_empresa = :id_empresa, id_servicio = :id_servicio, curp = :curp, rfc = :rfc, nss = :nss, CP_fiscal = :CP_fiscal, fecha_ingreso = :fecha_ingreso, paterno = :paterno, materno = :materno, nombre = :nombre, id_turno = :id_turno, id_puesto = :id_puesto, sueldo = :sueldo, id_periocidad = :id_periocidad, cuenta = :cuenta, clave_interbancaria = :clave_interbancaria, id_banco = :id_banco, estatus = :estatus WHERE id = :id";
@@ -95,6 +95,30 @@
                 self::$respuesta["status"] = "ok";
                 self::$respuesta["mensaje"] = "Registro Actualizado";
                 self::$respuesta["last_insert_id"] = $lastInsertID;
+                
+            } catch (RuntimeException $e) {
+                self::$respuesta["status"] = "error";
+                self::$respuesta["mensaje"] = $e->getMessage();
+            }catch(PDOException $e){
+                self::$respuesta["status"] = "error";
+                self::$respuesta["mensaje"] = $e->getMessage();
+            }
+            return self::$respuesta;
+            
+        }
+
+        public static function activar( $id, $estatus){
+            try{
+                
+                $sql = "UPDATE empleados SET estatus = :estatus WHERE id = :id";
+                $db = self::$database::getConnection();
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(":estatus", $estatus);
+                $stmt->bindParam(":id", $id);
+                $stmt->execute();
+
+                self::$respuesta["status"] = "ok";
+                self::$respuesta["mensaje"] = "Registro Actualizado";
                 
             } catch (RuntimeException $e) {
                 self::$respuesta["status"] = "error";

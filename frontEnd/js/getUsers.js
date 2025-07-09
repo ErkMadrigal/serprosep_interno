@@ -94,23 +94,62 @@ const renderTablaEmpleados = (lista = []) => {
       <td>${value.fecha_ingreso}</td>
       <td>${value.puesto ? value.puesto:''}</td>
       <td>${value.zona ? value.zona:''}</td>
-      <td>${asignIcon(value.estatus)}</td>
+      <td id="estatus-${value.id}">${asignIcon(value.estatus)}</td>
       <td>
         <div class="dropdown">
           <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="text-muted sr-only">Action</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#">Editar</a>
-            <a class="dropdown-item" href="#">Activar</a>
-            <a class="dropdown-item" href="#">Eliminar</a>
+            <a class="dropdown-item" href="empleado/${value.id}">Editar</a>
             <a class="dropdown-item" href="#">Asignar</a>
+            <button data-bs-toggle="button" class="dropdown-item btn" onclick='activar(${value.id}, "${value.estatus}")'>Activar / Desactivar</button>
           </div>
         </div>
       </td>
     </tr>
   `).join('');
 };
+
+const activar = async (id, status) => {
+  console.log(id, status)
+  let nuevoEstatus = status === 'activo' ? 'inactivo' : 'activo';
+  
+    let data_json = {
+    "action": 'activar',
+    "id": id,
+    "status": status === 'activo' ? 1226 : 1225
+  };
+ 
+  try {
+    const response = await fetch(API_BASE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': window.env.API_KEY,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(data_json)
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+    const data = await response.json();
+    
+    Toast.fire({
+      icon: "success",
+      title: data.mensaje
+    });
+
+    const tdEstatus = document.getElementById(`estatus-${id}`);
+    if (tdEstatus) {
+      tdEstatus.innerHTML = asignIcon(nuevoEstatus); // <-- Usa el nuevo estatus para el ícono
+    }
+
+  } catch (error) {
+    console.error('Error al obtener datos:', error);
+  }
+}
 
 const badgeClasses = {
   activo: 'badge-success',

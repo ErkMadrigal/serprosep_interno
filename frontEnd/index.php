@@ -53,6 +53,16 @@
             include "./components/footer.php";
         break;
 
+        case 'empleado':
+            $title = "Empleado";
+            $links = [];
+            include "./components/header.php";
+            include "./components/menu.php";
+            include "$ruta/empleados/empleado.php";
+            $scripts = [];
+            include "./components/footer.php";
+        break;
+
         case 'nuevo-empleado':
             $title = "Nuevo Empleado";
             $links = ['css/select2.css'];

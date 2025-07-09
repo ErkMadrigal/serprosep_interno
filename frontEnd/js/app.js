@@ -122,6 +122,7 @@ async function searchDataMenu(search, limit = 50, pagina = 1) {
 
     const data = await response.json();
 
+
     remoteResults.innerHTML = `<h6 class="px-2 mt-3 text-muted">Empleados</h6>`;
 
     if (!data?.data?.length) {
@@ -129,10 +130,14 @@ async function searchDataMenu(search, limit = 50, pagina = 1) {
       return;
     }
 
+
+    console.log(data)
+
+
     data.data.forEach(value => {
       const link = document.createElement("a");
       link.className = "list-group-item list-group-item-action modal-search-result d-flex align-items-center gap-2";
-      link.href = value.id; // ajustar si es necesario
+      link.href = `empleado/${value.id}`; // ajustar si es necesario
       link.onclick = closeSearch;
 
       // Ícono

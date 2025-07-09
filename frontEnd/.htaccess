@@ -9,13 +9,17 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^index$ index.php [L,QSA]
 RewriteRule ^auth$ index.php?dir=auth [L,QSA]
 RewriteRule ^login$ index.php?dir=login [L,QSA]
-RewriteRule ^empleados$ index.php?dir=empleados [L,QSA]
+
+
 RewriteRule ^home$ index.php?dir=home [L,QSA]
 RewriteRule ^nuevo-empleado$ index.php?dir=nuevo-empleado [L,QSA]
 RewriteRule ^importaciones$ index.php?dir=importaciones [L,QSA]
 RewriteRule ^carga-masiva-empleados$ index.php?dir=carga-masiva-empleados [L,QSA]
 RewriteRule ^configuraciones$ index.php?dir=configuraciones [L,QSA]
 RewriteRule ^actividades$ index.php?dir=actividades [L,QSA]
+
+RewriteRule ^empleados$ index.php?dir=empleados [L,QSA]
+RewriteRule ^empleado/([0-9]+)$ index.php?dir=empleado&id=$1 [L,QSA]
 
 # Página de error personalizada
 ErrorDocument 404 /404.html
