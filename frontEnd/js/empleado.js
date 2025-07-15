@@ -36,7 +36,7 @@ const API_BASE_URL_EMPLEADOS = window.env.API_URL + 'employees';
 
   let cuenta = document.querySelector("#cuenta");
   let interbancaria = document.querySelector("#interbancaria");
-  let banco = document.querySelector("#banco");
+  let banco = document.querySelector("#banco"); 
   let institucionBancaria = document.querySelector("#institucionBancaria");
 
   let data_json = {
@@ -165,3 +165,136 @@ const personal = async (event) => {
 
 // Asegúrate de que el evento esté correctamente asociado
 document.querySelector("#updatePersonal").addEventListener("click", personal);
+
+let formularioTrabajo = document.querySelector(".needs-invalidation-trabajo");
+
+
+const trabajo = async (event) => {
+    // Prevenir el comportamiento predeterminado del formulario
+    event.preventDefault();
+    
+    // Verificar que el formulario exista
+    if (!formularioTrabajo) {
+        console.error('Formulario .needs-invalidation-trabajo no encontrado');
+        Toast.fire({
+            icon: "error",
+            title: "Error",
+            text: "Formulario no encontrado"
+        });
+        return;
+    }
+    
+    // Validar el formulario
+    if (formularioTrabajo.checkValidity()) {
+        let data_json = {
+            action: "actualizarEmpleado",
+            tipo: "trabajo",
+            id: id, // Ahora id está definido en el ámbito global
+            id_unidad_negocio: unidadNegocio.value,
+            id_regional: regional.value,
+            id_zona: zona.value,
+            id_empresa: empresa.value,
+            id_servicio: servicioId.value,
+            id_turno: turno.value,
+            id_puesto: puesto.value,
+            sueldo: sueldo.value,
+            id_periocidad: periocidad.value
+        };
+    
+        try {
+        const response = await fetch(API_BASE_URL_EMPLEADOS, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            'X-API-KEY': window.env.API_KEY,
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(data_json)
+        });
+    
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        if (data.status === "ok") {
+            Toast.fire({
+                icon: "success",
+                title: data.mensaje
+            });
+        } else {
+            Toast.fire({
+                icon: "error",
+                title: data.mensaje
+            });
+        }
+        } catch (error) {
+        console.error('Error al obtener datos:', error);
+        }
+    } else {
+        formularioTrabajo.classList.add('was-validated');
+    }
+
+}
+
+document.querySelector("#updateTrabajo").addEventListener("click", trabajo);
+
+let formularioBanco = document.querySelector(".needs-invalidation-banco");
+
+
+const bancario = async (event) => {
+    // Prevenir el comportamiento predeterminado del formulario
+    event.preventDefault();
+    
+    // Verificar que el formulario exista
+    if (!formularioBanco) {
+        console.error('Formulario .needs-invalidation-banco no encontrado');
+        Toast.fire({
+            icon: "error",
+            title: "Error",
+            text: "Formulario no encontrado"
+        });
+        return;
+    }
+    
+    // Validar el formulario
+    if (formularioBanco.checkValidity()) {
+        let data_json = {
+            action: "actualizarEmpleado",
+            tipo: "banco",
+            id: id, // Ahora id está definido en el ámbito global
+            cuenta: cuenta.value,
+            clave_interbancaria: interbancaria.value,
+            id_banco: document.querySelector("#banco").value
+        };
+    
+        try {
+        const response = await fetch(API_BASE_URL_EMPLEADOS, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            'X-API-KEY': window.env.API_KEY,
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(data_json)
+        });
+    
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        if (data.status === "ok") {
+            Toast.fire({
+                icon: "success",
+                title: data.mensaje
+            });
+        } else {
+            Toast.fire({
+                icon: "error",
+                title: data.mensaje
+            });
+        }
+        } catch (error) {
+            console.error('Error al obtener datos:', error);
+        }
+    } else {
+        formularioBanco.classList.add('was-validated');
+    }
+}
+
+document.querySelector("#updateBanco").addEventListener("click", bancario);

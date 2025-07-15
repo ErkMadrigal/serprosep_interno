@@ -322,7 +322,7 @@ switch ($opcion) {
                                 JSON_UNESCAPED_UNICODE
                             );
                             break;
-                        case 'bancario':
+                        case 'banco':
                             echo json_encode(
                                 $empleados::actualizarBancario($data['id'], $data['cuenta'], $data['clave_interbancaria'], $data['id_banco']),
                                 JSON_UNESCAPED_UNICODE

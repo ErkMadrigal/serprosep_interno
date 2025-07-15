@@ -41,7 +41,7 @@
             
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
-                  <form class="needs-invalidation-personal" id="formulario" noinvalidate> 
+                  <form class="needs-invalidation-personal" noinvalidate> 
                     <div class="form-row">
                       <div class="col-md-6 mb-3">
                           <label for="invalidationCustom3">Nombre (s) <strong
@@ -89,84 +89,88 @@
                       </div>
                           
                     </div>
-                        <button class="btn btn-primary btn-block" id="updatePersonal">Actualizar</button>
+                    <button class="btn btn-primary btn-block" id="updatePersonal">Actualizar</button>
                   </form>  
                 </div>
                 <div class="tab-pane fade" id="trabajo" role="tabpanel" aria-labelledby="trabajo-tab">
-                  <div class="form-row">
-                      <div class="col-md-6 mb-3">
-                          <label for="invalidationCustom4">Empresa <strong
-                                  class="text-danger">*</strong></label>
-                          <select class="form-control select2" id="empresa" required>
-                              <option selected disabled value="">Seleccione una empresa</option>
-                          </select>
-                          <div class="invalid-feedback"> El campo es requerido </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="invalidationCustom3">Unidad de negocio <strong
-                                  class="text-danger">*</strong></label>
-                          <select class="form-control select2" id="unidadNegocio" required>
-                              <option selected disabled value="">Seleccione una Unidad de negocio
-                              </option>
-                          </select>
-                          <div class="invalid-feedback"> El campo es requerido </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="invalidationCustom4">Gerente Regional <strong
-                                  class="text-danger">*</strong></label>
-                          <select class="form-control select2" id="regional" required>
-                              <option selected disabled value="">Seleccione un Gerente Regional
-                              </option>
-                          </select>
-                          <div class="invalid-feedback"> El campo es requerido</div>
-  
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="invalidationCustom4">Zona / Área </label>
-                          <select class="form-control select2" id="zona">
-                              <option selected disabled>Seleccione una Zona / Área</option>
-                          </select>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="invalidationCustom4">Servicio </label>
-                          <input class="form-control" type="text" id="servicio" list="servicios">
-                          <input type="hidden" id="servicioId">
-                          <datalist id="servicios"></datalist>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="invalidationCustom4">Turno <strong
-                                  class="text-danger">*</strong></label>
-                          <select class="form-control select2" id="turno">
-                              <option selected disabled value="">Seleccione un Turno</option>
-                          </select>
-                          <div class="invalid-feedback"> El campo es requerido</div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="invalidationCustom3">Puesto <strong
-                                  class="text-danger">*</strong></label>
-                          <select class="form-control select2" id="puesto">
-                              <option selected disabled value="">Seleccione un Puesto</option>
-                          </select>
-                          <div class="invalid-feedback"> El campo es requerido</div>
-  
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="invalidationCustom3">Periocidad <strong
-                                  class="text-danger">*</strong></label>
-                          <select class="form-control select2" id="periocidad">
-                              <option selected disabled value="">Seleccione un Periocidad</option>
-                          </select>
-                          <div class="invalid-feedback"> El campo es requerido</div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <label for="invalidationCustom3">Sueldo <strong
-                                  class="text-danger">*</strong></label>
-                          <input type="number" class="form-control" id="sueldo" required>
-                          <div class="invalid-feedback"> El campo es requerido</div>
-                      </div>
-                  </div>
+                  <form class="needs-invalidation-trabajo" noinvalidate> 
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="invalidationCustom4">Empresa <strong
+                                    class="text-danger">*</strong></label>
+                            <select class="form-control select2" id="empresa" required>
+                                <option selected disabled value="">Seleccione una empresa</option>
+                            </select>
+                            <div class="invalid-feedback"> El campo es requerido </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="invalidationCustom3">Unidad de negocio <strong
+                                    class="text-danger">*</strong></label>
+                            <select class="form-control select2" id="unidadNegocio" required>
+                                <option selected disabled value="">Seleccione una Unidad de negocio
+                                </option>
+                            </select>
+                            <div class="invalid-feedback"> El campo es requerido </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="invalidationCustom4">Gerente Regional <strong
+                                    class="text-danger">*</strong></label>
+                            <select class="form-control select2" id="regional" required>
+                                <option selected disabled value="">Seleccione un Gerente Regional
+                                </option>
+                            </select>
+                            <div class="invalid-feedback"> El campo es requerido</div>
+    
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="invalidationCustom4">Zona / Área </label>
+                            <select class="form-control select2" id="zona">
+                                <option selected disabled>Seleccione una Zona / Área</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="invalidationCustom4">Servicio </label>
+                            <input class="form-control" type="text" id="servicio" list="servicios">
+                            <input type="hidden" id="servicioId">
+                            <datalist id="servicios"></datalist>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="invalidationCustom4">Turno <strong
+                                    class="text-danger">*</strong></label>
+                            <select class="form-control select2" id="turno">
+                                <option selected disabled value="">Seleccione un Turno</option>
+                            </select>
+                            <div class="invalid-feedback"> El campo es requerido</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="invalidationCustom3">Puesto <strong
+                                    class="text-danger">*</strong></label>
+                            <select class="form-control select2" id="puesto">
+                                <option selected disabled value="">Seleccione un Puesto</option>
+                            </select>
+                            <div class="invalid-feedback"> El campo es requerido</div>
+    
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="invalidationCustom3">Periocidad <strong
+                                    class="text-danger">*</strong></label>
+                            <select class="form-control select2" id="periocidad">
+                                <option selected disabled value="">Seleccione un Periocidad</option>
+                            </select>
+                            <div class="invalid-feedback"> El campo es requerido</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="invalidationCustom3">Sueldo <strong
+                                    class="text-danger">*</strong></label>
+                            <input type="number" class="form-control" id="sueldo" required>
+                            <div class="invalid-feedback"> El campo es requerido</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" id="updateTrabajo">Actualizar</button>
+                  </form>
                 </div>
                 <div class="tab-pane fade" id="banco" role="tabpanel" aria-labelledby="banco-tab">
+                  <form class="needs-invalidation-banco" noinvalidate>
                     <div class="form-row">
                       <div class="col-md-6 mb-3">
                           <label for="invalidationCustom3">No. Cuenta</label>
@@ -189,6 +193,8 @@
                           <div class="invalid-feedback"> El campo es requerido</div>
                       </div>
                     </div>
+                    <button class="btn btn-primary btn-block" id="updateBanco">Actualizar</button>
+                  </form>
                 </div>
               </div>
             
