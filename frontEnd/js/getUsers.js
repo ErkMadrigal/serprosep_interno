@@ -103,7 +103,7 @@ const renderTablaEmpleados = (lista = []) => {
           <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="empleado/${value.id}">Editar</a>
             <a class="dropdown-item" href="#">Asignar</a>
-            <button data-bs-toggle="button" class="dropdown-item btn" onclick='activar(${value.id}, "${value.estatus}")'>Activar / Desactivar</button>
+            <button data-bs-toggle="button" class="dropdown-item btn" onclick='baja(${value.id}, "${value.nombre}")'>Baja</button>
           </div>
         </div>
       </td>
@@ -111,14 +111,25 @@ const renderTablaEmpleados = (lista = []) => {
   `).join('');
 };
 
-const activar = async (id, status) => {
-  console.log(id, status)
-  let nuevoEstatus = status === 'activo' ? 'inactivo' : 'activo';
+const baja = (id, nombre) => {
+  $('#defaultModal').modal('show');
+  document.getElementById("empleadoModal").innerText = nombre;
+  document.getElementById("id_empleado").value = id;
+}
+
+const confirmarBaja = async () => {
+
+  // let nuevoEstatus = status === 'activo' ? 'inactivo' : 'activo';
   
-    let data_json = {
+  let data_json = {
     "action": 'activar',
-    "id": id,
-    "status": status === 'activo' ? 1226 : 1225
+    "id": document.getElementById("id_empleado").value,
+    "status": 1226,
+    "fecha_baja": document.getElementById("datetimesBaja").value,
+    "finiquito": document.getElementById("finiquito").value,  
+    "motivo_baja": document.getElementById("motivoBaja").value,
+    "nota_baja": document.getElementById("notaBaja").value,
+    // "status": status === 'activo' ? 1226 : 1225
   };
  
   try {

@@ -149,5 +149,58 @@
       </div>
     </div> <!-- .row -->
   </div> <!-- .container-fluid --><!-- .container-fluid -->
-  
+
+    <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+      <form class="needs-validation-baja" novalidate>
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="empleadoModal"></h5>
+              <input type="hidden" name="id_empleado" id="id_empleado">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body row">
+                <div class='col-12 col-sm-12 col-md-6'>
+                    <div class="form-group">
+                        <label for="finiquito" class=" control-label">Fecha efectiva de la baja:<span class="text-danger">*</span></label>
+                        <input type="text" name="datetimesBaja" class="form-control datetimes" id="datetimesBaja"/>
+                    </div>
+                </div>
+                <div class='col-12 col-sm-12 col-md-6'>
+                    <div class="form-group">
+                        <label for="finiquito" class=" control-label">Finiquito:<span class="text-danger">*</span></label>
+                        <select class="form-control" id="finiquito" name="finiquito">
+                            <option value="">Selecciona una Opcion</option>
+                            <option value="1">SI</option>
+                            <option value="0">NO</option>                
+                        </select>
+                    </div>
+                </div>
+                <div class='col-12 col-sm-12 col-md-12'>
+                    <div class="form-group">
+                        <label for="motivo" class=" control-label">Motivo de baja:<span class="text-danger">*</span></label>
+                        <select class="form-control" id="motivoBaja" name="motivoBaja">
+                                          
+                        </select>
+                    </div>
+                </div>
+                <div class='col-12 col-sm-12 col-md-12'>
+                    <div class="form-group">
+                        <label for="notaBaja" class=" control-label">Nota:</label>
+                        <textarea type="text" class="form-control " id="notaBaja" name="notaBaja"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn mb-2 btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn mb-2 btn-primary" onclick="confirmarBaja()">Procesar Baja</button>
+            </div>
+          </div>
+        </div>
+      </form> 
+
+    </div>
+
 </main

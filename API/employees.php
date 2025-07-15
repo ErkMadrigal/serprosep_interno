@@ -281,7 +281,7 @@ switch ($opcion) {
                 // Campos requeridos
                     $empleados = new ControllerEmpleados();
                     echo json_encode(
-                        $empleados::activar($data['id'], $data['status']), JSON_UNESCAPED_UNICODE
+                        $empleados::activar($data['id'], $data['status'], $data['motivo_baja'], $data['finiquito'], $data['nota_baja'], $data['fecha_baja']), JSON_UNESCAPED_UNICODE
                     );
             } catch (Exception $e) {
                 http_response_code(401);

@@ -55,6 +55,19 @@ getCatalogos(API, 10)
   console.error('Error in getCatalogos:', error);
 });
 
+let motivo = document.getElementById('motivoBaja');
+getCatalogos(API, 16)
+.then(data => { 
+    motivo.innerHTML = `<option disabled value="">Seleccione un puesto</option>`;
+    data.data.forEach(item => {
+        motivo.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
+    });
+    motivo.disabled = false; // Habilitar el select después de cargar los datos
+})
+.catch(error => {
+  console.error('Error in getCatalogos:', error);
+});
+
 document.getElementById("btnRecargar").onclick = () => {
   location.reload();
 };

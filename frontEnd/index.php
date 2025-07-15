@@ -83,6 +83,16 @@
             include "./components/footer.php";
         break;
 
+        case 'editarUsuarios':
+            $title = "Editar Usuarios";
+            $links = [];
+            include "./components/header.php";
+            include "./components/menu.php";
+            include "$ruta/imports/editarUsuarios.php";
+            $scripts = ['js/edicionMasiva.js'];
+            include "./components/footer.php";
+        break;
+
         case 'carga-masiva-empleados':
             $title = "Carga Masiva Empleados";
             $links = ["css/dropzone.min.css"];

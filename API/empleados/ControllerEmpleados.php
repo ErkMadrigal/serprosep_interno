@@ -107,7 +107,7 @@
             
         }
 
-        public static function activar( $id, $estatus){
+        public static function activar( $id, $estatus, $id_motivo, $finiquito, $nota, $fecha_efectiva){
             try{
                 
                 $sql = "UPDATE empleados SET estatus = :estatus WHERE id = :id";
@@ -118,7 +118,35 @@
                 $stmt->execute();
 
                 self::$respuesta["status"] = "ok";
-                self::$respuesta["mensaje"] = "Registro Actualizado";
+                self::$respuesta["mensaje"] = "El empleado ha sido dado de baja correctamente";
+                self::baja_confirmada($id, $id_motivo, $finiquito, $nota, $fecha_efectiva);
+                
+            } catch (RuntimeException $e) {
+                self::$respuesta["status"] = "error";
+                self::$respuesta["mensaje"] = $e->getMessage();
+            }catch(PDOException $e){
+                self::$respuesta["status"] = "error";
+                self::$respuesta["mensaje"] = $e->getMessage();
+            }
+            return self::$respuesta;
+            
+        }
+
+        public static function baja_confirmada( $id_empleado, $id_motivo, $finiquito, $nota, $fecha_efectiva){
+            try{
+                
+                $sql = "INSERT INTO baja_empleado (id_empleado, id_motivo, finiquito, nota, fecha_efectiva) VALUES (:id_empleado, :id_motivo, :finiquito, :nota, :fecha_efectiva)";
+                $db = self::$database::getConnection();
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(":id_empleado", $id_empleado);
+                $stmt->bindParam(":id_motivo", $id_motivo);
+                $stmt->bindParam(":finiquito", $finiquito);
+                $stmt->bindParam(":nota", $nota);
+                $stmt->bindParam(":fecha_efectiva", $fecha_efectiva);
+                $stmt->execute();
+
+                self::$respuesta["status"] = "ok";
+                self::$respuesta["mensaje"] = "El empleado ha sido dado de baja correctamente";
                 
             } catch (RuntimeException $e) {
                 self::$respuesta["status"] = "error";

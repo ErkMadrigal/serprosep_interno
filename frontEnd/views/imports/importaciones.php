@@ -37,15 +37,10 @@
                   <div class="list-group-item">
                     <div class="row align-items-center">
                       <div class="col">
-                        <a href="#" class="text-decoration-none">
+                        <a href="editarUsuarios" class="text-decoration-none">
                             <strong class="mb-0">Actualizacion de Empleados</strong>
                             <p class="text-muted mb-0">Se actualizaran todos los datos de los empleados de un archivo excel predefinido</p>
                         </a>
-                      </div> <!-- .col -->
-                      <div class="col-auto">
-                        <div class="custom-control">
-                            <button class="btn btn-primary">Plantilla <i class="fe fe-download fe-16"></i></button>
-                        </div>
                       </div> <!-- .col -->
                     </div> <!-- .row -->
                   </div>
