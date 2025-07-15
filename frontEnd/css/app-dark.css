@@ -7414,7 +7414,7 @@ button:focus {
   width: 2rem; }
 
 .brand-md {
-  width: 4rem; }
+  width: 8rem; }
 
 [data-mode="dark"] .fe::before {
   content: "\e9e3"; }

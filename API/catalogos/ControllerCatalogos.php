@@ -15,20 +15,36 @@ class ControllerCatalogos {
         self::$respuesta = null;
     }
 
-    public static function registro($nombre, $correo, $name_user, $paterno, $materno, $password, $estatus, $id_rol) {
+    public static function newMultiCatalogo($id_catalogo, $valor, $descripcion) {
         try {
-            $sql = "INSERT INTO usuario (nombre, correo, name_user, paterno, materno, password, estatus, id_rol)
-                    VALUES (:nombre, :correo, :name_user, :paterno, :materno, :password, :estatus, :id_rol)";
+            $sql = "INSERT INTO multicatalogo (descripcion, valor, id_catalogo)
+                    VALUES (:descripcion, :valor, :id_catalogo)";
             $db = self::$database::getConnection();
             $stmt = $db->prepare($sql);
-            $stmt->bindParam(":nombre", $nombre);
-            $stmt->bindParam(":correo", $correo);
-            $stmt->bindParam(":name_user", $name_user);
-            $stmt->bindParam(":paterno", $paterno);
-            $stmt->bindParam(":materno", $materno);
-            $stmt->bindParam(":password", $password);
-            $stmt->bindParam(":estatus", $estatus);
-            $stmt->bindParam(":id_rol", $id_rol);
+            $stmt->bindParam(":descripcion", $descripcion);
+            $stmt->bindParam(":valor", $valor);
+            $stmt->bindParam(":id_catalogo", $id_catalogo);
+            $stmt->execute();
+            $lastInsertID = $db->lastInsertId();
+
+            self::$respuesta["status"] = "ok";
+            self::$respuesta["mensaje"] = "Registro Exitoso";
+            self::$respuesta["last_insert_id"] = $lastInsertID;
+        } catch (RuntimeException | PDOException $e) {
+            self::$respuesta["status"] = "error";
+            self::$respuesta["mensaje"] = $e->getMessage();
+        }
+
+        return self::$respuesta;
+    }
+
+    public static function newCatalogo($descripcion) {
+        try {
+            $sql = "INSERT INTO catalogo (descripcion)
+                    VALUES (:descripcion)";
+            $db = self::$database::getConnection();
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(":descripcion", $descripcion);
             $stmt->execute();
             $lastInsertID = $db->lastInsertId();
 

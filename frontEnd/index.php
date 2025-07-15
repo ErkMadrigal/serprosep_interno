@@ -123,5 +123,25 @@
             include "./components/footer.php";
         break;
 
+        case 'colaborador':
+            $title = "colaborador";
+            $links = [];
+            include "./components/header.php";
+            include "./components/menu.php";
+            include "$ruta/users/users.php";
+            $scripts = ['js/users.js'];
+            include "./components/footer.php";
+        break;
+
+        case 'multicatalogo':
+            $title = "multicatalogo";
+            $links = ['css/select2.css'];
+            include "./components/header.php";
+            include "./components/menu.php";
+            include "$ruta/conf/multicatalogo.php";
+            $scripts = ['js/select2.min.js', 'js/multicatalogo.js'];
+            include "./components/footer.php";
+        break;
+
     }
     

@@ -163,6 +163,81 @@ switch ($opcion) {
             echo json_encode(["status" => "error", "message" => "Método no permitido"], JSON_UNESCAPED_UNICODE);
         }
         break;
+    case "getTipoCatalogos":
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $jwt = getBearerToken();
+
+            if (!$jwt) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "message" => "Token JWT no proporcionado"], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+
+            try {
+                $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
+
+                // Campos requeridos
+                $catalogos = new ConsultasCatalogos();
+                echo json_encode(
+                    $catalogos::getTipoCatalogos(), JSON_UNESCAPED_UNICODE
+                );
+            } catch (Exception $e) {
+                http_response_code(401);
+
+                echo json_encode(["status" => "error", "message" => "Token JWT inválido: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+        } else {
+            echo json_encode(["status" => "error", "message" => "Método no permitido"], JSON_UNESCAPED_UNICODE);
+        }
+
+        break;
+
+    case "newCatalogo":
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $jwt = getBearerToken();
+
+            if (!$jwt) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "message" => "Token JWT no proporcionado"], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+
+            try {
+                $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
+
+                // Campos requeridos
+
+                switch ($data['tipo']) {
+                    case 'catalogo':
+                        $catalogos = new ControllerCatalogos();
+                        echo json_encode(
+                            $catalogos::newCatalogo($data['descripcion']), JSON_UNESCAPED_UNICODE
+                        );
+                        break;
+                    case 'multicatalogo':
+                        $catalogos = new ControllerCatalogos();
+                        echo json_encode(
+                            $catalogos::newMultiCatalogo($data['id_Catalogo'], $data['valor'], $data['descripcion']), JSON_UNESCAPED_UNICODE
+                        );
+                        break;
+                    default:
+                        echo json_encode(["status" => "error", "message" => "Tipo de catalogo no reconocido"], JSON_UNESCAPED_UNICODE);
+                }
+                
+            } catch (Exception $e) {
+                http_response_code(401);
+
+                echo json_encode(["status" => "error", "message" => "Token JWT inválido: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+        } else {
+            echo json_encode(["status" => "error", "message" => "Método no permitido"], JSON_UNESCAPED_UNICODE);
+        }
+
+        break;
             
     default:
         echo json_encode(["status" => "error", "message" => "Acción no reconocida"], JSON_UNESCAPED_UNICODE);

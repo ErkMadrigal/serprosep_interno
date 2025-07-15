@@ -58,7 +58,7 @@
                   <div class="list-group-item">
                     <div class="row align-items-center">
                       <div class="col">
-                        <a href="#" class="text-decoration-none">
+                        <a href="multicatalogo" class="text-decoration-none">
                             <strong class="mb-0">Multicatalogo</strong>
                             <p class="text-muted mb-0">podras agrgegar datos, para la asignacion del empleado, como horarios, turnos, bancos</p>
                         </a>

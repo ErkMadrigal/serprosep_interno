@@ -22,6 +22,11 @@ RewriteRule ^actividades$ index.php?dir=actividades [L,QSA]
 RewriteRule ^empleados$ index.php?dir=empleados [L,QSA]
 RewriteRule ^empleado/([0-9]+)$ index.php?dir=empleado&id=$1 [L,QSA]
 
+RewriteRule ^colaborador$ index.php?dir=colaborador [L,QSA]
+
+RewriteRule ^multicatalogo$ index.php?dir=multicatalogo [L,QSA]
+
+
 # Página de error personalizada
 ErrorDocument 404 /404.html
 

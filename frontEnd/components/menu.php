@@ -23,7 +23,14 @@
               <span class="dot dot-md bg-success"></span>
             </a>
           </li>
-          <li class="nav-item dropdown">
+          
+          <li class="nav-item">
+            <a class="nav-link my-2 text-primary" href="auth" id="logout">
+              <span class="fe fe-log-out fe-16"></span>
+            </a>
+          </li>
+         
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
                 <img src="assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
@@ -34,7 +41,7 @@
               <li><hr class="dropdown-divider"></li>
               <li class="text-center"><a class="dropdown-item text-primary" href="auth" id="logout"><i class="fe fe-log-out fe-16"></i> Cerrar sesión</a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
@@ -46,7 +53,7 @@
           <div class="w-100 mb-4 d-flex">
             <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="home">
               <img src="assets/images/favicon.ico" alt="logo" class="navbar-brand-img brand-md">
-              <span class="text-muted">Serprosep</span>
+              <!-- <span class="text-muted">Serprosep</span> -->
             </a>
           </div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
@@ -89,13 +96,13 @@
                 
               </ul>
             </li>
-            <!-- <li class="nav-item w-100">
-              <a class="nav-link" href="widgets.html">
-                <i class="fe fe-clipboard fe-16"></i>
-                <span class="ml-3 item-text">Dashboard</span>
+            <li class="nav-item w-100">
+              <a class="nav-link" href="colaborador">
+                <i class="fe fe-user-plus fe-16"></i>
+                <span class="ml-3 item-text">Colaborador</span>
                 <span class="badge badge-pill badge-primary">New</span>
               </a>
-            </li> -->
+            </li>
             
         </nav>
       </aside>
