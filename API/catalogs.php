@@ -238,6 +238,34 @@ switch ($opcion) {
         }
 
         break;
+    case "getCatalogosSelect":
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $jwt = getBearerToken();
+
+            if (!$jwt) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "message" => "Token JWT no proporcionado"], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+
+            try {
+                $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
+
+                // Campos requeridos
+                $catalogos = new ConsultasCatalogos();
+                echo json_encode(
+                    $catalogos::getCatalogosSelect($data['id_catalogo']), JSON_UNESCAPED_UNICODE
+                );
+            } catch (Exception $e) {
+                http_response_code(401);
+
+                echo json_encode(["status" => "error", "message" => "Token JWT inválido: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+        } else {
+            echo json_encode(["status" => "error", "message" => "Método no permitido"], JSON_UNESCAPED_UNICODE);
+        }
+        break;
             
     default:
         echo json_encode(["status" => "error", "message" => "Acción no reconocida"], JSON_UNESCAPED_UNICODE);
