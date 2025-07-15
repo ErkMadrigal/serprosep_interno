@@ -96,13 +96,12 @@ const renderTablaEmpleados = (lista = []) => {
       <td>${value.zona ? value.zona:''}</td>
       <td id="estatus-${value.id}">${asignIcon(value.estatus)}</td>
       <td>
-        <div class="dropdown">
+        <div class="dropdown" style="${value.estatus === "baja" ? 'display: none;' : ''}">
           <button class="btn btn-sm dropdown-toggle more-vertical" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="text-muted sr-only">Action</span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="empleado/${value.id}">Editar</a>
-            <a class="dropdown-item" href="#">Asignar</a>
             <button data-bs-toggle="button" class="dropdown-item btn" onclick='baja(${value.id}, "${value.nombre}")'>Baja</button>
           </div>
         </div>
@@ -110,6 +109,14 @@ const renderTablaEmpleados = (lista = []) => {
     </tr>
   `).join('');
 };
+
+const renderEmployeeButton = (value) => {
+    // Solo genera el botón si el estatus no es 1226
+    if (value.estatus !== 1226) {
+        return `<button data-bs-toggle="button" class="dropdown-item btn" onclick='baja(${value.id}, "${value.nombre}")'>Baja</button>`;
+    }
+    return ''; // No genera nada si el estatus es 1226
+}
 
 const baja = (id, nombre) => {
   $('#defaultModal').modal('show');
@@ -120,45 +127,51 @@ const baja = (id, nombre) => {
 const confirmarBaja = async () => {
 
   // let nuevoEstatus = status === 'activo' ? 'inactivo' : 'activo';
+  const formulario = document.querySelector('.needs-validation-baja');
+
+  if (formulario.checkValidity()) {
+    let data_json = {
+      "action": 'activar',
+      "id": document.getElementById("id_empleado").value,
+      "status": 1226,
+      "fecha_baja": document.getElementById("datetimesBaja").value ? document.getElementById("datetimesBaja").value : new Date().toISOString().split('T')[0],
+      "finiquito": document.getElementById("finiquito").value,  
+      "motivo_baja": document.getElementById("motivoBaja").value,
+      "nota_baja": document.getElementById("notaBaja").value,
+      // "status": status === 'activo' ? 1226 : 1225
+    };
+   
+    try {
+      const response = await fetch(API_BASE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': window.env.API_KEY,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(data_json)
+      });
   
-  let data_json = {
-    "action": 'activar',
-    "id": document.getElementById("id_empleado").value,
-    "status": 1226,
-    "fecha_baja": document.getElementById("datetimesBaja").value,
-    "finiquito": document.getElementById("finiquito").value,  
-    "motivo_baja": document.getElementById("motivoBaja").value,
-    "nota_baja": document.getElementById("notaBaja").value,
-    // "status": status === 'activo' ? 1226 : 1225
-  };
- 
-  try {
-    const response = await fetch(API_BASE_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-KEY': window.env.API_KEY,
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(data_json)
-    });
-
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-    const data = await response.json();
-    
-    Toast.fire({
-      icon: "success",
-      title: data.mensaje
-    });
-
-    const tdEstatus = document.getElementById(`estatus-${id}`);
-    if (tdEstatus) {
-      tdEstatus.innerHTML = asignIcon(nuevoEstatus); // <-- Usa el nuevo estatus para el ícono
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+  
+      const data = await response.json();
+      
+      Toast.fire({
+        icon: "success",
+        title: data.mensaje
+      });
+      formulario.reset();
+      formulario.classList.remove('was-validated');
+      const tdEstatus = document.getElementById(`estatus-${id}`);
+      if (tdEstatus) {
+        tdEstatus.innerHTML = asignIcon(nuevoEstatus); // <-- Usa el nuevo estatus para el ícono
+      }
+  
+    } catch (error) {
+      console.error('Error al obtener datos:', error);
     }
-
-  } catch (error) {
-    console.error('Error al obtener datos:', error);
+  }else{
+    formulario.classList.add('was-validated');
   }
 }
 

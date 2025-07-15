@@ -292,6 +292,59 @@ switch ($opcion) {
             echo json_encode(["status" => "error", "message" => "Método no permitido"], JSON_UNESCAPED_UNICODE);
         }
         break;
+    case "actualizarEmpleado":
+        
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $jwt = getBearerToken();
+
+            if (!$jwt) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "message" => "Token JWT no proporcionado"], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+
+            try {
+                $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], 'HS256'));
+
+                // Campos requeridos
+                    $empleados = new ControllerEmpleados();
+                    switch ($data['tipo']) {
+                        case 'personal':
+                            echo json_encode(
+                                $empleados::actualizarPersonal($data['id'], $data['curp'], $data['rfc'], $data['nss'], $data['cp'], $data['paterno'], $data['materno'], $data['nombre']),
+                                JSON_UNESCAPED_UNICODE
+                            );
+                            break;
+                        case 'trabajo':
+                            echo json_encode(
+                                $empleados::actualizarTrabajo($data['id'], $data['id_unidad_negocio'], $data['id_regional'], $data['id_zona'], $data['id_empresa'], $data['id_servicio'], $data['id_turno'], $data['id_puesto'], $data['sueldo'], $data['id_periocidad']),
+                                JSON_UNESCAPED_UNICODE
+                            );
+                            break;
+                        case 'bancario':
+                            echo json_encode(
+                                $empleados::actualizarBancario($data['id'], $data['cuenta'], $data['clave_interbancaria'], $data['id_banco']),
+                                JSON_UNESCAPED_UNICODE
+                            );
+                            break;
+                        default:
+                            http_response_code(400);
+                            echo json_encode(["status" => "error", "message" => "Tipo de actualización no válido"], JSON_UNESCAPED_UNICODE);
+                            exit();
+                    }
+                    // echo json_encode(
+                    //     $empleados::actualizarPersonal($data['id'], $data['status'], $data['motivo_baja'], $data['finiquito'], $data['nota_baja'], $data['fecha_baja']), JSON_UNESCAPED_UNICODE
+                    // );
+            } catch (Exception $e) {
+                http_response_code(401);
+                echo json_encode(["status" => "error", "message" => "Token JWT inválido: " . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+        } else {
+            echo json_encode(["status" => "error", "message" => "Método no permitido"], JSON_UNESCAPED_UNICODE);
+        }
+        break;
     default:
         echo json_encode(["status" => "error", "message" => "Acción no reconocida"], JSON_UNESCAPED_UNICODE);
         break;

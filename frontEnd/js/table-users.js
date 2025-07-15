@@ -23,10 +23,15 @@
         altFormat: "d/m/Y" // Formato legible para el usuario
       });
 
-      $(document).ready(function() {
-          $("#finiquito").select2({
-              theme: "bootstrap4",
-              width: "100%"
-          });
+      $("#finiquito").select2({
+          theme: "bootstrap4",
+          width: "100%"
       });
+
+      
+      $("#motivoBaja").select2({
+          theme: "bootstrap4",
+          width: "100%"
+      });
+      
       

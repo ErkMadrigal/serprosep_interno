@@ -60,34 +60,82 @@
             
         }
 
-        public static function actualizar( $id, $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss, $cp, $fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
+        public static function actualizarPersonal( $id, $curp, $rfc, $nss, $cp, $paterno, $materno, $nombre){
             try{
                 
-                $sql = "UPDATE empleados SET no_empleado = :no_empleado, id_unidad_negocio = :id_unidad_negocio, id_regional = :id_regional, id_zona = :id_zona, id_empresa = :id_empresa, id_servicio = :id_servicio, curp = :curp, rfc = :rfc, nss = :nss, CP_fiscal = :CP_fiscal, fecha_ingreso = :fecha_ingreso, paterno = :paterno, materno = :materno, nombre = :nombre, id_turno = :id_turno, id_puesto = :id_puesto, sueldo = :sueldo, id_periocidad = :id_periocidad, cuenta = :cuenta, clave_interbancaria = :clave_interbancaria, id_banco = :id_banco, estatus = :estatus WHERE id = :id";
+                $sql = "UPDATE empleados SET curp = :curp, rfc = :rfc, nss = :nss, CP_fiscal = :CP_fiscal, paterno = :paterno, materno = :materno, nombre = :nombre WHERE id = :id";
                 $db = self::$database::getConnection();
                 $stmt = $db->prepare($sql);
-                $stmt->bindParam(":no_empleado", $no_empleado);
+                $stmt->bindParam(":curp", $curp); 
+                $stmt->bindParam(":rfc", $rfc); 
+                $stmt->bindParam(":nss", $nss); 
+                $stmt->bindParam(":CP_fiscal", $cp); 
+                $stmt->bindParam(":paterno", $paterno); 
+                $stmt->bindParam(":materno", $materno); 
+                $stmt->bindParam(":nombre", $nombre); 
+                $stmt->bindParam(":id", $id);
+
+                $stmt->execute();
+                $lastInsertID = $id;
+
+                self::$respuesta["status"] = "ok";
+                self::$respuesta["mensaje"] = "Registro Actualizado";
+                self::$respuesta["last_insert_id"] = $lastInsertID;
+                
+            } catch (RuntimeException $e) {
+                self::$respuesta["status"] = "error";
+                self::$respuesta["mensaje"] = $e->getMessage();
+            }catch(PDOException $e){
+                self::$respuesta["status"] = "error";
+                self::$respuesta["mensaje"] = $e->getMessage();
+            }
+            return self::$respuesta;
+            
+        }
+
+        public static function actualizarTrabajo( $id, $id_unidad_negocio, $id_regional, $id_zona, $id_empresa, $id_servicio,$id_turno, $id_puesto, $sueldo, $id_periocidad){
+            try{
+                
+                $sql = "UPDATE empleados SET id_unidad_negocio = :id_unidad_negocio, id_regional = :id_regional, id_zona = :id_zona, id_empresa = :id_empresa, id_servicio = :id_servicio, id_turno = :id_turno, id_puesto = :id_puesto, sueldo = :sueldo, id_periocidad = :id_periocidad WHERE id = :id";
+                $db = self::$database::getConnection();
+                $stmt = $db->prepare($sql);
                 $stmt->bindParam(":id_unidad_negocio", $id_unidad_negocio);
                 $stmt->bindParam(":id_regional", $id_regional);
                 $stmt->bindParam(":id_zona", $id_zona);
                 $stmt->bindParam(":id_empresa", $id_empresa,); 
                 $stmt->bindParam(":id_servicio", $id_servicio); 
-                $stmt->bindParam(":curp", $curp); 
-                $stmt->bindParam(":rfc", $rfc); 
-                $stmt->bindParam(":nss", $nss); 
-                $stmt->bindParam(":CP_fiscal", $cp); 
-                $stmt->bindParam(":fecha_ingreso", $fecha_ingreso); 
-                $stmt->bindParam(":paterno", $paterno); 
-                $stmt->bindParam(":materno", $materno); 
-                $stmt->bindParam(":nombre", $nombre); 
                 $stmt->bindParam(":id_turno", $id_turno); 
                 $stmt->bindParam(":id_puesto", $id_puesto); 
                 $stmt->bindParam(":sueldo", $sueldo); 
                 $stmt->bindParam(":id_periocidad", $id_periocidad); 
+                $stmt->bindParam(":id", $id);
+                $stmt->execute();
+                $lastInsertID = $id;
+
+                self::$respuesta["status"] = "ok";
+                self::$respuesta["mensaje"] = "Registro Actualizado";
+                self::$respuesta["last_insert_id"] = $lastInsertID;
+                
+            } catch (RuntimeException $e) {
+                self::$respuesta["status"] = "error";
+                self::$respuesta["mensaje"] = $e->getMessage();
+            }catch(PDOException $e){
+                self::$respuesta["status"] = "error";
+                self::$respuesta["mensaje"] = $e->getMessage();
+            }
+            return self::$respuesta;
+            
+        }
+
+        public static function actualizarBancario( $id, $cuenta, $clave_interbancaria, $id_banco){
+            try{
+                
+                $sql = "UPDATE empleados SET cuenta = :cuenta, clave_interbancaria = :clave_interbancaria, id_banco = :id_banco WHERE id = :id";
+                $db = self::$database::getConnection();
+                $stmt = $db->prepare($sql);
                 $stmt->bindParam(":cuenta", $cuenta); 
                 $stmt->bindParam(":clave_interbancaria", $clave_interbancaria); 
                 $stmt->bindParam(":id_banco", $id_banco); 
-                $stmt->bindParam(":estatus", $estatus);
                 $stmt->bindParam(":id", $id);
                 $stmt->execute();
                 $lastInsertID = $id;

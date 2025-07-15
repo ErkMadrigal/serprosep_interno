@@ -58,7 +58,7 @@ getCatalogos(API, 10)
 let motivo = document.getElementById('motivoBaja');
 getCatalogos(API, 16)
 .then(data => { 
-    motivo.innerHTML = `<option disabled value="">Seleccione un puesto</option>`;
+    motivo.innerHTML = `<option value="">Seleccione un Motivo de la baja</option>`;
     data.data.forEach(item => {
         motivo.innerHTML += `<option value="${item.id}">${item.valor}</option>`;
     });

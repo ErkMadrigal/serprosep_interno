@@ -171,19 +171,22 @@
                 <div class='col-12 col-sm-12 col-md-6'>
                     <div class="form-group">
                         <label for="finiquito" class=" control-label">Finiquito:<span class="text-danger">*</span></label>
-                        <select class="form-control" id="finiquito" name="finiquito">
+                        <select class="form-control" id="finiquito" name="finiquito" required>
                             <option value="">Selecciona una Opcion</option>
                             <option value="1">SI</option>
                             <option value="0">NO</option>                
                         </select>
+                        <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
                 </div>
                 <div class='col-12 col-sm-12 col-md-12'>
                     <div class="form-group">
                         <label for="motivo" class=" control-label">Motivo de baja:<span class="text-danger">*</span></label>
-                        <select class="form-control" id="motivoBaja" name="motivoBaja">
+                        <select class="form-control" id="motivoBaja" name="motivoBaja" required>
+                            <option value="">Selecciona una Opcion</option>
                                           
                         </select>
+                        <div class="invalid-feedback"> El campo es requerido </div>
                     </div>
                 </div>
                 <div class='col-12 col-sm-12 col-md-12'>

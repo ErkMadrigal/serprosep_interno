@@ -38,10 +38,11 @@
               </div>
             </div>
             <hr class="my-4">
-            <form class="needs-invalidation" id="formulario" noinvalidate>
+            
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
-                  <div class="form-row">
+                  <form class="needs-invalidation-personal" id="formulario" noinvalidate> 
+                    <div class="form-row">
                       <div class="col-md-6 mb-3">
                           <label for="invalidationCustom3">Nombre (s) <strong
                                   class="text-danger">*</strong></label>
@@ -86,9 +87,10 @@
                               autocomplete="off" maxlength="6" required>
                           <div class="invalid-feedback"> El campo es requerido </div>
                       </div>
-                      
-                  </div>
-                  
+                          
+                    </div>
+                        <button class="btn btn-primary btn-block" id="updatePersonal">Actualizar</button>
+                  </form>  
                 </div>
                 <div class="tab-pane fade" id="trabajo" role="tabpanel" aria-labelledby="trabajo-tab">
                   <div class="form-row">
@@ -189,8 +191,7 @@
                     </div>
                 </div>
               </div>
-              <button class="btn btn-primary btn-block" id="add">Actualizar</button>
-            </form>
+            
 
             
           </div> <!-- /.card-body -->
