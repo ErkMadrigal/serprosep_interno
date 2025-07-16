@@ -82,7 +82,6 @@ switch ($opcion) {
             $correo     = $data['correo']     ?? false;
             $password   = isset($data['password']) ? password_hash($data['password'], PASSWORD_ARGON2ID) : false;
             $estatus    = 1;
-            $id_rol     = 1;
 
             if (in_array(false, [$nombre, $paterno, $materno, $name_user, $correo, $password], true)) {
                 echo json_encode(["status" => "error", "message" => "Todos los campos son requeridos"], JSON_UNESCAPED_UNICODE);
@@ -100,7 +99,7 @@ switch ($opcion) {
                 }
 
                 $empleados = new ControllerUsuarios();
-                echo json_encode($empleados::registro($nombre, $correo, $name_user, $paterno, $materno, $password, $estatus, $id_rol), JSON_UNESCAPED_UNICODE);
+                echo json_encode($empleados::registro($nombre, $correo, $name_user, $paterno, $materno, $password, $estatus), JSON_UNESCAPED_UNICODE);
             }
         } else {
             echo json_encode(["status" => "error", "message" => "Método no permitido"], JSON_UNESCAPED_UNICODE);

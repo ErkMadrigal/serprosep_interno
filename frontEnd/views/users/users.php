@@ -37,7 +37,10 @@
                                             <input type="text" class="form-control" id="correo" required>
                                             <div class="invalid-feedback"> El campo es requerido </div>
                                         </div>
-                                        
+                                        <div class="col-md-12 mb-3">
+                                            <div id="checkboxContainer" class="row"></div>
+                                             <!-- <button onclick="mostrarSeleccionados()">Mostrar Seleccionados</button> -->
+                                        </div>
                                     </div>
                                     <button class="btn btn-primary" id="add">Agregar</button>
                                 </form>
