@@ -29,6 +29,7 @@
       };
 
       fetch('http://localhost/serprosep_interno/API/auth', {
+      // fetch('https://mc-madrigal.com/serprosep_interno/API/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,6 +46,7 @@
         localStorage.setItem('user', JSON.stringify(data));
         localStorage.setItem('token', data.token);
         document.cookie = `jwt=${data.token}; path=/;`;
+        // window.location.href = 'https://mc-madrigal.com/serprosep_interno/frontEnd/home';
         window.location.href = 'http://localhost/serprosep_interno/frontEnd/home';
       }).catch(error => {
         console.error('There was a problem with the fetch operation:', error);

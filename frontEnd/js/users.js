@@ -49,6 +49,35 @@ const API_BASE_URL = window.env.API_URL + 'users'; // Replace with your actual A
   }
 })();
 
+// JavaScript
+const copiarTexto = async () => {
+    // Obtener los valores de los labels
+    const usuario = document.getElementById('usuarioMsg').textContent;
+    const contrasenia = document.getElementById('passMsg').textContent;
+    
+    // Formatear el texto a copiar
+    const texto = `Usuario: ${usuario}\nContraseña: ${contrasenia}`;
+    
+    try {
+        // Copiar al portapapeles
+        await navigator.clipboard.writeText(texto);
+        // console.log(texto)
+
+         Toast.fire({
+          icon: "success",
+          title: "Exito",
+          text: "Credenciales copiadas al portapapeles!"
+        });
+    } catch (err) {
+        console.error('Error al copiar: ', err);
+         Toast.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error al copiar las credenciales"
+        });
+    }
+}
+
 // Función para mostrar los elementos seleccionados
 const mostrarSeleccionados = () => {
   const mainCheckboxes = document.querySelectorAll('input.custom-control-input:checked');
@@ -62,11 +91,11 @@ const mostrarSeleccionados = () => {
     return { id, tipo, permisos };
   });
 
-  if (seleccionados.length === 0) {
-    console.log("No hay elementos seleccionados.");
-  } else {
-    console.log("Elementos seleccionados:", seleccionados);
-  }
+  // if (seleccionados.length === 0) {
+  //   console.log("No hay elementos seleccionados.");
+  // } else {
+  //   console.log("Elementos seleccionados:", seleccionados);
+  // }
   return seleccionados; // Devolver los seleccionados para usarlos en newUsuario
 };
 
@@ -106,11 +135,17 @@ const newUsuario = async (event) => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify(data_json)
-      });
+      }); 
 
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
       if (data.status === "ok") {
+        
+        document.querySelector("#alert_new_empleado").classList.remove("d-none")
+        document.querySelector("#usuarioMsg").innerText = data.userName
+        document.querySelector("#passMsg").innerText = data.password
+
+
         Toast.fire({
           icon: "success",
           title: data.mensaje
@@ -132,6 +167,7 @@ const newUsuario = async (event) => {
         const rolesData = await responseRoles.json();
         setTimeout(() => {
           if (rolesData.status === "ok") {
+             
               Toast.fire({
                   icon: "success",
                   title: rolesData.mensaje

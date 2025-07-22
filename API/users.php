@@ -108,8 +108,12 @@ switch ($opcion) {
                 }
 
                 $usuario = new ControllerUsuarios();
+                $data = $usuario::registro($data['nombre'], $data['correo'], $user_name, $data['paterno'], $data['materno'], password_hash($password, PASSWORD_ARGON2ID), 1);
+                $data['password'] = $password;
+                $data['userName'] = $user_name;
+                
                 echo json_encode(
-                    $usuario::registro($data['nombre'], $data['correo'], $user_name, $data['paterno'], $data['materno'], password_hash($password, PASSWORD_ARGON2ID), 1), JSON_UNESCAPED_UNICODE
+                    $data, JSON_UNESCAPED_UNICODE
                 );
 
             } catch (Exception $e) {

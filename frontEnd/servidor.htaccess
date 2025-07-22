@@ -1,0 +1,31 @@
+<IfModule mod_rewrite.c>
+    # Activa el motor de reescritura
+    RewriteEngine On
+    RewriteBase /serprosep_interno/frontEnd/
+
+    # Forzar HTTPS (opcional, pero recomendado)
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Eliminar www (opcional)
+    RewriteCond %{HTTP_HOST} ^www\. [NC]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Evitar reescritura para archivos y directorios reales
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Reescritura genérica para todas las rutas
+    RewriteRule ^(.*)$ index.php?dir=$1 [L,QSA]
+</IfModule>
+
+# Página de error personalizada
+ErrorDocument 404 /serprosep_interno/frontEnd/404.html
+
+# Opciones de seguridad y limpieza
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# Evitar mostrar archivos
+IndexIgnore *.css *.map *.js *.png *.jpg *.wmv *.mp4 *.avi *.etc
