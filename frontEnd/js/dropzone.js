@@ -1,7 +1,7 @@
 Dropzone.autoDiscover = false;
 
 const dropzone = new Dropzone("#tinydash-dropzone", {
-  autoProcessQueue: false, // No sube el archivo al servidor automáticamente
+  autoProcessQueue: false,
   acceptedFiles: ".xlsx,.xls",
   maxFiles: 1,
   init: function () {
@@ -19,12 +19,34 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
 
         const seenCURPs = new Set();
         const seenRFCs = new Set();
+        const seenNSS = new Set();
 
         rows.forEach((fila, i) => {
-          const filaIndex = i + 2;
+          const filaIndex = i + 2; // por el encabezado
+
+          const paterno = (fila.Paterno || "").trim();
+          const materno = (fila.Materno || "").trim();
+          const nombre = (fila.Nombre || "").trim();
+          const nss = (fila.NSS || "").trim();
           const curp = (fila.CURP || "").toUpperCase().trim();
           const rfc = (fila.RFC || "").toUpperCase().trim();
-          const nombre = (fila.Nombre || "").trim();
+          const cpFiscal = (fila.CP_Fiscal || "").toString().trim();
+          const fechaAlta = (fila.Fecha_Alta || "").trim();
+          const clabe = (fila.Clabe || "").toString().trim();
+          const servicio = (fila.Servicio || "").trim();
+          const direccion = (fila.Direccion_Inmueble || "").trim();
+          const sueldo = (fila.Sueldo || "").toString().trim();
+          const alergia = (fila.Alergia || "").trim();
+          const foto = (fila.Foto || "").trim();
+
+          // --- Validaciones ---
+          if (!paterno || !nombre) {
+            errores.push(`Fila ${filaIndex}: Nombre incompleto (Paterno o Nombre vacío)`);
+          }
+
+          if (nss && !/^\d{11}$/.test(nss)) {
+            errores.push(`Fila ${filaIndex}: NSS inválido (${nss})`);
+          }
 
           if (curp.length !== 18 || !/^[A-Z]{4}\d{6}[A-Z]{6}\d{2}$/.test(curp)) {
             errores.push(`Fila ${filaIndex}: CURP inválido (${curp})`);
@@ -34,6 +56,23 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
             errores.push(`Fila ${filaIndex}: RFC inválido (${rfc})`);
           }
 
+          if (cpFiscal && !/^\d{5}$/.test(cpFiscal)) {
+            errores.push(`Fila ${filaIndex}: Código Postal inválido (${cpFiscal})`);
+          }
+
+          if (fechaAlta && isNaN(Date.parse(fechaAlta))) {
+            errores.push(`Fila ${filaIndex}: Fecha de Alta inválida (${fechaAlta})`);
+          }
+
+          if (clabe && !/^\d{18}$/.test(clabe)) {
+            errores.push(`Fila ${filaIndex}: Clabe inválida (${clabe})`);
+          }
+
+          if (sueldo && isNaN(parseFloat(sueldo))) {
+            errores.push(`Fila ${filaIndex}: Sueldo inválido (${sueldo})`);
+          }
+
+          // --- Duplicados ---
           if (seenCURPs.has(curp)) {
             errores.push(`Fila ${filaIndex}: CURP duplicado (${curp})`);
           } else {
@@ -46,9 +85,31 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
             seenRFCs.add(rfc);
           }
 
-          datosValidados.push({ curp, rfc, nombre });
+          if (nss && seenNSS.has(nss)) {
+            errores.push(`Fila ${filaIndex}: NSS duplicado (${nss})`);
+          } else if (nss) {
+            seenNSS.add(nss);
+          }
+
+          datosValidados.push({
+            paterno,
+            materno,
+            nombre,
+            nss,
+            curp,
+            rfc,
+            cpFiscal,
+            fechaAlta,
+            clabe,
+            servicio,
+            direccion,
+            sueldo,
+            alergia,
+            foto,
+          });
         });
 
+        // --- DOM Elements ---
         const enviarBtn = document.getElementById("enviar");
         const countErrors = document.getElementById("countErrors");
         const errorSection = document.getElementById("errorSection");
@@ -60,6 +121,7 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
         if (errores.length > 0) {
           errorSection.style.display = "block";
           enviarBtn.disabled = true;
+          notificationsContainer.style.display = "none";
           countErrors.textContent = ` ${errores.length} `;
 
           errores.forEach((error) => {
@@ -75,11 +137,11 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
           notificationsContainer.style.display = "block";
           enviarBtn.disabled = false;
           errorSection.style.display = "none";
-          console.log("Datos validados:", datosValidados);
+          console.log("✅ Datos validados correctamente:", datosValidados);
         }
       };
 
       reader.readAsArrayBuffer(file);
     });
-  }
+  },
 });
