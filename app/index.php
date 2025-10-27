@@ -1,13 +1,10 @@
 
 <?php
-    // Mostrar errores
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+   
 
     // Root
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-    $root = $protocol . $_SERVER["HTTP_HOST"] . "/SIA/";
+    $root = $protocol . $_SERVER["HTTP_HOST"] . "/SIA/app/";
 
     // Includes
     include './jwt/verify_jwt.php';

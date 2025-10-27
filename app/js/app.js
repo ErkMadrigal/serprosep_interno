@@ -22,9 +22,11 @@ const datosLocales = [
   { nombre: "Actividades", ruta: "actividades" },
 ];
 
+let dominio = window.location.origin
+
 window.env = {
   // API_URL: "http://localhost/serprosep_interno/API/",
-  API_URL: "https://maneh.com.mx/SIA/API/",
+  API_URL: dominio+"/SIA/API/",
   API_KEY: "k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh"
 };
 

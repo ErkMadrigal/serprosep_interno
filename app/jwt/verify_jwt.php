@@ -4,10 +4,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-// Mostrar errores (útil en GoDaddy)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 // Clave JWT directa
 $JWT_SECRET = 'zT9wU!5vYp@34Fk'; // <- cambia a tu clave segura
