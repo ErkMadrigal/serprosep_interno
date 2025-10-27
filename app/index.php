@@ -1,26 +1,30 @@
 
 <?php
+    // Mostrar errores
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
-    include './components/_root.php'; 
+    // Root
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+    $root = $protocol . $_SERVER["HTTP_HOST"] . "/SIA/";
+
+    // Includes
     include './jwt/verify_jwt.php';
-    
+
     $ruta = './views/';
 
+    $publicas = ['auth', 'index', 'login']; // rutas públicas
+    $url = isset($_GET['dir']) ? $_GET['dir'] : 'index';
 
-    
-    $publicas = ['auth', 'index', 'login']; // rutas sin protección
-
-    $url = (isset($_GET['dir'])) ? $_GET['dir'] : 'index';
+    // Verificar JWT si no es ruta pública
     if (!in_array($url, $publicas)) {
-        // var_dump($_COOKIE['jwt']);
-        // Verificar si el token JWT está presente y es válido
-        $direcition = $root.'login';
         if (!isset($_COOKIE['jwt']) || !verificarToken($_COOKIE['jwt'])) {
-            
-            header("Location: $direcition");
+            header("Location: {$root}login");
             exit;
         }
     }
+
 
 
     switch ($url) {

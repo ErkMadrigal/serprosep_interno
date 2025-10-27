@@ -1,6 +1,6 @@
 <?php
 $request = $_SERVER['REQUEST_URI'];
-$basePath = '/serprosep_interno/API'; // ajusta si cambia
+$basePath = '/SIA/API'; // ajusta si cambia
 
 // Eliminar parámetros GET y la base
 $uri = str_replace($basePath, '', parse_url($request, PHP_URL_PATH));

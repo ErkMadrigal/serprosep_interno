@@ -1,6 +1,7 @@
 # Activa el motor de reescritura
 RewriteEngine on
-RewriteBase /serprosep_interno/frontend/
+RewriteBase /SIA/frontEnd/
+; RewriteBase /serprosep_interno/frontend/
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

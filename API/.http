@@ -1,26 +1,26 @@
-POST http://localhost/serprosep_interno/API/auth HTTP/1.1
+POST https://maneh.com.mx/SIA/API/auth HTTP/1.1
 Content-Type: application/json
 X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
 
 {
   "action": "login",
-  "name_user": "carlosr",
+  "name_user": "SuperAdmin",
   "password": "supersegura123"
 }
 
 ###
 
-POST http://localhost/serprosep_interno/API/auth HTTP/1.1
+POST https://arma2.com.mx/API/auth HTTP/1.1
 Content-Type: application/json
 X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
 
 {   
     "action": "registro",
-    "nombre": "Ellioth",
-    "paterno": "Madrigal",
-    "materno": "Gonzalez",
-    "name_user": "ElliothM",
-    "correo": "Ellioth@example.com",
+    "nombre": "Santiago",
+    "paterno": "Montejo",
+    "materno": "",
+    "name_user": "S_Montejo",
+    "correo": "santiago@serprosep.com",
     "password": "supersegura123"
 }
 
@@ -36,20 +36,20 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vb
 
 
 ###
-POST http://localhost/serprosep_interno/API/auth
+POST https://maneh.com.mx/SIA/API/auth
 Content-Type: application/json
 X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlhdCI6MTc0ODg4OTkyMSwiZXhwIjoxNzQ4OTc2MzIxLCJkYXRhIjp7ImlkIjoxLCJuYW1lX3VzZXIiOiJjYXJsb3NyIiwiY29ycmVvIjoiY2FybG9zQGV4YW1wbGUuY29tIiwicm9sIjoxfX0.axtwBlhenzUManbD7MS1U7hhL8oFpV3qgDdKHnbHQXM
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlhdCI6MTc2MTU5Mjc0OCwiZXhwIjoxNzYxNjc5MTQ4LCJkYXRhIjp7ImlkIjoxLCJuYW1lX3VzZXIiOiJTdXBlckFkbWluIiwiY29ycmVvIjoiYWRtaW5AZXhhbXBsZS5jb20ifX0.xzieBZYBejkkGPsDOh9gI_pQJw1KWHB7cByxJGoqcvs
 
 {
   "action": "refreshToken"
 }
 
 ###
-POST http://localhost/serprosep_interno/API/employees
+POST https://maneh.com.mx/SIA/API/employees
 Content-Type: application/json
 X-API-KEY: k8sd7f9a2v1b4mzqp0xlj5ngtu3wrceh
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdCIsImlhdCI6MTc0ODgzOTcxMCwiZXhwIjoxNzQ4ODQzMzEwLCJkYXRhIjp7ImlkIjoxLCJuYW1lX3VzZXIiOiJjYXJsb3NyIiwiY29ycmVvIjoiY2FybG9zQGV4YW1wbGUuY29tIiwicm9sIjoxfX0.DZ9T1CD4pySBe2NtoN7afqleMSjiepCqCHtkictKgao
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NjE1OTI3ODksImV4cCI6MTc2MTU5NjM4OSwiZGF0YSI6eyJpZCI6MSwibmFtZV91c2VyIjoiU3VwZXJBZG1pbiIsImNvcnJlbyI6ImFkbWluQGV4YW1wbGUuY29tIn19.qZ77TqYvlq-7fayaUuTm8jvqLxmi0Q3PvRJWednyAF8
 
 {
   "action": "empleados"

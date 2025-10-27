@@ -28,7 +28,7 @@
         password: passwordInput.value,
       };
 
-      fetch('http://localhost/serprosep_interno/API/auth', {
+      fetch('https://maneh.com.mx/SIA/API/auth', {
       // fetch('https://arma2.com.mx/API/auth', {
       // fetch('https://mc-madrigal.com/serprosep_interno/API/auth', {
         method: 'POST',
@@ -49,7 +49,7 @@
         document.cookie = `jwt=${data.token}; path=/;`;
         // window.location.href = 'https://mc-madrigal.com/serprosep_interno/frontEnd/home';
         // window.location.href = 'https://arma2.com.mx/SIA/home';
-        window.location.href = 'http://localhost/serprosep_interno/frontEnd/home';
+        window.location.href = 'https://maneh.com.mx/SIA/frontEnd/home';
       }).catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });

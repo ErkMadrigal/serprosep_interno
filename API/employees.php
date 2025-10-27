@@ -2,8 +2,8 @@
 require_once './db/Conection.php';
 require_once './pruebas/Consultas.pruebas.php';
 
-require_once './Empleados/ControllerEmpleados.php';
-require_once './Empleados/ConsultasEmpleados.php';
+require_once './empleados/ControllerEmpleados.php';
+require_once './empleados/ConsultasEmpleados.php';
 require_once __DIR__ . '/vendor/autoload.php';
 require_once './methods/method.php';
 

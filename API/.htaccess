@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /serprosep_interno/API/
+    RewriteBase /SIA/API/
 
     # No redirigir si existe el archivo o carpeta
     RewriteCond %{REQUEST_FILENAME} !-f
