@@ -21,23 +21,26 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
         const seenRFCs = new Set();
         const seenNSS = new Set();
 
+        function safe(value) {
+          if (value === undefined || value === null) return "";
+          return String(value).trim();
+        }
+
         rows.forEach((fila, i) => {
           const filaIndex = i + 2; // por el encabezado
 
-          const paterno = (fila.Paterno || "").trim();
-          const materno = (fila.Materno || "").trim();
-          const nombre = (fila.Nombre || "").trim();
-          const nss = (fila.NSS || "").trim();
-          const curp = (fila.CURP || "").toUpperCase().trim();
-          const rfc = (fila.RFC || "").toUpperCase().trim();
-          const cpFiscal = (fila.CP_Fiscal || "").toString().trim();
-          const fechaAlta = (fila.Fecha_Alta || "").trim();
-          const clabe = (fila.Clabe || "").toString().trim();
-          const servicio = (fila.Servicio || "").trim();
-          const direccion = (fila.Direccion_Inmueble || "").trim();
-          const sueldo = (fila.Sueldo || "").toString().trim();
-          const alergia = (fila.Alergia || "").trim();
-          const foto = (fila.Foto || "").trim();
+          const paterno = safe(fila.Paterno);
+          const materno = safe(fila.Materno);
+          const nombre = safe(fila.Nombre);
+          const nss = safe(fila.NSS);
+          const curp = safe(fila.CURP).toUpperCase();
+          const rfc = safe(fila.RFC).toUpperCase();
+          const cp = safe(fila.CP_Fiscal);
+          const fechaAlta = safe(fila.Fecha_Alta);
+          const interbancaria = safe(fila.Clabe);
+          const sueldo = safe(fila.Sueldo);
+          const alergia = safe(fila.Alergia);
+          const fotos = safe(fila.Foto);
 
           // --- Validaciones ---
           if (!paterno || !nombre) {
@@ -56,16 +59,16 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
             errores.push(`Fila ${filaIndex}: RFC inválido (${rfc})`);
           }
 
-          if (cpFiscal && !/^\d{5}$/.test(cpFiscal)) {
-            errores.push(`Fila ${filaIndex}: Código Postal inválido (${cpFiscal})`);
+          if (cp && !/^\d{5}$/.test(cp)) {
+            errores.push(`Fila ${filaIndex}: Código Postal inválido (${cp})`);
           }
 
           if (fechaAlta && isNaN(Date.parse(fechaAlta))) {
             errores.push(`Fila ${filaIndex}: Fecha de Alta inválida (${fechaAlta})`);
           }
 
-          if (clabe && !/^\d{18}$/.test(clabe)) {
-            errores.push(`Fila ${filaIndex}: Clabe inválida (${clabe})`);
+          if (interbancaria && !/^\d{18}$/.test(interbancaria)) {
+            errores.push(`Fila ${filaIndex}: Clabe interbancaria inválida (${interbancaria})`);
           }
 
           if (sueldo && isNaN(parseFloat(sueldo))) {
@@ -98,16 +101,14 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
             nss,
             curp,
             rfc,
-            cpFiscal,
+            cp,
             fechaAlta,
-            clabe,
-            servicio,
-            direccion,
+            interbancaria,
             sueldo,
             alergia,
-            foto,
+            fotos,
           });
-        });
+        }); 
 
         // --- DOM Elements ---
         const enviarBtn = document.getElementById("enviar");
@@ -134,14 +135,86 @@ const dropzone = new Dropzone("#tinydash-dropzone", {
             errorTable.appendChild(row);
           });
         } else {
-          notificationsContainer.style.display = "block";
-          enviarBtn.disabled = false;
-          errorSection.style.display = "none";
-          console.log("✅ Datos validados correctamente:", datosValidados);
+            notificationsContainer.style.display = "block";
+            enviarBtn.disabled = false;
+            errorSection.style.display = "none";
+            console.log("✅ Datos validados correctamente:", datosValidados);
+
+            const dropzone = document.getElementById("tinydash-dropzone");
+            const overlay = document.getElementById("loadingOverlay");
+
+            dropzone.classList.add("success");
+
+            // Mostrar overlay mientras se procesan los fetch
+            overlay.style.display = "flex";
+
+            let completados = 0;
+
+            datosValidados.forEach((value, index) => {
+              const API_BASE_URL = window.env.API_URL + 'employees';
+
+              value.action = "empleados",
+
+              fetch(API_BASE_URL, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-API-KEY': window.env.API_KEY,
+                  'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify(value)
+              })
+                .then(response => {
+                  if (!response.ok) throw new Error('Error en la respuesta del servidor');
+                  return response.json();
+                })
+                .then(result => {
+                  
+                  if (result.status === "error") throw new Error(result.mensaje || 'Error al agregar empleado');
+
+                  console.log('Empleado agregado:', result);
+                  Toast.fire({
+                    icon: "success",
+                    title: result.mensaje || "Empleado agregado correctamente"
+                  });
+                })
+                .catch(error => {
+                  console.error('Error en el fetch:', error);
+                  Toast.fire({
+                    icon: "error",
+                    title: error.message
+                  });
+                })
+                .finally(() => {
+                  completados++;
+                  // Cuando termine el último fetch, ocultamos el overlay
+                  if (completados === datosValidados.length) {
+                    overlay.style.display = "none";
+                  }
+                });
+            });
+
+
+
         }
       };
 
       reader.readAsArrayBuffer(file);
     });
   },
+});
+
+
+function resetDropzone() {
+  const dropzoneElement = document.getElementById("tinydash-dropzone");
+  const notificationsContainer = document.getElementById("notificationsContainer");
+
+  dropzoneElement.classList.remove("success");
+  notificationsContainer.style.display = "none";
+
+}
+
+document.getElementById("recetear").addEventListener("click", function() {
+  dropzone.removeAllFiles(true);  
+  resetDropzone();
 });

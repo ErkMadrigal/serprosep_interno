@@ -19,6 +19,12 @@
                           <h5 class="text-muted mt-4">Suelte los archivos aquí o haga clic para cargarlos</h5>
                         </div>
                       </form>
+                      <div id="loadingOverlay">
+                        <div class="loading-content">
+                          <i class="fe fe-loader fe-spin fe-48 text-white"></i>
+                          <p class="text-white mt-3">Procesando empleados...</p>
+                        </div>
+                      </div>
 
                       <!-- From Uiverse.io by kennyotsu --> 
                       <div class="notifications-container mt-4" id="notificationsContainer" style="display: none;">
@@ -42,6 +48,7 @@
                       </div>
 
                       <button id="enviar" class="btn btn-primary mt-4" disabled>Enviar</button>
+                      <button id="recetear" class="btn btn-primary mt-4">Recetear</button>
                       
                       <!-- Preview -->
                       <!-- <div class="dropzone-previews mt-3" id="file-previews"></div> -->

@@ -50,6 +50,13 @@
                                             <input type="text" class="form-control" id="nss" required>
                                             <div class="invalid-feedback"> El campo es requerido </div>
                                         </div>
+                                        
+                                        <div class="col-md-6 mb-3">
+                                            <label for="invalidationCustom3">Alergias <strong
+                                                    class="text-danger">*</strong></label>
+                                            <input type="text" class="form-control" id="alergias" required>
+                                            <div class="invalid-feedback"> El campo es requerido </div>
+                                        </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="Codigo postal">Codigo Postal Fiscal<strong
                                                     class="text-danger">*</strong></label>

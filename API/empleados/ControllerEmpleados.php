@@ -14,33 +14,37 @@
         }
 
        
-        public static function registro( $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss, $cp, $fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus){
+        public static function registro( $no_empleado,$id_unidad_negocio,$id_regional,$id_zona,$id_empresa,$id_servicio,$curp,$rfc,$nss, $cp, $fecha_ingreso,$paterno,$materno,$nombre,$id_turno,$id_puesto,$sueldo,$id_periocidad,$cuenta,$clave_interbancaria,$id_banco,$estatus, $alergias, $foto){
             try{
                 
-                $sql = "INSERT INTO empleados (no_empleado, id_unidad_negocio, id_regional, id_zona, id_empresa, id_servicio, curp, rfc, nss, CP_fiscal, fecha_ingreso, paterno, materno, nombre, id_turno, id_puesto, sueldo, id_periocidad, cuenta, clave_interbancaria, id_banco, estatus) values(:no_empleado, :id_unidad_negocio, :id_regional, :id_zona, :id_empresa, :id_servicio, :curp, :rfc, :nss, :CP_fiscal, :fecha_ingreso, :paterno, :materno, :nombre, :id_turno, :id_puesto, :sueldo, :id_periocidad, :cuenta, :clave_interbancaria, :id_banco, :estatus)";
+                $sql = "INSERT INTO empleados (no_empleado, id_unidad_negocio, id_regional, id_zona, id_empresa, id_servicio, curp, rfc, nss, CP_fiscal, fecha_ingreso, paterno, materno, nombre, id_turno, id_puesto, sueldo, id_periocidad, cuenta, clave_interbancaria, id_banco, estatus, alergias, fotos) values(:no_empleado, :id_unidad_negocio, :id_regional, :id_zona, :id_empresa, :id_servicio, :curp, :rfc, :nss, :CP_fiscal, :fecha_ingreso, :paterno, :materno, :nombre, :id_turno, :id_puesto, :sueldo, :id_periocidad, :cuenta, :clave_interbancaria, :id_banco, :estatus, :alergias, :fotos)";
                 $db = self::$database::getConnection();
                 $stmt = $db->prepare($sql);
-                $stmt->bindParam(":no_empleado", $no_empleado);
-                $stmt->bindParam(":id_unidad_negocio", $id_unidad_negocio);
-                $stmt->bindParam(":id_regional", $id_regional);
-                $stmt->bindParam(":id_zona", $id_zona);
-                $stmt->bindParam(":id_empresa", $id_empresa,); 
-                $stmt->bindParam(":id_servicio", $id_servicio); 
-                $stmt->bindParam(":curp", $curp); 
-                $stmt->bindParam(":rfc", $rfc); 
-                $stmt->bindParam(":nss", $nss);
-                $stmt->bindParam(":CP_fiscal", $cp); 
-                $stmt->bindParam(":fecha_ingreso", $fecha_ingreso); 
                 $stmt->bindParam(":paterno", $paterno); 
                 $stmt->bindParam(":materno", $materno); 
                 $stmt->bindParam(":nombre", $nombre); 
-                $stmt->bindParam(":id_turno", $id_turno); 
-                $stmt->bindParam(":id_puesto", $id_puesto); 
-                $stmt->bindParam(":sueldo", $sueldo); 
-                $stmt->bindParam(":id_periocidad", $id_periocidad); 
-                $stmt->bindParam(":cuenta", $cuenta); 
+                $stmt->bindParam(":nss", $nss);
+                $stmt->bindParam(":curp", $curp); 
+                $stmt->bindParam(":rfc", $rfc); 
+                $stmt->bindParam(":CP_fiscal", $cp); 
+                $stmt->bindParam(":fecha_ingreso", $fecha_ingreso); 
                 $stmt->bindParam(":clave_interbancaria", $clave_interbancaria); 
                 $stmt->bindParam(":id_banco", $id_banco); 
+                $stmt->bindParam(":sueldo", $sueldo); 
+                $stmt->bindParam(":alergias", $alergias); 
+                $stmt->bindParam(":fotos", $foto); 
+                
+                
+                $stmt->bindParam(":id_servicio", $id_servicio); 
+                $stmt->bindParam(":id_unidad_negocio", $id_unidad_negocio);
+                $stmt->bindParam(":id_zona", $id_zona);
+                $stmt->bindParam(":id_regional", $id_regional);
+                $stmt->bindParam(":no_empleado", $no_empleado);
+                $stmt->bindParam(":id_empresa", $id_empresa,); 
+                $stmt->bindParam(":id_turno", $id_turno); 
+                $stmt->bindParam(":id_puesto", $id_puesto); 
+                $stmt->bindParam(":id_periocidad", $id_periocidad); 
+                $stmt->bindParam(":cuenta", $cuenta); 
                 $stmt->bindParam(":estatus", $estatus);
                 $stmt->execute();
                 $lastInsertID = $db->lastInsertId();

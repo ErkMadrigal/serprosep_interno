@@ -53,6 +53,7 @@
             rfc: document.getElementById('rfc').value,
             nss: document.getElementById('nss').value,
             cp: document.getElementById('cp').value,
+            alergias: document.getElementById('alergias').value,
             id_regional: document.getElementById('regional').value,
             no_empleado: fechaHora,
             id_unidad_negocio: document.getElementById('unidadNegocio').value,

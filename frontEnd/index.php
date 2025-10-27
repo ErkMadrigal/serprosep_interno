@@ -95,7 +95,7 @@
 
         case 'carga-masiva-empleados':
             $title = "Carga Masiva Empleados";
-            $links = ["css/dropzone.min.css"];
+            $links = ["css/dropzone.min.css", "css/dropZone_xslx.css"];
             include "./components/header.php";
             include "./components/menu.php";
             include "$ruta/imports/carga-masiva-empleados.php";

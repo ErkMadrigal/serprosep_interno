@@ -88,7 +88,7 @@ switch ($opcion) {
 
                 // Campos requeridos
                 $clave_interbancaria =  $clave_final;
-                $id_banco            = $data['institucionBancaria']            ?? false;
+                $id_banco            = $data['institucionBancaria']            ?? '';
 
                 $paterno             = $data['paterno']             ?? false;
                 $materno             = $data['materno']             ?? false;
@@ -111,12 +111,14 @@ switch ($opcion) {
                 $id_periocidad       = $data['id_periocidad']       ?? '';
                 $cuenta              = $data['cuenta']              ?? '';
                 $estatus             = 1225; // o lo que aplique
-                $fecha_ingreso       = date('Y-m-d'); // Fecha actual
+                $fecha_ingreso       = $data['fecha_ingreso']       ?? date('Y-m-d'); // Fecha actual
+                $alergias            = $data['alergias']       ?? 'N/A'; // Fecha actual
+                $foto            = $data['fotos']       ?? ''; // Fecha actual
 
                 
                 // Validación de campos obligatorios
                 $camposRequeridos = [
-                    $clave_interbancaria, $id_banco,
+                    $clave_interbancaria,
                     $paterno, $materno, $nombre,
                     $curp, $rfc, $nss, $cp
                 ];
@@ -124,7 +126,8 @@ switch ($opcion) {
                 if (in_array(false, $camposRequeridos, true)) {
                     echo json_encode([
                         "status" => "error",
-                        "message" => "Todos los campos obligatorios deben ser proporcionados"
+                        "message" => "Todos los campos obligatorios deben ser proporcionados", 
+                        "campos_requeridos" => $camposRequeridos
                     ], JSON_UNESCAPED_UNICODE);
                 }else {
                     $id = isset($data['id']) ? trim($data['id']) : '';
@@ -135,7 +138,7 @@ switch ($opcion) {
                                 $no_empleado, $id_unidad_negocio, $id_regional, $id_zona,
                                 $id_empresa, $id_servicio, $curp, $rfc, $nss, $cp, $fecha_ingreso,
                                 $paterno, $materno, $nombre, $id_turno, $id_puesto, $sueldo,
-                                $id_periocidad, $cuenta, $clave_interbancaria, $id_banco, $estatus
+                                $id_periocidad, $cuenta, $clave_interbancaria, $id_banco, $estatus, $alergias, $foto
                             ),
                             JSON_UNESCAPED_UNICODE
                         );
@@ -145,7 +148,7 @@ switch ($opcion) {
                                 intval(value: $id), $no_empleado, $id_unidad_negocio, $id_regional, $id_zona,
                                 $id_empresa, $id_servicio, $curp, $rfc, $nss, $cp, $fecha_ingreso,
                                 $paterno, $materno, $nombre, $id_turno, $id_puesto, $sueldo,
-                                $id_periocidad, $cuenta, $clave_interbancaria, $id_banco, $estatus
+                                $id_periocidad, $cuenta, $clave_interbancaria, $id_banco, $estatus, $alergias, $foto
                             ),
                             JSON_UNESCAPED_UNICODE
                         );
